@@ -9,25 +9,46 @@ use Inertia\Inertia;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display all products.
      */
-    public function index()
+    public function all()
     {
-        return inertia('Products/Index', [
+        return Inertia::render('Products/All', [
             'products' => Product::all(),
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * View a single product.
      */
-    public function create()
+    public function view(Product $product)
     {
-        return inertia('Products/Create');
+        return Inertia::render('Products/{product}/View')->with([
+            'product' => $product,
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Edit a single product.
+     */
+    public function edit(Product $product)
+    {
+
+        return Inertia::render('Products/{product}/Edit')->with([
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * Create a new product.
+     */
+    public function create()
+    {
+        return Inertia::render('Products/Create');
+    }
+
+    /**
+     * Save a new product.
      */
     public function store(ProductStoreRequest $request)
     {
@@ -40,32 +61,11 @@ class ProductController extends Controller
 
         $request->user()->products()->create($productData);
 
-        // Return an Inertia response with a success message
-        return Inertia::render('Dashboard')->with('success', 'Product uploaded successfully!');
+        return redirect()->route('products.index');
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        return inertia('Products/Show', [
-            'product' => $product,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        return inertia('Products/Edit', [
-            'product' => $product,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update a product.
      */
     public function update(ProductStoreRequest $request, Product $product)
     {
@@ -75,12 +75,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a product.
      */
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->back();
+        return redirect()->route('products.index');
     }
 }

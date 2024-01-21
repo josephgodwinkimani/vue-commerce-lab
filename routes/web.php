@@ -31,18 +31,25 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
-    // Profile.
+    // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Products.
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-    Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    // All products.
+    Route::get('/products', [ProductController::class, 'all'])->name('products.all');
+
+    // Create a new product.
+    Route::post('/products/create', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+    // View a single product.
+    Route::get('/products/{product}/view', [ProductController::class, 'view'])->name('products.view');
+
+    // Edit a single product.
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::patch('/products/{product}/edit', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}/edit', [ProductController::class, 'destroy'])->name('products.destroy');
 });
 
 require __DIR__.'/auth.php';
