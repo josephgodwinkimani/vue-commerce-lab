@@ -10,6 +10,7 @@ const form = useForm({
     name: '',
     description: '',
     price: '',
+    quantity: '',
     image: null as File | null
 })
 
@@ -40,6 +41,7 @@ function submitForm(): void {
     form.name = sanitizeInput(form.name)
     form.description = sanitizeInput(form.description, allowedHTMLTags)
     form.price = sanitizeInput(form.price)
+    form.quantity = sanitizeInput(form.quantity)
 
     // Post the sanitized form data.
     form.post('/products', {
@@ -184,7 +186,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     required
                 />
                 <p class="description">
-                    Please enter the product name. HTML is not allowed.
+                    Please enter the name. HTML is not allowed.
                 </p>
             </div>
             <div class="field">
@@ -199,7 +201,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     required
                 />
                 <p class="description">
-                    Please enter the product description. Basic HTML is allowed.
+                    Please enter the description. Basic HTML is allowed.
                 </p>
             </div>
             <div class="field">
@@ -215,8 +217,21 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     step="0.01"
                 />
                 <p class="description">
-                    Please enter the product price in US Dollars (e.g. 100.00).
+                    Please enter the price in US Dollars (e.g. 100.00).
                 </p>
+            </div>
+            <div class="field">
+                <label for="quantity"
+                    >Product Quantity<span class="required">*</span></label
+                >
+                <input
+                    id="quantity"
+                    v-model="form.quantity"
+                    type="number"
+                    placeholder="100"
+                    required
+                />
+                <p class="description">Please enter the quantity (e.g. 100).</p>
             </div>
             <div class="field">
                 <label class="pb-1" for="image"

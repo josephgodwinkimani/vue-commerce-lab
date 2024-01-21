@@ -35,6 +35,10 @@ class ProductStoreRequest extends FormRequest
                 'required',
                 'numeric',
             ],
+            'quantity' => [
+                'required',
+                'numeric',
+            ],
             'image' => [
                 'required',
                 'image',
