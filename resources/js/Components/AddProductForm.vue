@@ -3,17 +3,27 @@ import { useForm } from '@inertiajs/vue3'
 import Button from './Button.vue'
 import { computed } from 'vue'
 import DOMPurify from 'dompurify'
+import { ref } from 'vue'
 
 // Set form shape and initial values.
 const form = useForm({
     name: '',
     description: '',
     price: '',
-    image: ''
+    image: null as File | null
 })
+
+// Image preview ref.
+const previewImage = ref<string | null>(null)
 
 // Define the allowed HTML tags for the description field.
 const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
+
+// Store submission state.
+const isSubmitted = ref(false)
+
+// Store form message state.
+const formMessage = ref('')
 
 // Define the computed property for form validation.
 const isFormValid = computed(() => {
@@ -30,10 +40,31 @@ function submitForm(): void {
     form.name = sanitizeInput(form.name)
     form.description = sanitizeInput(form.description, allowedHTMLTags)
     form.price = sanitizeInput(form.price)
-    form.image = sanitizeInput(form.image)
 
     // Post the sanitized form data.
-    form.post('/add-product')
+    form.post('/products', {
+        onSuccess: () => {
+            // Reset the form.
+            form.reset()
+            // Reset the image preview.
+            previewImage.value = null
+            // Set the success message.
+            formMessage.value = 'Product added successfully!'
+            // Set the submission state.
+            isSubmitted.value = true
+            // Reset the submission state after 3 seconds.
+            setTimeout(() => {
+                isSubmitted.value = false
+                formMessage.value = ''
+            }, 3000)
+        },
+        onError: () => {
+            // Set the success message.
+            formMessage.value = 'There was an error adding the product.'
+            // Set the submission state.
+            isSubmitted.value = true
+        }
+    })
 }
 
 /**
@@ -69,8 +100,11 @@ async function onFileChange(event: Event): Promise<void> {
         return
     }
 
-    // If file is valid, read it as a data URL.
-    form.image = await readFileAsDataURL(file)
+    // Read the file as a data URL for preview.
+    previewImage.value = await readFileAsDataURL(file)
+
+    // Set the selected file in the form data.
+    form.image = file
 }
 
 /**
@@ -148,7 +182,6 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     type="text"
                     placeholder="Product Name"
                     required
-                    pattern="[A-Za-z0-9]+"
                 />
                 <p class="description">
                     Please enter the product name. HTML is not allowed.
@@ -180,7 +213,6 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     placeholder="100.00"
                     required
                     step="0.01"
-                    pattern="^\d+(?:\.\d{1,2})?$"
                 />
                 <p class="description">
                     Please enter the product price in US Dollars (e.g. 100.00).
@@ -195,9 +227,13 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     Please select an image file (JPG or PNG) with a minimum size
                     of 300x300 pixels.
                 </p>
-                <img v-if="form.image" class="pt-2" :src="form.image" />
+                <img v-if="previewImage" class="pt-2" :src="previewImage" />
             </div>
             <Button type="submit" :disabled="!isFormValid">Save</Button>
+
+            <div v-if="formMessage">
+                <p>{{ formMessage }}</p>
+            </div>
         </form>
     </section>
 </template>
