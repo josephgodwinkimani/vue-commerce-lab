@@ -61,7 +61,7 @@ class ProductController extends Controller
 
         $request->user()->products()->create($productData);
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.all');
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.all');
     }
 
     /**
