@@ -13,7 +13,7 @@ import { Head, Link } from '@inertiajs/vue3'
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Products
+                    Add New Product
                 </h2>
                 <Link
                     :href="route('products.all')"
@@ -23,6 +23,6 @@ import { Head, Link } from '@inertiajs/vue3'
             </div>
         </template>
 
-        <ProductForm />
+        <ProductForm :product="{}" button-text="Add Product" />
     </AuthenticatedLayout>
 </template>

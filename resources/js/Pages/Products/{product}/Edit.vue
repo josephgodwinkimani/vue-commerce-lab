@@ -36,7 +36,7 @@ defineProps<{
             </div>
         </template>
         <div>
-            <ProductForm :product="product" />
+            <ProductForm :product="product" button-text="Save" />
         </div>
     </AuthenticatedLayout>
 </template>
