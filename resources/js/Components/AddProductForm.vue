@@ -13,8 +13,9 @@ const form = useForm({
 })
 
 // Define the allowed HTML tags for the description field.
-const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br']
+const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
 
+// Define the computed property for form validation.
 const isFormValid = computed(() => {
     return form.name && form.description && form.price && form.image
 })
@@ -31,7 +32,7 @@ function submitForm(): void {
     form.price = sanitizeInput(form.price)
     form.image = sanitizeInput(form.image)
 
-    // Post the sanitized form data
+    // Post the sanitized form data.
     form.post('/add-product')
 }
 
@@ -205,6 +206,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
 .title {
     @apply text-lg font-semibold leading-tight text-gray-800 dark:text-gray-200;
 }
+
 .form {
     @apply flex flex-col gap-6;
 
