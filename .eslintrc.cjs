@@ -18,5 +18,7 @@ module.exports = {
         es6: true
     },
     root: true,
-    rules: {}
+    rules: {
+        'vue/multi-word-component-names': 'off'
+    }
 }
