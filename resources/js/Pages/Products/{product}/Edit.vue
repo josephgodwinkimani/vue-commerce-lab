@@ -2,7 +2,6 @@
 import ProductForm from '@/Components/ProductForm.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
-
 defineProps<{
     product: {
         id: number
