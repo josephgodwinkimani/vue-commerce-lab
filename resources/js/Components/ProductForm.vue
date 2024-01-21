@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3'
-import Button from './Button.vue'
+import Button from '@/Components/Button.vue'
 import { computed } from 'vue'
 import DOMPurify from 'dompurify'
 import { ref } from 'vue'
@@ -44,7 +44,7 @@ function submitForm(): void {
     form.quantity = sanitizeInput(form.quantity)
 
     // Post the sanitized form data.
-    form.post('/products', {
+    form.post('/products/create', {
         onSuccess: () => {
             // Reset the form.
             form.reset()
@@ -54,11 +54,6 @@ function submitForm(): void {
             formMessage.value = 'Product added successfully!'
             // Set the submission state.
             isSubmitted.value = true
-            // Reset the submission state after 3 seconds.
-            setTimeout(() => {
-                isSubmitted.value = false
-                formMessage.value = ''
-            }, 3000)
         },
         onError: () => {
             // Set the success message.
