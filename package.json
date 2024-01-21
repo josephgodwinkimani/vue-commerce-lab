@@ -5,7 +5,7 @@
         "dev": "vite",
         "build": "vue-tsc && vite build && vite build --ssr",
         "format": "prettier  '**/*.{vue,js,ts,md,html,css,json,yml}' --ignore-path .gitignore --cache --write",
-        "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ."
+        "lint": "eslint --ext .js,.ts,.vue --fix --ignore-path .gitignore ."
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.14",
