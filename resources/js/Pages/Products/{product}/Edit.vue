@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link } from '@inertiajs/vue3'
 import ProductForm from '@/Components/ProductForm.vue'
-import { Head } from '@inertiajs/vue3'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Head, Link } from '@inertiajs/vue3'
+
 defineProps<{
     product: {
         id: number

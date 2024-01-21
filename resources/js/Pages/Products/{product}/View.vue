@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 defineProps<{
     product: {
         id: number
@@ -12,7 +12,7 @@ defineProps<{
         user_id: number
         created_at: string
         updated_at: string
-    }[]
+    }
 }>()
 </script>
 
