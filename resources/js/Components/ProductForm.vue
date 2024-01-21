@@ -5,13 +5,25 @@ import { computed } from 'vue'
 import DOMPurify from 'dompurify'
 import { ref } from 'vue'
 
-// Set form shape and initial values.
+// Define the props.
+const { product, buttonText } = defineProps({
+    product: {
+        type: Object,
+        default: null
+    },
+    buttonText: {
+        type: String,
+        default: 'Submit'
+    }
+})
+
+// Form setup
 const form = useForm({
-    name: '',
-    description: '',
-    price: '',
-    quantity: '',
-    image: null as File | null
+    name: product ? product.name : '',
+    description: product ? product.description : '',
+    price: product ? product.price : '',
+    quantity: product ? product.quantity : '',
+    image: null
 })
 
 // Image preview ref.
@@ -167,8 +179,8 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
 
 <template>
     <section class="flex flex-col gap-6">
-        <h2 class="title">Add New Product</h2>
         <form class="form" @submit.prevent="submitForm">
+            <!-- Product name input -->
             <div class="field">
                 <label for="name"
                     >Product Name<span class="required">*</span></label
@@ -184,6 +196,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     Please enter the name. HTML is not allowed.
                 </p>
             </div>
+            <!-- Product description input -->
             <div class="field">
                 <label for="description"
                     >Product Description<span class="required">*</span></label
@@ -199,6 +212,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     Please enter the description. Basic HTML is allowed.
                 </p>
             </div>
+            <!-- Product price input -->
             <div class="field">
                 <label for="price"
                     >Product Price<span class="required">*</span></label
@@ -215,6 +229,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     Please enter the price in US Dollars (e.g. 100.00).
                 </p>
             </div>
+            <!-- Product quantity input -->
             <div class="field">
                 <label for="quantity"
                     >Product Quantity<span class="required">*</span></label
@@ -228,6 +243,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                 />
                 <p class="description">Please enter the quantity (e.g. 100).</p>
             </div>
+            <!-- Product image input -->
             <div class="field">
                 <label class="pb-1" for="image"
                     >Product Image<span class="required">*</span></label
@@ -239,8 +255,10 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                 </p>
                 <img v-if="previewImage" class="pt-2" :src="previewImage" />
             </div>
-            <Button type="submit" :disabled="!isFormValid">Save</Button>
-
+            <!-- Submit button -->
+            <Button type="submit" :disabled="!isFormValid">{{
+                buttonText
+            }}</Button>
             <div v-if="formMessage">
                 <p>{{ formMessage }}</p>
             </div>
