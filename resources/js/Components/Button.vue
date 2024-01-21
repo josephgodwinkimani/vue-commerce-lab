@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
-
 // Define the component props.
 const props = defineProps({
     type: {
