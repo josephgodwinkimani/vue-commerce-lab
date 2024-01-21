@@ -35,27 +35,47 @@ defineProps<{
             </div>
         </template>
         <div>
-            <ul>
+            <ul class="grid grid-cols-2 gap-8">
                 <!-- Loop through products and display each one -->
                 <li v-for="product in products" :key="product.id">
-                    <div>
-                        <h2>{{ product.name }}</h2>
-                        <img :src="product.image" alt="Product image" />
-                        <Link
-                            :href="
-                                route('products.view', { product: product.id })
-                            "
-                            >View</Link
-                        >
-                        <Link
-                            :href="
-                                route('products.edit', { product: product.id })
-                            "
-                            >Edit</Link
-                        >
+                    <div class="flex flex-col gap-4">
+                        <h3 class="text-xl font-bold">{{ product.name }}</h3>
+                        <img
+                            :src="product.image"
+                            alt="Product image"
+                            class="image"
+                        />
+                        <div class="flex items-center gap-4">
+                            <Link
+                                :href="
+                                    route('products.view', {
+                                        product: product.id
+                                    })
+                                "
+                                >View</Link
+                            >
+                            <Link
+                                :href="
+                                    route('products.edit', {
+                                        product: product.id
+                                    })
+                                "
+                                >Edit</Link
+                            >
+                        </div>
                     </div>
                 </li>
             </ul>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.image {
+    @apply h-64 w-64;
+}
+
+.action {
+    @apply rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700;
+}
+</style>
