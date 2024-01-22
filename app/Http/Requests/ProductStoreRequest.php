@@ -21,7 +21,8 @@ class ProductStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+
+        $rules = [
             'name' => [
                 'required',
                 'string',
@@ -39,12 +40,13 @@ class ProductStoreRequest extends FormRequest
                 'required',
                 'numeric',
             ],
-            'image' => [
-                'required',
-                'image',
-                'dimensions:min_width=300,min_height=300',
-                'mimes:jpg,jpeg,png',
-            ],
         ];
+
+        // If the request is post or has image file, then add the image validation rules.
+        if ($this->isMethod('post') || $this->hasFile('image')) {
+            $rules['image'] = 'required|image|dimensions:min_width=300,min_height=300|mimes:jpg,jpeg,png,webp,avif,gif';
+        }
+
+        return $rules;
     }
 }
