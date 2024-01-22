@@ -28,6 +28,11 @@ class ProductStoreRequest extends FormRequest
                 'string',
                 'max:255',
             ],
+            'sku' => [
+                'required',
+                'string',
+                'max:255',
+            ],
             'description' => [
                 'required',
                 'string',

@@ -26,6 +26,7 @@ const { product, action, errors } = defineProps({
 // Initialize the form.
 const form = useForm({
     name: product ? product.name : '',
+    sku: product ? product.sku : '',
     description: product ? product.description : '',
     price: product ? product.price : '',
     quantity: product ? product.quantity : '',
@@ -52,6 +53,7 @@ const successMessage = ref('')
 const isFormValid = computed(() => {
     return (
         form.name &&
+        form.sku &&
         form.description &&
         form.price &&
         form.quantity &&
@@ -59,6 +61,7 @@ const isFormValid = computed(() => {
     )
 })
 
+// Allow access to the submitForm function from the parent component.
 defineExpose({ submitForm })
 
 /**
@@ -74,6 +77,7 @@ function submitForm(): void {
 
     // Sanitize individual form fields.
     form.name = sanitizeInput(form.name)
+    form.sku = sanitizeInput(form.sku)
     form.description = sanitizeInput(form.description, allowedHTMLTags)
     form.price = sanitizeInput(form.price)
     form.quantity = sanitizeInput(form.quantity)
@@ -242,6 +246,22 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                 />
                 <p class="description">
                     Please enter the name. HTML is not allowed.
+                </p>
+            </div>
+            <!-- Product SKU input -->
+            <div class="field">
+                <label class="label" for="sku"
+                    >Product SKU<span class="required">*</span></label
+                >
+                <input
+                    id="sku"
+                    v-model="form.sku"
+                    type="text"
+                    placeholder="Product SKU"
+                    required
+                />
+                <p class="description">
+                    Please enter the SKU. This must be unique.
                 </p>
             </div>
             <!-- Product description input -->

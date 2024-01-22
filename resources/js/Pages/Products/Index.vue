@@ -7,6 +7,7 @@ const { products } = defineProps<{
     products: {
         id: number
         name: string
+        sku: string
         description: string
         price: number
         quantity: number
@@ -60,6 +61,7 @@ const { products } = defineProps<{
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>SKU</th>
                     <th>Image</th>
                     <th>Description</th>
                     <th>Price</th>
@@ -76,6 +78,7 @@ const { products } = defineProps<{
                             >{{ product.name }}</Link
                         >
                     </td>
+                    <td>{{ product.sku }}</td>
                     <td>
                         <img
                             :src="`/${product.image}`"
@@ -118,6 +121,7 @@ const { products } = defineProps<{
 .products-table th {
     @apply bg-gray-100 dark:bg-gray-800;
 }
+
 .image {
     @apply h-16 w-16;
 }

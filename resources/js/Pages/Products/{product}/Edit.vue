@@ -9,6 +9,7 @@ const { product } = defineProps<{
     product: {
         id: number
         name: string
+        sku: string
         description: string
         price: number
         quantity: number
