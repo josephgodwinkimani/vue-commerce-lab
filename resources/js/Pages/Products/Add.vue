@@ -16,13 +16,13 @@ import { Head, Link } from '@inertiajs/vue3'
                     Add New Product
                 </h2>
                 <Link
-                    :href="route('products.all')"
+                    :href="route('products.index')"
                     class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                     >Cancel</Link
                 >
             </div>
         </template>
 
-        <ProductForm :product="{}" button-text="Add Product" />
+        <ProductForm :product="{}" action="post" button-text="Add Product" />
     </AuthenticatedLayout>
 </template>

@@ -41,11 +41,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Create a new product.
+     * Add a new product.
      */
-    public function create()
+    public function add()
     {
-        return Inertia::render('Products/Create');
+        return Inertia::render('Products/Add');
     }
 
     /**

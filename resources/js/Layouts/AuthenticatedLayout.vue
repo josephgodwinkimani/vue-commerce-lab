@@ -43,7 +43,7 @@ const showingNavigationDropdown = ref(false)
                                     :href="route('products.index')"
                                     :active="
                                         route().current('products.index') ||
-                                        route().current('products.create') ||
+                                        route().current('products.add') ||
                                         route().current('products.edit') ||
                                         route().current('products.view')
                                     "

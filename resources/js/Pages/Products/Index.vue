@@ -30,7 +30,7 @@ const { products } = defineProps<{
                     All Products
                 </h2>
                 <Link
-                    :href="route('products.create')"
+                    :href="route('products.add')"
                     class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                     >Add New Product</Link
                 >
@@ -53,7 +53,7 @@ const { products } = defineProps<{
                             "
                         >
                             <img
-                                :src="product.image"
+                                :src="`/${product.image}`"
                                 alt="Product image"
                                 class="image"
                             />
