@@ -18,6 +18,9 @@ module.exports = {
         es6: true
     },
     root: true,
+    globals: {
+        route: 'readonly'
+    },
     rules: {
         'vue/multi-word-component-names': 'off'
     }
