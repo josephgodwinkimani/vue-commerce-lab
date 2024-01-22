@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
-defineProps<{
+
+// Define page props.
+const { products } = defineProps<{
     products: {
         id: number
         name: string
@@ -39,14 +41,26 @@ defineProps<{
                 <!-- Loop through products and display each one -->
                 <li v-for="product in products" :key="product.id">
                     <div class="flex flex-col gap-4">
-                        <h3 class="text-xl font-bold">{{ product.name }}</h3>
-                        <img
-                            :src="product.image"
-                            alt="Product image"
-                            class="image"
-                        />
+                        <h3 class="text-xl font-bold dark:text-white">
+                            {{ product.name }}
+                        </h3>
+                        <Link
+                            class="hover:underline dark:text-white"
+                            :href="
+                                route('products.view', {
+                                    product: product.id
+                                })
+                            "
+                        >
+                            <img
+                                :src="product.image"
+                                alt="Product image"
+                                class="image"
+                            />
+                        </Link>
                         <div class="flex items-center gap-4">
                             <Link
+                                class="hover:underline dark:text-white"
                                 :href="
                                     route('products.view', {
                                         product: product.id
@@ -55,6 +69,7 @@ defineProps<{
                                 >View</Link
                             >
                             <Link
+                                class="hover:underline dark:text-white"
                                 :href="
                                     route('products.edit', {
                                         product: product.id

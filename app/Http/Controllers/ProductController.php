@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -11,9 +12,9 @@ class ProductController extends Controller
     /**
      * Display all products.
      */
-    public function all()
+    public function index()
     {
-        return Inertia::render('Products/All', [
+        return Inertia::render('Products/Index', [
             'products' => Product::all(),
         ]);
     }
@@ -61,7 +62,7 @@ class ProductController extends Controller
 
         $request->user()->products()->create($productData);
 
-        return redirect()->route('products.all');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -71,7 +72,7 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
 
-        return redirect()->route('products.all');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -82,5 +83,20 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index');
+    }
+
+    /**
+     * Delete an image.
+     */
+    public function deleteImage(Product $product)
+    {
+        $product->update([
+            'image' => null,
+        ]);
+
+        // Remove from filestyem.
+        Storage::disk('public')->delete($product->image);
+
+        return redirect()->route('products.edit', $product);
     }
 }
