@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    /**
-     * Product image upload path.
-     */
-    private $imagePath = 'images/products';
-
     /**
      * Display all products.
      */
@@ -60,11 +54,6 @@ class ProductController extends Controller
     {
         $productData = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store($this->imagePath, 'public');
-            $productData['image'] = $path;
-        }
-
         $request->user()->products()->create($productData);
 
         return redirect()->route('products.index');
@@ -77,36 +66,7 @@ class ProductController extends Controller
     {
         $productData = $request->validated();
 
-        if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $path = $request->file('image')->store($this->imagePath, 'public');
-            $productData['image'] = $path;
-        }
-
         $product->update($productData);
-
-        return Inertia::render('Products/{product}/Edit', [
-            'product' => $product->refresh(),
-        ]);
-    }
-
-    /**
-     * Delete an image.
-     */
-    public function deleteImage(Product $product)
-    {
-
-        $imagePath = $product->image;
-
-        if ($imagePath && Storage::disk('public')->exists($imagePath)) {
-            Storage::disk('public')->delete($imagePath);
-        }
-
-        $product->update([
-            'image' => null,
-        ]);
 
         return Inertia::render('Products/{product}/Edit', [
             'product' => $product->refresh(),

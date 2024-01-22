@@ -30,7 +30,7 @@ const form = useForm({
     description: product ? product.description : '',
     price: product ? product.price : '',
     quantity: product ? product.quantity : '',
-    image: product ? product.image : null
+    image: product ? product.image : ''
 })
 
 // Set the form action based on the action.
@@ -39,9 +39,6 @@ const formAction = action === 'post' ? 'post' : 'patch'
 // Set the form URL based on the action.
 const url =
     formAction === 'post' ? '/products/add' : `/products/${product.id}/edit`
-
-// Image state.
-const previewImage = ref(product?.image ? `/${product.image}` : null)
 
 // Define the allowed HTML tags for the description field.
 const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
@@ -57,7 +54,7 @@ const isFormValid = computed(() => {
         form.description &&
         form.price &&
         form.quantity &&
-        previewImage.value
+        form.image
     )
 })
 
@@ -70,6 +67,7 @@ defineExpose({ submitForm })
  * @returns void
  */
 function submitForm(): void {
+    // Return if the form is not valid.
     if (!isFormValid.value) {
         alert('Please fill in all required fields.')
         return
@@ -81,6 +79,7 @@ function submitForm(): void {
     form.description = sanitizeInput(form.description, allowedHTMLTags)
     form.price = sanitizeInput(form.price)
     form.quantity = sanitizeInput(form.quantity)
+    form.image = sanitizeInput(form.image)
 
     // Send the form data.
     form[formAction](url, {
@@ -91,113 +90,6 @@ function submitForm(): void {
         onError: () => {
             successMessage.value = ''
         }
-    })
-}
-
-/**
- * Handle file change event.
- *
- * @param event The file change event.
- *
- * @returns void
- */
-async function onFileChange(event: Event): Promise<void> {
-    // Get the file input element from the event.
-    const input = event.target as HTMLInputElement
-
-    // Return if no file is selected.
-    if (!input.files || input.files.length === 0) return
-
-    // Get the first file from the FileList object.
-    const file = input.files[0]
-
-    // Allowed image types.
-    const validImageTypes = [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/webp',
-        'image/avif'
-    ]
-
-    // Check if the file is one of the valid image types.
-    if (!validImageTypes.includes(file.type)) {
-        alert('Please select a valid image file (JPG, PNG, GIF, WEBP, AVIF).')
-        return
-    }
-
-    // Check if the image size is at least 300x300 pixels.
-    const isSizeValid = await checkImageSize(file)
-    if (!isSizeValid) {
-        alert('The image size must be at least 300x300 pixels.')
-        return
-    }
-
-    // Read the file as a data URL for preview.
-    previewImage.value = await readFileAsDataURL(file)
-
-    // Set the selected file in the form data.
-    form.image = file
-}
-
-/**
- * Delete the product image.
- *
- * @returns void
- */
-function deleteImage(): void {
-    if (confirm('Are you sure you want to delete the image?')) {
-        form.image = null
-        previewImage.value = null
-        form.delete(route('products.deleteImage', product.id))
-    }
-}
-
-/**
- * Check if the image size meets the minimum requirements.
- *
- * @param file The file to check.
- *
- * @returns Promise<boolean>
- */
-function checkImageSize(file: File): Promise<boolean> {
-    return new Promise((resolve) => {
-        const img = new Image()
-        img.onload = () => {
-            // Check the natural width and height of the image.
-            const width = img.naturalWidth
-            const height = img.naturalHeight
-            // Resolve true if both width and height are at least 300 pixels.
-            resolve(width >= 300 && height >= 300)
-        }
-        img.onerror = () => {
-            // Resolve false if there's an error loading the image.
-            resolve(false)
-        }
-        // Create a URL for the file and set it as the image source.
-        img.src = URL.createObjectURL(file)
-    })
-}
-
-/**
- * Read the file as a data URL.
- *
- * @param file The file to read.
- *
- * @returns Promise<string>
- */
-function readFileAsDataURL(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-
-        // Event listener for when file reading is completed.
-        reader.onloadend = () => resolve(reader.result as string)
-
-        // Error handling for file reading.
-        reader.onerror = reject
-
-        // Initiating the file reading process.
-        reader.readAsDataURL(file)
     })
 }
 
@@ -295,7 +187,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     step="0.01"
                 />
                 <p class="description">
-                    Please enter the price in US Dollars (e.g. 100.00).
+                    Please enter the price in US Dollars (e.g., 100.00).
                 </p>
             </div>
             <!-- Product quantity input -->
@@ -310,25 +202,29 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     placeholder="100"
                     required
                 />
-                <p class="description">Please enter the quantity (e.g. 100).</p>
+                <p class="description">
+                    Please enter the quantity (e.g., 100).
+                </p>
             </div>
             <!-- Product image input -->
             <div class="field">
                 <label class="label" for="image"
                     >Product Image<span class="required">*</span></label
                 >
-
-                <!-- Display existing image with delete option -->
-                <div v-if="previewImage">
-                    <img :src="previewImage" class="preview-image" />
-                    <input v-model="form.image" type="hidden" />
-                    <button class="delete-image" @click="deleteImage">
-                        Delete Image?
-                    </button>
-                </div>
-
-                <!-- Image input for new image upload -->
-                <input v-else id="image" type="file" @change="onFileChange" />
+                <input id="image" v-model="form.image" type="url" required />
+                <p class="description">
+                    Please enter the full URL to an image. (e.g.,
+                    https://via.placeholder.com/640x480.png/001199)
+                </p>
+            </div>
+            <!-- Preview the image if it exists -->
+            <div v-if="form.image">
+                <p>Image preview:</p>
+                <img
+                    :src="form.image"
+                    alt="Product Image"
+                    class="preview-image"
+                />
             </div>
         </form>
     </section>

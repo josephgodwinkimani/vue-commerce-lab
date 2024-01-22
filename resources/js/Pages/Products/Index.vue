@@ -81,9 +81,10 @@ const { products } = defineProps<{
                     <td>{{ product.sku }}</td>
                     <td>
                         <img
-                            :src="`/${product.image}`"
                             :alt="product.name"
+                            :src="product.image"
                             class="image"
+                            loading="lazy"
                         />
                     </td>
                     <td>{{ product.description }}</td>

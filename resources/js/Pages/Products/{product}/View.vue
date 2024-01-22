@@ -63,11 +63,8 @@ function destroy(id: number) {
             </div>
         </template>
         <div class="flex gap-4 dark:text-white">
-            <a :href="`/${product.image}`" target="_blank">
-                <img
-                    :src="`/${product.image}`"
-                    :alt="product.name"
-                    class="h-32 w-32"
+            <a :href="product.image" target="_blank">
+                <img :src="product.image" :alt="product.name" class="h-32 w-32"
             /></a>
             <div>
                 <p>{{ product.description }}</p>
