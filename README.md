@@ -61,3 +61,14 @@ npm run dev
 ```
 
 ---
+
+## Next Steps
+
+Visit the Dashboard and login with the following credentials:
+
+-   user: <test@example.com>
+-   pass: password
+
+You can now start adding products!
+
+---
