@@ -2,16 +2,16 @@
 
 **Project Overview:** 🚀
 
-This repository houses an experimental ecommerce store that serves as a practical application for learning and implementing **Laravel**.
+This repository houses an experimental ecommerce store that serves as a practical application for learning and implementing **[Laravel](https://laravel.com/docs/10.x)**.
 
-The project is enriched with a modern tech stack, utilizing **Vue.js** and **Inertia.js** for seamless single-page application experiences. **TailwindCSS** provides the styling, ensuring a responsive and visually appealing interface.
+The project is enriched with a modern tech stack, utilizing **[Vue.js](https://vuejs.org/guide/introduction.html)** and **[Inertia.js](https://inertiajs.com/)** for seamless single-page application experiences. **[TailwindCSS](https://tailwindcss.com/)** provides the styling, ensuring a responsive and visually appealing interface.
 
 **Key Features:** 🛠
 
 -   **CRUD Operations**: Comprehensive Create, Read, Update, and Delete functionalities for products and customers, showcasing Laravel's robust back-end capabilities.
 -   **Vue.js Integration**: A dynamic and reactive frontend built with Vue.js, offering an engaging user experience.
 -   **Inertia.js**: Bridges Laravel and Vue.js, enabling server-side rendering and client-side navigation without page reloads.
--   **Tailwind CSS**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
+-   **TailwindCSS**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
 
 **Learning Outcomes:** 📚
 
