@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
     // Create a new product.
-    Route::post('/products/create', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products/add', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/add', [ProductController::class, 'add'])->name('products.add');
 
     // View a single product.
     Route::get('/products/{product}/view', [ProductController::class, 'view'])->name('products.view');
