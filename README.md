@@ -2,7 +2,7 @@
 
 **Project Overview:** 🚀
 
-This repository houses an experimental ecommerce store that serves as a practical application for learning and implementing **[Laravel](https://laravel.com/docs/10.x)**.
+This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing **[Laravel](https://laravel.com/docs/10.x)**.
 
 The project is enriched with a modern tech stack, utilizing **[Vue.js](https://vuejs.org/guide/introduction.html)** and **[Inertia.js](https://inertiajs.com/)** for seamless single-page application experiences. **[TailwindCSS](https://tailwindcss.com/)** provides the styling, ensuring a responsive and visually appealing interface.
 
