@@ -4,7 +4,7 @@
 
 This repository houses an experimental ecommerce store that serves as a practical application for learning and implementing **Laravel**.
 
-The project is enriched with a modern tech stack, utilizing **Vue.js** and **Inertia.js** for seamless single-page application experiences. Tailwind CSS provides the styling, ensuring a responsive and visually appealing interface.
+The project is enriched with a modern tech stack, utilizing **Vue.js** and **Inertia.js** for seamless single-page application experiences. **TailwindCSS** provides the styling, ensuring a responsive and visually appealing interface.
 
 **Key Features:** 🛠
 
