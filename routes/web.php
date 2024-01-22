@@ -50,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::patch('/products/{product}/edit', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}/edit', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    // Delete an image from a product.
+    Route::delete('/products/{product}/delete-image', [ProductController::class, 'deleteImage'])->name('products.deleteImage');
 });
 
 require __DIR__.'/auth.php';
