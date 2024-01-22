@@ -23,10 +23,14 @@ const { product } = defineProps<{
 // Create a ref for the ProductForm component.
 const productFormRef = ref()
 
+// Create a ref for the saved state.
+const saved = ref(false)
+
 // Calls the submitForm method in ProductForm.
 function saveProduct() {
     if (productFormRef.value) {
         productFormRef.value.submitForm()
+        saved.value = true
     }
 }
 </script>
@@ -52,7 +56,9 @@ function saveProduct() {
                     <Link
                         :href="route('products.view', product.id)"
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                        >Cancel</Link
+                    >
+                        <span v-if="saved">Done</span
+                        ><span v-else>Cancel</span></Link
                     >
                 </div>
             </div>
