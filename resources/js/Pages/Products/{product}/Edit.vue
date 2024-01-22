@@ -31,7 +31,7 @@ const saved = ref(false)
 const cancelOrDone = computed(() => {
     return saved.value
         ? route('products.index')
-        : route('products.view', product.id)
+        : route('products.show', product.id)
 })
 
 // Calls the submitForm method in ProductForm.

@@ -19,11 +19,11 @@ class ProductController extends Controller
     }
 
     /**
-     * View a single product.
+     * Show a single product.
      */
-    public function view(Product $product)
+    public function show(Product $product)
     {
-        return Inertia::render('Products/{product}/View')->with([
+        return Inertia::render('Products/{product}/Show')->with([
             'product' => $product,
         ]);
     }
@@ -40,11 +40,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Add a new product.
+     * Create a new product.
      */
-    public function add()
+    public function create()
     {
-        return Inertia::render('Products/Add');
+        return Inertia::render('Products/Create');
     }
 
     /**

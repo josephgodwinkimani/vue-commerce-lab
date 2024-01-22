@@ -31,7 +31,7 @@ const { products } = defineProps<{
                     All Products
                 </h2>
                 <Link
-                    :href="route('products.add')"
+                    :href="route('products.create')"
                     class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                     >Add New Product</Link
                 >
@@ -45,7 +45,7 @@ const { products } = defineProps<{
             </h3>
             <Link
                 class="hover:underline dark:text-white"
-                :href="route('products.add')"
+                :href="route('products.create')"
                 >Add a product</Link
             >
         </div>
@@ -53,7 +53,7 @@ const { products } = defineProps<{
         <!-- No Products -->
         <div v-if="!products.length" class="no-products">
             <h3>No products found.</h3>
-            <Link :href="route('products.add')">Add a product</Link>
+            <Link :href="route('products.create')">Add a product</Link>
         </div>
 
         <!-- Products Table -->
@@ -74,7 +74,7 @@ const { products } = defineProps<{
                     <td>
                         <Link
                             class="hover:underline"
-                            :href="route('products.view', product.id)"
+                            :href="route('products.show', product.id)"
                             >{{ product.name }}</Link
                         >
                     </td>
@@ -93,7 +93,7 @@ const { products } = defineProps<{
                     <td>
                         <Link
                             class="hover:underline"
-                            :href="route('products.view', product.id)"
+                            :href="route('products.show', product.id)"
                             >View</Link
                         >
                         |
