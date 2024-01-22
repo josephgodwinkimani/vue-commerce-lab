@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -40,16 +41,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
     // Create a new product.
-    Route::post('/products/add', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/products/add', [ProductController::class, 'add'])->name('products.add');
+    Route::post('/products/create', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
     // View a single product.
-    Route::get('/products/{product}/view', [ProductController::class, 'view'])->name('products.view');
+    Route::get('/products/{product}/show', [ProductController::class, 'show'])->name('products.show');
 
     // Edit a single product.
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::patch('/products/{product}/edit', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}/edit', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    // All customers.
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+
+    // Create a new customer.
+    Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+
+    // View a single customer.
+    Route::get('/customers/{customer}/show', [CustomerController::class, 'show'])->name('customers.show');
+
+    // Edit a single customer.
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::patch('/customers/{customer}/edit', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{customer}/edit', [CustomerController::class, 'destroy'])->name('customers.destroy');
 });
 
 require __DIR__.'/auth.php';
