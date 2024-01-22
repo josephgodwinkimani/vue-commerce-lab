@@ -44,7 +44,7 @@ This project was scaffolded with [Laravel Breeze](https://laravel.com/docs/10.x/
 1. Clone the repository
 
 ```bash
-git clone git@github.com:gregrickaby/laravel-vue-inertia-example.git
+git clone git@github.com:gregrickaby/vue-commerce-lab.git
 ```
 
 2. Install dependencies
