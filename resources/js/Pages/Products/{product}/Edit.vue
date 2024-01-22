@@ -2,6 +2,7 @@
 import ProductForm from '@/Components/ProductForm.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
+import { computed } from 'vue'
 import { ref } from 'vue'
 
 // Define page props.
@@ -25,6 +26,13 @@ const productFormRef = ref()
 
 // Create a ref for the saved state.
 const saved = ref(false)
+
+// Define the cancelOrDone computed property.
+const cancelOrDone = computed(() => {
+    return saved.value
+        ? route('products.index')
+        : route('products.view', product.id)
+})
 
 // Calls the submitForm method in ProductForm.
 function saveProduct() {
@@ -54,7 +62,7 @@ function saveProduct() {
                         Save
                     </button>
                     <Link
-                        :href="route('products.view', product.id)"
+                        :href="cancelOrDone"
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                     >
                         <span v-if="saved">Done</span
