@@ -36,61 +36,93 @@ const { products } = defineProps<{
                 >
             </div>
         </template>
-        <div>
-            <ul class="grid grid-cols-2 gap-8">
-                <!-- Loop through products and display each one -->
-                <li v-for="product in products" :key="product.id">
-                    <div class="flex flex-col gap-4">
-                        <h3 class="text-xl font-bold dark:text-white">
-                            {{ product.name }}
-                        </h3>
-                        <Link
-                            class="hover:underline dark:text-white"
-                            :href="
-                                route('products.view', {
-                                    product: product.id
-                                })
-                            "
-                        >
-                            <img
-                                :src="`/${product.image}`"
-                                alt="Product image"
-                                class="image"
-                            />
-                        </Link>
-                        <div class="flex items-center gap-4">
-                            <Link
-                                class="hover:underline dark:text-white"
-                                :href="
-                                    route('products.view', {
-                                        product: product.id
-                                    })
-                                "
-                                >View</Link
-                            >
-                            <Link
-                                class="hover:underline dark:text-white"
-                                :href="
-                                    route('products.edit', {
-                                        product: product.id
-                                    })
-                                "
-                                >Edit</Link
-                            >
-                        </div>
-                    </div>
-                </li>
-            </ul>
+
+        <!-- If there are no products -->
+        <div v-if="!products.length" class="flex flex-col gap-4">
+            <h3 class="text-xl font-bold dark:text-white">
+                No products found.
+            </h3>
+            <Link
+                class="hover:underline dark:text-white"
+                :href="route('products.add')"
+                >Add a product</Link
+            >
         </div>
+
+        <!-- No Products -->
+        <div v-if="!products.length" class="no-products">
+            <h3>No products found.</h3>
+            <Link :href="route('products.add')">Add a product</Link>
+        </div>
+
+        <!-- Products Table -->
+        <table v-else class="products-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="product in products" :key="product.id">
+                    <td>
+                        <Link
+                            class="hover:underline"
+                            :href="route('products.view', product.id)"
+                            >{{ product.name }}</Link
+                        >
+                    </td>
+                    <td>
+                        <img
+                            :src="`/${product.image}`"
+                            :alt="product.name"
+                            class="image"
+                        />
+                    </td>
+                    <td>{{ product.description }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        <Link
+                            class="hover:underline"
+                            :href="route('products.view', product.id)"
+                            >View</Link
+                        >
+                        |
+                        <Link
+                            class="hover:underline"
+                            :href="route('products.edit', product.id)"
+                            >Edit</Link
+                        >
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </AuthenticatedLayout>
 </template>
 
 <style scoped>
-.image {
-    @apply h-64 w-64;
+.products-table {
+    @apply w-full border-collapse dark:text-white;
 }
 
-.action {
-    @apply rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700;
+.products-table th,
+.products-table td {
+    @apply p-4 text-left dark:bg-gray-700;
+}
+
+.products-table th {
+    @apply bg-gray-100 dark:bg-gray-800;
+}
+.image {
+    @apply h-16 w-16;
+}
+
+.actions {
+    @apply flex gap-2;
 }
 </style>
