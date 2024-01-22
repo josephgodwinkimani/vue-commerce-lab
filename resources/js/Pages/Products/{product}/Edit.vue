@@ -2,7 +2,9 @@
 import ProductForm from '@/Components/ProductForm.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
-defineProps<{
+
+// Define page props.
+const { product } = defineProps<{
     product: {
         id: number
         name: string
@@ -18,7 +20,7 @@ defineProps<{
 </script>
 
 <template>
-    <Head title="Edit {{ product.name }}" />
+    <Head :title="`Edit: ${product.name}`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -26,7 +28,7 @@ defineProps<{
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Edit {{ product.name }}
+                    Edit: {{ product.name }}
                 </h2>
                 <Link
                     :href="route('products.view', product.id)"
@@ -36,7 +38,7 @@ defineProps<{
             </div>
         </template>
         <div>
-            <ProductForm :product="product" button-text="Save" />
+            <ProductForm :product="product" action="patch" button-text="Save" />
         </div>
     </AuthenticatedLayout>
 </template>

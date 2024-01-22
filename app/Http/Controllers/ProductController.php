@@ -90,12 +90,16 @@ class ProductController extends Controller
      */
     public function deleteImage(Product $product)
     {
+
+        $imagePath = $product->image;
+
+        if ($imagePath && Storage::disk('public')->exists($imagePath)) {
+            Storage::disk('public')->delete($imagePath);
+        }
+
         $product->update([
             'image' => null,
         ]);
-
-        // Remove from filestyem.
-        Storage::disk('public')->delete($product->image);
 
         return redirect()->route('products.edit', $product);
     }
