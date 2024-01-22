@@ -1,6 +1,6 @@
 # Laravel with Vue and Inertia
 
-This is a project to learn Laravel with Vue and Inertia. It creates a dashboard for adding products to a demo e-commerce store. This project was created with [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia).
+This is a project to learn Laravel with Vue and Inertia. It creates a dashboard for performing basic CRUD operations on products in a demo e-commerce store. This project was created with [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia).
 
 ---
 
