@@ -1,47 +1,65 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3'
-import Button from '@/Components/Button.vue'
 import { computed } from 'vue'
 import DOMPurify from 'dompurify'
 import { ref } from 'vue'
 
-// Define the props.
-const { product, buttonText } = defineProps({
+// Define component props.
+const { product, action, errors } = defineProps({
     product: {
         type: Object,
         default: null
     },
-    buttonText: {
+    action: {
         type: String,
-        default: 'Submit'
+        default: 'post',
+        validator: (value: string) => {
+            return ['post', 'patch'].includes(value)
+        }
+    },
+    errors: {
+        type: Object,
+        default: null
     }
 })
 
-// Form setup
+// Initialize the form.
 const form = useForm({
     name: product ? product.name : '',
     description: product ? product.description : '',
     price: product ? product.price : '',
     quantity: product ? product.quantity : '',
-    image: null
+    image: product ? product.image : null
 })
 
-// Image preview ref.
-const previewImage = ref<string | null>(null)
+// Set the form action based on the action.
+const formAction = action === 'post' ? 'post' : 'patch'
+
+// Set the form URL based on the action.
+const url =
+    formAction === 'post' ? '/products/add' : `/products/${product.id}/edit`
+
+// Image state.
+const previewImage = ref(product?.image ? `/${product.image}` : null)
 
 // Define the allowed HTML tags for the description field.
 const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
 
-// Store submission state.
-const isSubmitted = ref(false)
-
-// Store form message state.
-const formMessage = ref('')
+// Success message state.
+const successMessage = ref('')
 
 // Define the computed property for form validation.
 const isFormValid = computed(() => {
-    return form.name && form.description && form.price && form.image
+    return (
+        form.name &&
+        form.description &&
+        form.price &&
+        form.quantity &&
+        previewImage.value
+    )
 })
+
+defineExpose({ submitForm })
 
 /**
  * Form submission handler.
@@ -49,29 +67,25 @@ const isFormValid = computed(() => {
  * @returns void
  */
 function submitForm(): void {
+    if (!isFormValid.value) {
+        alert('Please fill in all required fields.')
+        return
+    }
+
     // Sanitize individual form fields.
     form.name = sanitizeInput(form.name)
     form.description = sanitizeInput(form.description, allowedHTMLTags)
     form.price = sanitizeInput(form.price)
     form.quantity = sanitizeInput(form.quantity)
 
-    // Post the sanitized form data.
-    form.post('/products/create', {
+    // Send the form data.
+    form[formAction](url, {
+        preserveScroll: true,
         onSuccess: () => {
-            // Reset the form.
-            form.reset()
-            // Reset the image preview.
-            previewImage.value = null
-            // Set the success message.
-            formMessage.value = 'Product added successfully!'
-            // Set the submission state.
-            isSubmitted.value = true
+            successMessage.value = `${product.name} has been saved successfully.`
         },
         onError: () => {
-            // Set the success message.
-            formMessage.value = 'There was an error adding the product.'
-            // Set the submission state.
-            isSubmitted.value = true
+            successMessage.value = ''
         }
     })
 }
@@ -93,12 +107,18 @@ async function onFileChange(event: Event): Promise<void> {
     // Get the first file from the FileList object.
     const file = input.files[0]
 
-    // Define the allowed image types
-    const validImageTypes = ['image/jpeg', 'image/png']
+    // Allowed image types.
+    const validImageTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'image/avif'
+    ]
 
     // Check if the file is one of the valid image types.
     if (!validImageTypes.includes(file.type)) {
-        alert('Please select a valid image file (JPG or PNG).')
+        alert('Please select a valid image file (JPG, PNG, GIF, WEBP, AVIF).')
         return
     }
 
@@ -114,6 +134,19 @@ async function onFileChange(event: Event): Promise<void> {
 
     // Set the selected file in the form data.
     form.image = file
+}
+
+/**
+ * Delete the product image.
+ *
+ * @returns void
+ */
+function deleteImage(): void {
+    if (confirm('Are you sure you want to delete the image?')) {
+        form.image = null
+        previewImage.value = null
+        form.delete(route('products.deleteImage', product.id))
+    }
 }
 
 /**
@@ -179,10 +212,25 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
 
 <template>
     <section class="flex flex-col gap-6">
+        <!-- Display success message -->
+        <div v-if="successMessage" class="success-message">
+            {{ successMessage }}
+        </div>
+
+        <!-- Display error messages -->
+        <div v-if="errors" class="error-message">
+            <p>Please fix the following errors:</p>
+            <ul>
+                <li v-for="error in errors" :key="error">
+                    {{ error }}
+                </li>
+            </ul>
+        </div>
+
         <form class="form" @submit.prevent="submitForm">
             <!-- Product name input -->
             <div class="field">
-                <label for="name"
+                <label class="label" for="name"
                     >Product Name<span class="required">*</span></label
                 >
                 <input
@@ -198,7 +246,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
             </div>
             <!-- Product description input -->
             <div class="field">
-                <label for="description"
+                <label class="label" for="description"
                     >Product Description<span class="required">*</span></label
                 >
                 <textarea
@@ -207,6 +255,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
                     type="text"
                     placeholder="Product Description"
                     required
+                    rows="6"
                 />
                 <p class="description">
                     Please enter the description. Basic HTML is allowed.
@@ -214,7 +263,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
             </div>
             <!-- Product price input -->
             <div class="field">
-                <label for="price"
+                <label class="label" for="price"
                     >Product Price<span class="required">*</span></label
                 >
                 <input
@@ -231,7 +280,7 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
             </div>
             <!-- Product quantity input -->
             <div class="field">
-                <label for="quantity"
+                <label class="label" for="quantity"
                     >Product Quantity<span class="required">*</span></label
                 >
                 <input
@@ -245,22 +294,21 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
             </div>
             <!-- Product image input -->
             <div class="field">
-                <label class="pb-1" for="image"
+                <label class="label" for="image"
                     >Product Image<span class="required">*</span></label
                 >
-                <input id="image" type="file" required @change="onFileChange" />
-                <p class="description">
-                    Please select an image file (JPG or PNG) with a minimum size
-                    of 300x300 pixels.
-                </p>
-                <img v-if="previewImage" class="pt-2" :src="previewImage" />
-            </div>
-            <!-- Submit button -->
-            <Button type="submit" :disabled="!isFormValid">{{
-                buttonText
-            }}</Button>
-            <div v-if="formMessage">
-                <p>{{ formMessage }}</p>
+
+                <!-- Display existing image with delete option -->
+                <div v-if="previewImage">
+                    <img :src="previewImage" class="preview-image" />
+                    <input v-model="form.image" type="hidden" />
+                    <button class="delete-image" @click="deleteImage">
+                        Delete Image?
+                    </button>
+                </div>
+
+                <!-- Image input for new image upload -->
+                <input v-else id="image" type="file" @change="onFileChange" />
             </div>
         </form>
     </section>
@@ -271,19 +319,39 @@ function sanitizeInput(value: string, allowedTags: string[] = []): string {
     @apply text-lg font-semibold leading-tight text-gray-800 dark:text-gray-200;
 }
 
+.success-message {
+    @apply text-lg font-semibold leading-tight text-green-600;
+}
+
+.error-message {
+    @apply text-lg font-semibold leading-tight text-red-800;
+}
+
 .form {
-    @apply flex flex-col gap-6;
+    @apply flex flex-col gap-6 dark:text-white;
+
+    .label {
+        @apply pb-1 text-lg font-semibold dark:text-white;
+    }
 
     .field {
-        @apply flex flex-col;
+        @apply flex flex-col dark:text-black;
     }
 
     .description {
-        @apply pt-2 text-sm italic text-gray-600;
+        @apply pt-2 text-sm italic text-gray-600 dark:text-white;
+    }
+
+    .preview-image {
+        @apply h-32 w-32 rounded-md object-cover;
     }
 
     .required {
         @apply text-red-800;
+    }
+
+    .delete-image {
+        @apply mt-2 text-sm text-red-800;
     }
 }
 </style>
