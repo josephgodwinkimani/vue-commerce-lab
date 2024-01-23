@@ -15,6 +15,8 @@ export interface Product {
     price: number
     quantity: number
     image: string
+    createdAt: string
+    updatedAt: string
 }
 
 export interface Customer {
@@ -26,6 +28,24 @@ export interface Customer {
     city: string
     state: string
     zip: string
+    createdAt: string
+    updatedAt: string
+}
+
+export interface Order {
+    id: number
+    customerId: number
+    productId: number
+    status: string
+    shippingAddress: string
+    billingAddress: string
+    creditCardType: string
+    creditCardLastFour: string
+    customerNote?: string
+    quantity: number
+    totalAmount: number
+    createdAt: string
+    updatedAt: string
 }
 
 export type PageProps<
