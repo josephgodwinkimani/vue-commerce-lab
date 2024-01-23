@@ -110,3 +110,27 @@ Login with the following credentials:
 -   pass: `password`
 
 ---
+
+## Where to find Vue.js files
+
+Vue.js files are located in the `resources/js` directory.
+
+You'll mostly be working with both the `Pages` and `Components` directories.
+
+```tree
+├── resources
+│   ├── css
+│   ├── js
+│   │   ├── Components
+│   │   ├── Layouts
+│   │   ├── Pages
+│   │   │   ├── Auth
+│   │   │   ├── Customers
+│   │   │   ├── Orders
+│   │   │   ├── Products
+│   │   │   ├── Profile
+│   │   │   ├── Reports
+│   │   │   ├── Dashboard.vue
+│   │   │   └── Welcome.vue
+│   ├── views
+```
