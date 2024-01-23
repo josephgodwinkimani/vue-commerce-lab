@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Customer } from '@/types'
+import { sanitizeInput } from '@/utils'
 import { useForm } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
-import DOMPurify from 'dompurify'
 
 // Define component props.
 const { customer, action, errors } = defineProps({
@@ -93,18 +93,6 @@ function submitForm(): void {
             successMessage.value = ''
         }
     })
-}
-
-/**
- * Sanitize form fields.
- *
- * @param value The value to sanitize.
- * @param allowedTags Optional allowed tags for sanitizing HTML content.
- *
- * @returns The sanitized string.
- */
-function sanitizeInput(value: string, allowedTags: string[] = []): string {
-    return DOMPurify.sanitize(value, { ALLOWED_TAGS: allowedTags })
 }
 </script>
 
