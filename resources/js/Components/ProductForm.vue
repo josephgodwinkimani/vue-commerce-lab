@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { Product } from '@/types'
 import { useForm } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import DOMPurify from 'dompurify'
-import { ref } from 'vue'
 
 // Define component props.
 const { product, action, errors } = defineProps({
