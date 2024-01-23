@@ -21,14 +21,14 @@ const { product } = defineProps<{
                 </h2>
                 <div class="flex gap-4">
                     <Link
-                        :href="route('products.index')"
-                        class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                        >Go Back</Link
-                    >
-                    <Link
                         :href="route('products.edit', product.id)"
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                         >Edit Product</Link
+                    >
+                    <Link
+                        :href="route('products.index')"
+                        class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
+                        >All Products</Link
                     >
                 </div>
             </div>

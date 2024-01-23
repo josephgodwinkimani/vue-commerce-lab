@@ -21,14 +21,14 @@ const { customer } = defineProps<{
                 </h2>
                 <div class="flex gap-4">
                     <Link
-                        :href="route('customers.index')"
-                        class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                        >Go Back</Link
-                    >
-                    <Link
                         :href="route('customers.edit', customer.id)"
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                         >Edit Customer</Link
+                    >
+                    <Link
+                        :href="route('customers.index')"
+                        class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
+                        >All Customers</Link
                     >
                 </div>
             </div>
