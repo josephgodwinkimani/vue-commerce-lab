@@ -8,44 +8,44 @@ export interface User {
 }
 
 export interface Product {
-    id: number
-    name: string
-    sku: string
+    created_at: string
     description: string
+    id: number
+    image: string
+    name: string
     price: number
     quantity: number
-    image: string
-    createdAt: string
-    updatedAt: string
+    sku: string
+    updated_at: string
 }
 
 export interface Customer {
-    id: number
-    name: string
-    email: string
-    phone: string
     address: string
     city: string
+    created_at: string
+    email: string
+    id: number
+    name: string
+    phone: string
     state: string
+    updated_at: string
     zip: string
-    createdAt: string
-    updatedAt: string
 }
 
 export interface Order {
+    billing_address: string
+    created_at: string
+    credit_card_late_four: string
+    credit_card_type: string
+    customer_id: number
+    customer_note?: string
     id: number
-    customerId: number
-    productId: number
-    status: string
-    shippingAddress: string
-    billingAddress: string
-    creditCardType: string
-    creditCardLastFour: string
-    customerNote?: string
+    product_id: number
     quantity: number
-    totalAmount: number
-    createdAt: string
-    updatedAt: string
+    shipping_address: string
+    status: string
+    total_amount: number
+    updated_at: string
 }
 
 export type PageProps<
