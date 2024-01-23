@@ -12,7 +12,7 @@ const { entityId, viewRoute, editRoute, deleteRoute } = defineProps({
     },
     editRoute: {
         type: String,
-        required: true
+        required: false
     },
     deleteRoute: {
         type: String,
@@ -31,7 +31,12 @@ function destroy(id: number | string, deleteRoute: string) {
 
 <template>
     <div class="action-icons">
-        <Link aria-label="Edit" class="icon" :href="route(editRoute, entityId)">
+        <Link
+            v-if="editRoute"
+            aria-label="Edit"
+            class="icon"
+            :href="route(editRoute, entityId)"
+        >
             <font-awesome-icon :icon="['fas', 'pen-to-square']" />
         </Link>
 

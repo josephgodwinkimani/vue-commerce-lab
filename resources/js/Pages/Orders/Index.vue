@@ -86,7 +86,6 @@ const { orders } = defineProps<{
                             <ActionIcons
                                 :entity-id="order.id"
                                 view-route="orders.show"
-                                edit-route="orders.edit"
                                 delete-route="orders.destroy"
                             />
                         </td>
