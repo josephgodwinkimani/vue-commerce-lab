@@ -9,7 +9,7 @@ use Inertia\Inertia;
 class ProductController extends Controller
 {
     /**
-     * Display all products.
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -19,28 +19,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show a single product.
-     */
-    public function show(Product $product)
-    {
-        return Inertia::render('Products/{product}/Show')->with([
-            'product' => $product,
-        ]);
-    }
-
-    /**
-     * Edit a single product.
-     */
-    public function edit(Product $product)
-    {
-
-        return Inertia::render('Products/{product}/Edit')->with([
-            'product' => $product,
-        ]);
-    }
-
-    /**
-     * Create a new product.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
@@ -48,7 +27,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Save a new product.
+     * Store a newly created resource in storage.
      */
     public function store(ProductStoreRequest $request)
     {
@@ -60,7 +39,28 @@ class ProductController extends Controller
     }
 
     /**
-     * Update a product.
+     * Display the specified resource.
+     */
+    public function show(Product $product)
+    {
+        return Inertia::render('Products/{product}/Show')->with([
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Product $product)
+    {
+
+        return Inertia::render('Products/{product}/Edit')->with([
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
      */
     public function update(ProductStoreRequest $request, Product $product)
     {
@@ -74,7 +74,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Delete a product.
+     * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
     {

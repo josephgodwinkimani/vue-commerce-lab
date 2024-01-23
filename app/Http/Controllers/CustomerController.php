@@ -9,7 +9,7 @@ use Inertia\Inertia;
 class CustomerController extends Controller
 {
     /**
-     * Display all customers.
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -19,28 +19,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show a single customer.
-     */
-    public function show(Customer $customer)
-    {
-        return Inertia::render('Customers/{customer}/Show', [
-            'customer' => $customer,
-        ]);
-    }
-
-    /**
-     * Edit a single customer.
-     */
-    public function edit(Customer $customer)
-    {
-
-        return Inertia::render('Customers/{customer}/Edit')->with([
-            'customer' => $customer,
-        ]);
-    }
-
-    /**
-     * Create a new customer.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
@@ -48,7 +27,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Save a new customer.
+     * Store a newly created resource in storage.
      */
     public function store(CustomerStoreRequest $request)
     {
@@ -60,7 +39,28 @@ class CustomerController extends Controller
     }
 
     /**
-     * Update a customer.
+     * Display the specified resource.
+     */
+    public function show(Customer $customer)
+    {
+        return Inertia::render('Customers/{customer}/Show', [
+            'customer' => $customer,
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Customer $customer)
+    {
+
+        return Inertia::render('Customers/{customer}/Edit')->with([
+            'customer' => $customer,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
      */
     public function update(CustomerStoreRequest $request, Customer $customer)
     {
@@ -74,7 +74,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Delete a customer.
+     * Remove the specified resource from storage.
      */
     public function destroy(Customer $customer)
     {
