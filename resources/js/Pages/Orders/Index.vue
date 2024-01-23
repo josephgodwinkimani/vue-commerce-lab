@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Order } from '@/types'
+import Pagination from '@/components/Molecules/Pagination.vue'
+import ActionIcons from '@/components/Molecules/ActionIcons.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
 import { formatDate } from '@/utils'
 
-// Define page props.
 const { orders } = defineProps<{
     orders: {
         data: Order[]
@@ -30,14 +31,12 @@ const { orders } = defineProps<{
             </div>
         </template>
 
-        <!-- If there are no orders -->
         <div v-if="!orders.data.length" class="flex flex-col gap-4">
             <h3 class="text-xl font-bold dark:text-white">No orders found.</h3>
         </div>
 
-        <!-- If there are orders -->
         <div v-else>
-            <table class="orders-table">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -64,34 +63,17 @@ const { orders } = defineProps<{
                         <td>{{ order.quantity }}</td>
                         <td>${{ order.total_amount }}</td>
                         <td>
-                            <Link
-                                class="hover:underline"
-                                :href="route('orders.show', order.id)"
-                                ><font-awesome-icon :icon="['fas', 'eye']"
-                            /></Link>
-                            |
-                            <Link
-                                class="hover:underline"
-                                :href="route('orders.edit', order.id)"
-                                ><font-awesome-icon
-                                    :icon="['fas', 'pen-to-square']"
-                            /></Link>
+                            <ActionIcons
+                                :entity-id="order.id"
+                                view-route="orders.show"
+                                edit-route="orders.edit"
+                                delete-route="orders.destroy"
+                            />
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="pagination">
-                <Link v-if="orders.prev_page_url" :href="orders.prev_page_url"
-                    ><font-awesome-icon :icon="['fas', 'fa-angle-left']"
-                /></Link>
-                <span class="text-base"
-                    >Page {{ orders.current_page }} of
-                    {{ orders.last_page }}</span
-                >
-                <Link v-if="orders.next_page_url" :href="orders.next_page_url"
-                    ><font-awesome-icon :icon="['fas', 'fa-angle-right']"
-                /></Link>
-            </div>
+            <Pagination :pagination-data="orders" />
         </div>
     </AuthenticatedLayout>
 </template>
@@ -99,26 +81,14 @@ const { orders } = defineProps<{
 <style scoped>
 .orders-table {
     @apply w-full border-collapse dark:text-white;
-}
 
-.orders-table th,
-.orders-table td {
-    @apply p-4 text-left dark:bg-gray-700;
-}
+    th,
+    td {
+        @apply p-4 text-left dark:bg-gray-700;
+    }
 
-.orders-table th {
-    @apply bg-gray-100 dark:bg-gray-800;
-}
-
-.image {
-    @apply h-16 w-16;
-}
-
-.actions {
-    @apply flex gap-2;
-}
-
-.pagination {
-    @apply mt-4 flex items-center justify-center gap-4 text-2xl dark:text-white;
+    th {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
 }
 </style>

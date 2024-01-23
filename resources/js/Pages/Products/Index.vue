@@ -2,10 +2,17 @@
 import { Product } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
+import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
+import Pagination from '@/Components/Molecules/Pagination.vue'
 
-// Define page props.
 const { products } = defineProps<{
-    products: Product[]
+    products: {
+        data: Product[]
+        current_page: number
+        last_page: number
+        prev_page_url: string | null
+        next_page_url: string | null
+    }
 }>()
 </script>
 
@@ -28,8 +35,7 @@ const { products } = defineProps<{
             </div>
         </template>
 
-        <!-- If there are no products -->
-        <div v-if="!products.length" class="flex flex-col gap-4">
+        <div v-if="!products.data.length" class="flex flex-col gap-4">
             <h3 class="text-xl font-bold dark:text-white">
                 No products found.
             </h3>
@@ -40,79 +46,71 @@ const { products } = defineProps<{
             >
         </div>
 
-        <!-- Products Table -->
-        <table v-else class="products-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>SKU</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="product in products" :key="product.id">
-                    <td>
-                        <Link
-                            class="hover:underline"
-                            :href="route('products.show', product.id)"
-                            >{{ product.name }}</Link
-                        >
-                    </td>
-                    <td>{{ product.sku }}</td>
-                    <td>
-                        <img
-                            :alt="product.name"
-                            :src="product.image"
-                            class="image"
-                            loading="lazy"
-                        />
-                    </td>
-                    <td>{{ product.description }}</td>
-                    <td>${{ product.price }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td>
-                        <Link
-                            class="hover:underline"
-                            :href="route('products.show', product.id)"
-                            ><font-awesome-icon :icon="['fas', 'eye']"
-                        /></Link>
-                        |
-                        <Link
-                            class="hover:underline"
-                            :href="route('products.edit', product.id)"
-                            ><font-awesome-icon
-                                :icon="['fas', 'pen-to-square']"
-                        /></Link>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div v-else>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>SKU</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="product in products.data" :key="product.id">
+                        <td>
+                            <Link
+                                class="hover:underline"
+                                :href="route('products.show', product.id)"
+                                >{{ product.name }}</Link
+                            >
+                        </td>
+                        <td>{{ product.sku }}</td>
+                        <td>
+                            <img
+                                :alt="product.name"
+                                :src="product.image"
+                                class="image"
+                                loading="lazy"
+                            />
+                        </td>
+                        <td>{{ product.description }}</td>
+                        <td>${{ product.price }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>
+                            <ActionIcons
+                                :entity-id="product.id"
+                                view-route="products.show"
+                                edit-route="products.edit"
+                                delete-route="products.destroy"
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <Pagination :pagination-data="products" />
+        </div>
     </AuthenticatedLayout>
 </template>
 
 <style scoped>
-.products-table {
+.table {
     @apply w-full border-collapse dark:text-white;
-}
 
-.products-table th,
-.products-table td {
-    @apply p-4 text-left dark:bg-gray-700;
-}
+    th,
+    td {
+        @apply p-4 text-left dark:bg-gray-700;
+    }
 
-.products-table th {
-    @apply bg-gray-100 dark:bg-gray-800;
-}
+    th {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
 
-.image {
-    @apply h-16 w-16;
-}
-
-.actions {
-    @apply flex gap-2;
+    .image {
+        @apply h-16 w-16;
+    }
 }
 </style>

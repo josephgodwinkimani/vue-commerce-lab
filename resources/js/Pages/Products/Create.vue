@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import ProductForm from '@/Components/ProductForm.vue'
+import FormProduct from '@/Components/Organisms/FormProduct.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
@@ -42,6 +42,6 @@ function saveProduct() {
             </div>
         </template>
 
-        <ProductForm ref="productFormRef" action="post" />
+        <FormProduct ref="productFormRef" action="post" />
     </AuthenticatedLayout>
 </template>

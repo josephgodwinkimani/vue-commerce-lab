@@ -1,24 +1,11 @@
 <script setup lang="ts">
 import { Product } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
-// Define page props.
 const { product } = defineProps<{
     product: Product
 }>()
-
-// Init form.
-const form = useForm({ product })
-
-// Destroy the product.
-function destroy(id: number) {
-    if (
-        confirm('Are you sure you want to delete? This action is irreversible!')
-    ) {
-        form.delete(route('products.destroy', id))
-    }
-}
 </script>
 
 <template>
@@ -43,12 +30,6 @@ function destroy(id: number) {
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                         >Edit Product</Link
                     >
-                    <button
-                        class="focus:shadow-outline-red rounded-lg border border-transparent bg-red-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-red-700 focus:outline-none active:bg-red-600"
-                        @click="destroy(product.id)"
-                    >
-                        Delete
-                    </button>
                 </div>
             </div>
         </template>

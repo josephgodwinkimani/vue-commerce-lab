@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Product } from '@/types'
-import ProductForm from '@/Components/ProductForm.vue'
+import FormProduct from '@/Components/Organisms/FormProduct.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
@@ -62,7 +62,7 @@ function saveProduct() {
             </div>
         </template>
         <div>
-            <ProductForm
+            <FormProduct
                 ref="productFormRef"
                 :product="product"
                 action="patch"

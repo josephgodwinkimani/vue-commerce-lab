@@ -2,10 +2,17 @@
 import { Customer } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
+import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
+import Pagination from '@/Components/Molecules/Pagination.vue'
 
-// Define page props.
 const { customers } = defineProps<{
-    customers: Customer[]
+    customers: {
+        data: Customer[]
+        current_page: number
+        last_page: number
+        prev_page_url: string | null
+        next_page_url: string | null
+    }
 }>()
 </script>
 
@@ -28,8 +35,7 @@ const { customers } = defineProps<{
             </div>
         </template>
 
-        <!-- If there are no customers -->
-        <div v-if="!customers.length" class="flex flex-col gap-4">
+        <div v-if="!customers.data.length" class="flex flex-col gap-4">
             <h3 class="text-xl font-bold dark:text-white">
                 No customers found.
             </h3>
@@ -40,74 +46,62 @@ const { customers } = defineProps<{
             >
         </div>
 
-        <!-- Customers Table -->
-        <table v-else class="customers-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Zip</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="customer in customers" :key="customer.id">
-                    <td>
-                        <Link
-                            class="hover:underline"
-                            :href="route('customers.show', customer.id)"
-                            >{{ customer.name }}</Link
-                        >
-                    </td>
-                    <td>{{ customer.email }}</td>
-                    <td>{{ customer.phone }}</td>
-                    <td>{{ customer.address }}</td>
-                    <td>{{ customer.city }}</td>
-                    <td>{{ customer.state }}</td>
-                    <td>{{ customer.zip }}</td>
-                    <td>
-                        <Link
-                            class="hover:underline"
-                            :href="route('customers.show', customer.id)"
-                            ><font-awesome-icon :icon="['fas', 'eye']"
-                        /></Link>
-                        |
-                        <Link
-                            class="hover:underline"
-                            :href="route('customers.edit', customer.id)"
-                            ><font-awesome-icon
-                                :icon="['fas', 'pen-to-square']"
-                        /></Link>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div v-else>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zip</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="customer in customers.data" :key="customer.id">
+                        <td>
+                            <Link
+                                class="hover:underline"
+                                :href="route('customers.show', customer.id)"
+                                >{{ customer.name }}</Link
+                            >
+                        </td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>{{ customer.city }}</td>
+                        <td>{{ customer.state }}</td>
+                        <td>{{ customer.zip }}</td>
+                        <td>
+                            <ActionIcons
+                                :entity-id="customer.id"
+                                view-route="customers.show"
+                                edit-route="customers.edit"
+                                delete-route="customers.destroy"
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <Pagination :pagination-data="customers" />
+        </div>
     </AuthenticatedLayout>
 </template>
 
 <style scoped>
-.customers-table {
+.table {
     @apply w-full border-collapse dark:text-white;
-}
 
-.customers-table th,
-.customers-table td {
-    @apply p-4 text-left dark:bg-gray-700;
-}
+    th,
+    td {
+        @apply p-4 text-left dark:bg-gray-700;
+    }
 
-.customers-table th {
-    @apply bg-gray-100 dark:bg-gray-800;
-}
-
-.image {
-    @apply h-16 w-16;
-}
-
-.actions {
-    @apply flex gap-2;
+    th {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import CustomerForm from '@/Components/CustomerForm.vue'
+import FormCustomer from '@/Components/Organisms/FormCustomer.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
@@ -41,7 +41,6 @@ function saveCustomer() {
                 </div>
             </div>
         </template>
-
-        <CustomerForm ref="customerFormRef" action="post" />
+        <FormCustomer ref="customerFormRef" action="post" />
     </AuthenticatedLayout>
 </template>

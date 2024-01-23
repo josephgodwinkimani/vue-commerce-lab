@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { Customer } from '@/types'
-import CustomerForm from '@/Components/CustomerForm.vue'
+import FormCustomer from '@/Components/Organisms/FormCustomer.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
-
-// Define page props.
+d
 const { customer } = defineProps<{
     customer: Customer
 }>()
@@ -61,7 +60,7 @@ function saveCustomer() {
             </div>
         </template>
         <div>
-            <CustomerForm
+            <FormCustomer
                 ref="customerFormRef"
                 :customer="customer"
                 action="patch"
