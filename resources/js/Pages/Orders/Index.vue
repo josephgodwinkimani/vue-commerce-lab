@@ -43,6 +43,7 @@ const { orders } = defineProps<{
                         <th>Status</th>
                         <th>Customer</th>
                         <th>Date</th>
+                        <th>Product</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Actions</th>
@@ -57,9 +58,28 @@ const { orders } = defineProps<{
                                 >{{ order.id }}</Link
                             >
                         </td>
-                        <td>{{ order.status }}</td>
-                        <td>{{ order.customer_id }}</td>
+                        <td :class="order.status">{{ order.status }}</td>
+                        <td>
+                            <Link
+                                v-if="order.customer"
+                                :href="
+                                    route('customers.show', order.customer.id)
+                                "
+                            >
+                                {{ order.customer.name }}
+                            </Link>
+                            <span v-else>No Customer</span>
+                        </td>
                         <td>{{ formatDate(order.created_at) }}</td>
+                        <td>
+                            <Link
+                                v-if="order.product"
+                                :href="route('products.show', order.product.id)"
+                            >
+                                {{ order.product.name }}
+                            </Link>
+                            <span v-else>No Product</span>
+                        </td>
                         <td>{{ order.quantity }}</td>
                         <td>${{ order.total_amount }}</td>
                         <td>
@@ -90,5 +110,17 @@ const { orders } = defineProps<{
     th {
         @apply bg-gray-100 dark:bg-gray-800;
     }
+}
+
+.completed {
+    @apply text-green-500;
+}
+
+.pending {
+    @apply text-yellow-500;
+}
+
+.shipped {
+    @apply text-blue-500;
 }
 </style>
