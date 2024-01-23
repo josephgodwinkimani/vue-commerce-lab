@@ -2,9 +2,9 @@
 
 **Project Overview:** 🚀
 
-This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing **[Laravel](https://laravel.com/docs/10.x)**. I scaffolded this [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and use [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
+This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing [Laravel](https://laravel.com/docs/10.x). I scaffolded this [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and use [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
 
-VueCommerceLab is enriched with a modern tech stack, utilizing **[Vue.js](https://vuejs.org/guide/introduction.html)** and **[Inertia.js](https://inertiajs.com/)** for seamless single-page application experiences. **[TailwindCSS](https://tailwindcss.com/)** provides the styling, ensuring a responsive and visually appealing interface.
+VueCommerceLab is enriched with a modern tech stack, utilizing [Vue.js](https://vuejs.org/guide/introduction.html) and [Inertia.js](https://inertiajs.com/) for seamless single-page application experiences. [TailwindCSS](https://tailwindcss.com/) provides the styling, ensuring a responsive and visually appealing interface.
 
 **Key Features:** 🛠
 
