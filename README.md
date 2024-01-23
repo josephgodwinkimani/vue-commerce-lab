@@ -35,75 +35,81 @@ The project is enriched with a modern tech stack, utilizing **[Vue.js](https://v
 
 This project is part of a learning journey to explore the depths of Laravel, Vue.js, and modern web development practices. It serves as a comprehensive example for anyone interested in developing full-featured web applications using these technologies.
 
-This project was scaffolded with [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia).
+This project was scaffolded with [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and uses [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
 
 ---
 
 ## Installation
 
-1. Clone the repository
+Login to MySQL:
 
 ```bash
-git clone git@github.com:gregrickaby/vue-commerce-lab.git
+mysql -u root -h 127.0.0.1
 ```
 
-2. Install dependencies
+Create a database:
+
+```sql
+CREATE DATABASE vue_commerce_lab;
+```
+
+Clone the repository (into your Valet sites directory):
 
 ```bash
-composer install && npm install
+cd ~/Sites && git clone git@github.com:gregrickaby/vue-commerce-lab.git
 ```
 
-3. Create MySQL database
+Install dependencies:
 
-Using your favorite MySQL client, create a database for this project. I personally use [DBngin](https://github.com/TablePlus/DBngin) for managing my local MySQL databases.
+```bash
+cd vue-commerce-lab && composer install && npm install
+```
 
--   Database Name: `laravel`
--   Database User: `root`
--   Database Password: {blank}
-
-4. Create `.env` file
+Create `.env` file:
 
 ```bash
 cp .env.example .env
 ```
 
-5. Generate application key
+Generate application key:
 
 ```bash
 php artisan key:generate
 ```
 
-6. Run a migration
+Run a migration:
 
 ```bash
 php artisan migrate:fresh
 ```
 
-7. Seed the Database
+Seed the database:
 
 ```bash
 php artisan db:seed
 ```
 
-8. Start the development environment
+Secure the site:
 
-I use <https://herd.laravel.com/> for running local Laravel projects. In the Herd GUI, point at the cloned repo.
+```bash
+valet secure
+```
 
-9. Start the development server
+Start development server:
 
 ```bash
 npm run dev
 ```
 
+Visit the site: <https://vue-commerce-lab.test>
+
 ---
 
 ## Next Steps
 
-Visit the Dashboard and login with the following credentials:
+Login with the following credentials:
 
 -   user: <test@example.com>
--   pass: password
-
-You can now start adding products!
+-   pass: `password`
 
 ---
