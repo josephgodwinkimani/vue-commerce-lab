@@ -24,11 +24,8 @@ This repository houses an experimental E-commerce store that serves as a practic
 **Project Sections:** 🔍
 
 -   **Products**: Includes features like product listing, adding new products, editing, and deleting.
-
 -   **Customers**: Manages customer data with functionalities for adding, viewing, editing, and removing customer records.
-
 -   **Orders**: Allows users to place orders for products, with a dedicated page for viewing all orders.
-
 -   **Reports**: Provides a dashboard for viewing sales reports and other metrics.
 
 **Motivation:** 💡
