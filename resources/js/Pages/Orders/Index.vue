@@ -38,6 +38,7 @@ const { orders } = defineProps<{
                     <th>Date</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,10 +51,10 @@ const { orders } = defineProps<{
                         >
                     </td>
                     <td>{{ order.status }}</td>
-                    <td>{{ order.customerId }}</td>
-                    <td>{{ order.createdAt }}</td>
+                    <td>{{ order.customer_id }}</td>
+                    <td>{{ order.created_at }}</td>
                     <td>{{ order.quantity }}</td>
-                    <td>${{ order.totalAmount }}</td>
+                    <td>${{ order.total_amount }}</td>
                     <td>
                         <Link
                             class="hover:underline"
