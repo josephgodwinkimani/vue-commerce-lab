@@ -1,19 +1,11 @@
 <script setup lang="ts">
+import { Customer } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
 
 // Define page props.
 const { customers } = defineProps<{
-    customers: {
-        id: number
-        name: string
-        email: string
-        phone: string
-        address: string
-        city: string
-        state: string
-        zip: string
-    }[]
+    customers: Customer[]
 }>()
 </script>
 

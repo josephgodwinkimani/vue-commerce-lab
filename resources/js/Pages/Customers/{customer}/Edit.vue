@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Customer } from '@/types'
 import CustomerForm from '@/Components/CustomerForm.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
@@ -6,16 +7,7 @@ import { computed, ref } from 'vue'
 
 // Define page props.
 const { customer } = defineProps<{
-    customer: {
-        id: number
-        name: string
-        email: string
-        phone: string
-        address: string
-        city: string
-        state: string
-        zip: string
-    }
+    customer: Customer
 }>()
 
 // Create a ref for the CustomerForm component.

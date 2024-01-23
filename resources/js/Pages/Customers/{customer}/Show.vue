@@ -1,19 +1,11 @@
 <script setup lang="ts">
+import { Customer } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 
 // Define page props.
 const { customer } = defineProps<{
-    customer: {
-        id: number
-        name: string
-        email: string
-        phone: string
-        address: string
-        city: string
-        state: string
-        zip: string
-    }
+    customer: Customer
 }>()
 
 // Init form.
