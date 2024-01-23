@@ -40,6 +40,8 @@ export interface Order {
     customer_id: number
     customer_note?: string
     id: number
+    next_page_url: string
+    prev_page_url: string
     product_id: number
     quantity: number
     shipping_address: string

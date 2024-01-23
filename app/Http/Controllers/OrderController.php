@@ -13,9 +13,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Orders/Index', [
-            'orders' => Order::all(),
-        ]);
+        $orders = Order::paginate(10);
+
+        return Inertia::render('Orders/Index', ['orders' => $orders]);
     }
 
     /**

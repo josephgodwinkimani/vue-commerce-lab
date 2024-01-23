@@ -6,7 +6,13 @@ import { formatDate } from '@/utils'
 
 // Define page props.
 const { orders } = defineProps<{
-    orders: Order[]
+    orders: {
+        data: Order[]
+        current_page: number
+        last_page: number
+        prev_page_url: string | null
+        next_page_url: string | null
+    }
 }>()
 </script>
 
@@ -25,54 +31,68 @@ const { orders } = defineProps<{
         </template>
 
         <!-- If there are no orders -->
-        <div v-if="!orders.length" class="flex flex-col gap-4">
+        <div v-if="!orders.data.length" class="flex flex-col gap-4">
             <h3 class="text-xl font-bold dark:text-white">No orders found.</h3>
         </div>
 
-        <!-- Orders Table -->
-        <table v-else class="orders-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Status</th>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="order in orders" :key="order.id">
-                    <td>
-                        <Link
-                            class="hover:underline"
-                            :href="route('orders.show', order.id)"
-                            >{{ order.id }}</Link
-                        >
-                    </td>
-                    <td>{{ order.status }}</td>
-                    <td>{{ order.customer_id }}</td>
-                    <td>{{ formatDate(order.created_at) }}</td>
-                    <td>{{ order.quantity }}</td>
-                    <td>${{ order.total_amount }}</td>
-                    <td>
-                        <Link
-                            class="hover:underline"
-                            :href="route('orders.show', order.id)"
-                            ><font-awesome-icon :icon="['fas', 'eye']"
-                        /></Link>
-                        |
-                        <Link
-                            class="hover:underline"
-                            :href="route('orders.edit', order.id)"
-                            ><font-awesome-icon
-                                :icon="['fas', 'pen-to-square']"
-                        /></Link>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- If there are orders -->
+        <div v-else>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="order in orders.data" :key="order.id">
+                        <td>
+                            <Link
+                                class="hover:underline"
+                                :href="route('orders.show', order.id)"
+                                >{{ order.id }}</Link
+                            >
+                        </td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.customer_id }}</td>
+                        <td>{{ formatDate(order.created_at) }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>${{ order.total_amount }}</td>
+                        <td>
+                            <Link
+                                class="hover:underline"
+                                :href="route('orders.show', order.id)"
+                                ><font-awesome-icon :icon="['fas', 'eye']"
+                            /></Link>
+                            |
+                            <Link
+                                class="hover:underline"
+                                :href="route('orders.edit', order.id)"
+                                ><font-awesome-icon
+                                    :icon="['fas', 'pen-to-square']"
+                            /></Link>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <Link v-if="orders.prev_page_url" :href="orders.prev_page_url"
+                    ><font-awesome-icon :icon="['fas', 'fa-angle-left']"
+                /></Link>
+                <span class="text-base"
+                    >Page {{ orders.current_page }} of
+                    {{ orders.last_page }}</span
+                >
+                <Link v-if="orders.next_page_url" :href="orders.next_page_url"
+                    ><font-awesome-icon :icon="['fas', 'fa-angle-right']"
+                /></Link>
+            </div>
+        </div>
     </AuthenticatedLayout>
 </template>
 
@@ -96,5 +116,9 @@ const { orders } = defineProps<{
 
 .actions {
     @apply flex gap-2;
+}
+
+.pagination {
+    @apply mt-4 flex items-center justify-center gap-4 text-2xl dark:text-white;
 }
 </style>
