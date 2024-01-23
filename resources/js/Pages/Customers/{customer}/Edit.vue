@@ -19,8 +19,8 @@ const saved = ref(false)
 // Define the cancelOrDone computed property.
 const cancelOrDone = computed(() => {
     return saved.value
-        ? route('customer.index')
-        : route('customer.show', customer.id)
+        ? route('customers.index')
+        : route('customers.show', customer.id)
 })
 
 // Calls the submitForm method in CustomerForm.

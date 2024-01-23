@@ -16,7 +16,7 @@ function destroy(id: number) {
     if (
         confirm('Are you sure you want to delete? This action is irreversible!')
     ) {
-        form.delete(route('customer.destroy', id))
+        form.delete(route('customers.destroy', id))
     }
 }
 </script>
@@ -34,12 +34,12 @@ function destroy(id: number) {
                 </h2>
                 <div class="flex gap-4">
                     <Link
-                        :href="route('customer.index')"
+                        :href="route('customers.index')"
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                         >Go Back</Link
                     >
                     <Link
-                        :href="route('customer.edit', customer.id)"
+                        :href="route('customers.edit', customer.id)"
                         class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
                         >Edit Customer</Link
                     >
