@@ -2,7 +2,7 @@
 
 **Project Overview:** 🚀
 
-This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing [Laravel](https://laravel.com/docs/10.x). I scaffolded this [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and use [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
+This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing Laravel. I scaffolded this [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and use [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
 
 **Key Features:** 🛠
 
