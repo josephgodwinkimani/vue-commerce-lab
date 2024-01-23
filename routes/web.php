@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -27,45 +28,19 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // All products.
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-
-    // Create a new product.
-    Route::post('/products/create', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-
-    // View a single product.
-    Route::get('/products/{product}/show', [ProductController::class, 'show'])->name('products.show');
-
-    // Edit a single product.
-    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    Route::patch('/products/{product}/edit', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}/edit', [ProductController::class, 'destroy'])->name('products.destroy');
-
-    // All customers.
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-
-    // Create a new customer.
-    Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
-    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-
-    // View a single customer.
-    Route::get('/customers/{customer}/show', [CustomerController::class, 'show'])->name('customers.show');
-
-    // Edit a single customer.
-    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-    Route::patch('/customers/{customer}/edit', [CustomerController::class, 'update'])->name('customers.update');
-    Route::delete('/customers/{customer}/edit', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    // Resource routes for products, customers, and orders
+    Route::resource('products', ProductController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('orders', OrderController::class);
 });
-
 require __DIR__.'/auth.php';
