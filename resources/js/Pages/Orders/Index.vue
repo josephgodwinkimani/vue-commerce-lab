@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Order } from '@/types'
-import Pagination from '@/components/Molecules/Pagination.vue'
-import ActionIcons from '@/components/Molecules/ActionIcons.vue'
+import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
+import Pagination from '@/Components/Molecules/Pagination.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head } from '@inertiajs/vue3'
+import { Order } from '@/types'
 import { formatDate } from '@/utils'
+import { Head, Link } from '@inertiajs/vue3'
 
 const { orders } = defineProps<{
     orders: {
@@ -79,7 +79,7 @@ const { orders } = defineProps<{
 </template>
 
 <style scoped>
-.orders-table {
+.table {
     @apply w-full border-collapse dark:text-white;
 
     th,

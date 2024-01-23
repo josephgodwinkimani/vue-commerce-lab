@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Customer } from '@/types'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head } from '@inertiajs/vue3'
 import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
 import Pagination from '@/Components/Molecules/Pagination.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Customer } from '@/types'
+import { Head, Link } from '@inertiajs/vue3'
 
 const { customers } = defineProps<{
     customers: {

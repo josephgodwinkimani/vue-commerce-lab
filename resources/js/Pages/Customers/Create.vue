@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import FormCustomer from '@/Components/Organisms/FormCustomer.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 

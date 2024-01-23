@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Customer } from '@/types'
 import FormCustomer from '@/Components/Organisms/FormCustomer.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Customer } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
-d
+
 const { customer } = defineProps<{
     customer: Customer
 }>()
