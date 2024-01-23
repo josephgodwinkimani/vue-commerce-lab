@@ -121,9 +121,9 @@ You'll mostly be working with both the `Components` and `Pages` directories.
 ├── resources
 │   ├── js
 │   │   ├── Components
-│   │   │   ├── ApplicationLogo.vue
-│   │   │   ├── Checkbox.vue
-│   │   │   ├── DangerButton.vue
+│   │   │   ├── Atoms
+│   │   │   ├── Molecules
+│   │   │   ├── Organisms
 │   │   │   ├── ...
 │   │   ├── Layouts
 │   │   │   ├── AuthenticatedLayout.vue
