@@ -60,8 +60,6 @@ function destroy(id: number) {
                 <p>{{ product.description }}</p>
                 <p>${{ product.price }}</p>
                 <p>{{ product.quantity }} available</p>
-                <p>Created: {{ product.created_at }}</p>
-                <p>Updated: {{ product.updated_at }}</p>
             </div>
         </div>
     </AuthenticatedLayout>
