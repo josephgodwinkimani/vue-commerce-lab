@@ -26,6 +26,7 @@ export interface Customer {
     email: string
     id: number
     name: string
+    orders: Order[]
     phone: string
     state: string
     updated_at: string

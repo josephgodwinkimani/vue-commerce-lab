@@ -18,4 +18,12 @@ class Customer extends Model
         'state',
         'zip',
     ];
+
+    /**
+     * Get the orders for the customer.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

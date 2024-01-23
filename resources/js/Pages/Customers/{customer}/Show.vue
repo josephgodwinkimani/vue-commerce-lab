@@ -33,14 +33,69 @@ const { customer } = defineProps<{
                 </div>
             </div>
         </template>
-        <div class="flex gap-4 dark:text-white">
-            {{ customer.name }}
-            {{ customer.email }}
-            {{ customer.phone }}
-            {{ customer.address }}
-            {{ customer.city }}
-            {{ customer.state }}
-            {{ customer.zip }}
+
+        <div class="bg-white shadow-md">
+            <div class="md:flex">
+                <div class="p-8">
+                    <div
+                        class="text-sm font-semibold uppercase tracking-wide text-indigo-500"
+                    >
+                        {{ customer.name }}
+                    </div>
+                    <p
+                        class="mt-1 block text-lg font-medium leading-tight text-black"
+                    >
+                        {{ customer.email }}
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Phone: {{ customer.phone }}
+                    </p>
+                    <p class="text-gray-500">
+                        Address: {{ customer.address }}, {{ customer.city }},
+                        {{ customer.state }},
+                        {{ customer.zip }}
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200">
+                <dl>
+                    <div
+                        class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                    >
+                        <dt class="text-sm font-medium text-gray-500">
+                            Orders
+                        </dt>
+                        <dd
+                            class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                        >
+                            <ul
+                                class="divide-y divide-gray-200 rounded-md border border-gray-200"
+                            >
+                                <li
+                                    v-for="order in customer.orders"
+                                    :key="order.id"
+                                    class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+                                >
+                                    <div class="flex w-0 flex-1 items-center">
+                                        <span class="ml-2 w-0 flex-1 truncate"
+                                            >Order ID: {{ order.id }}</span
+                                        >
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <Link
+                                            :href="
+                                                route('orders.show', order.id)
+                                            "
+                                            class="font-medium text-indigo-600 hover:text-indigo-500"
+                                            >View Order</Link
+                                        >
+                                    </div>
+                                </li>
+                            </ul>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>
