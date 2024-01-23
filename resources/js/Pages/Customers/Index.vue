@@ -73,14 +73,15 @@ const { customers } = defineProps<{
                         <Link
                             class="hover:underline"
                             :href="route('customers.show', customer.id)"
-                            >View</Link
-                        >
+                            ><font-awesome-icon :icon="['fas', 'eye']"
+                        /></Link>
                         |
                         <Link
                             class="hover:underline"
                             :href="route('customers.edit', customer.id)"
-                            >Edit</Link
-                        >
+                            ><font-awesome-icon
+                                :icon="['fas', 'pen-to-square']"
+                        /></Link>
                     </td>
                 </tr>
             </tbody>

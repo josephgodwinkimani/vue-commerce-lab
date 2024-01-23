@@ -78,14 +78,15 @@ const { products } = defineProps<{
                         <Link
                             class="hover:underline"
                             :href="route('products.show', product.id)"
-                            >View</Link
-                        >
+                            ><font-awesome-icon :icon="['fas', 'eye']"
+                        /></Link>
                         |
                         <Link
                             class="hover:underline"
                             :href="route('products.edit', product.id)"
-                            >Edit</Link
-                        >
+                            ><font-awesome-icon
+                                :icon="['fas', 'pen-to-square']"
+                        /></Link>
                     </td>
                 </tr>
             </tbody>
