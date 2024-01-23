@@ -33,14 +33,31 @@ const { product } = defineProps<{
                 </div>
             </div>
         </template>
-        <div class="flex gap-4 dark:text-white">
-            <a :href="product.image" target="_blank">
-                <img :src="product.image" :alt="product.name" class="h-32 w-32"
-            /></a>
-            <div>
-                <p>{{ product.description }}</p>
-                <p>${{ product.price }}</p>
-                <p>{{ product.quantity }} available</p>
+        <div class="bg-white shadow-md">
+            <div class="md:flex">
+                <div class="md:flex-shrink-0">
+                    <img
+                        :src="product.image"
+                        :alt="product.name"
+                        class="h-48 w-full object-cover md:h-full md:w-48"
+                    />
+                </div>
+                <div class="p-8">
+                    <div
+                        class="text-sm font-semibold uppercase tracking-wide text-indigo-500"
+                    >
+                        {{ product.name }}
+                    </div>
+                    <p
+                        class="mt-1 block text-lg font-medium leading-tight text-black"
+                    >
+                        Price: ${{ product.price }}
+                    </p>
+                    <p class="mt-2 text-gray-500">{{ product.description }}</p>
+                    <p class="mt-2 text-gray-500">
+                        Quantity: {{ product.quantity }}
+                    </p>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
