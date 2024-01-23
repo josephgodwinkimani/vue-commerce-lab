@@ -50,12 +50,6 @@ const { products } = defineProps<{
             >
         </div>
 
-        <!-- No Products -->
-        <div v-if="!products.length" class="no-products">
-            <h3>No products found.</h3>
-            <Link :href="route('products.create')">Add a product</Link>
-        </div>
-
         <!-- Products Table -->
         <table v-else class="products-table">
             <thead>
