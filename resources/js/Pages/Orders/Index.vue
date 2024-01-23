@@ -2,6 +2,7 @@
 import { Order } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
+import { formatDate } from '@/utils'
 
 // Define page props.
 const { orders } = defineProps<{
@@ -52,21 +53,22 @@ const { orders } = defineProps<{
                     </td>
                     <td>{{ order.status }}</td>
                     <td>{{ order.customer_id }}</td>
-                    <td>{{ order.created_at }}</td>
+                    <td>{{ formatDate(order.created_at) }}</td>
                     <td>{{ order.quantity }}</td>
                     <td>${{ order.total_amount }}</td>
                     <td>
                         <Link
                             class="hover:underline"
                             :href="route('orders.show', order.id)"
-                            >View</Link
-                        >
+                            ><font-awesome-icon :icon="['fas', 'eye']"
+                        /></Link>
                         |
                         <Link
                             class="hover:underline"
                             :href="route('orders.edit', order.id)"
-                            >Edit</Link
-                        >
+                            ><font-awesome-icon
+                                :icon="['fas', 'pen-to-square']"
+                        /></Link>
                     </td>
                 </tr>
             </tbody>
