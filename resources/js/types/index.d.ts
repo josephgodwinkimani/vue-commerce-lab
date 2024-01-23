@@ -37,6 +37,8 @@ export interface Order {
     created_at: string
     credit_card_late_four: string
     credit_card_type: string
+    customer: Customer
+    product: Product
     customer_id: number
     customer_note?: string
     id: number

@@ -21,4 +21,20 @@ class Order extends Model
         'quantity',
         'total_amount',
     ];
+
+    /**
+     * Get the customer that owns the order.
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the product that owns the order.
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
