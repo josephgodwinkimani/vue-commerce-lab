@@ -10,7 +10,7 @@ const { order } = defineProps<{
 </script>
 
 <template>
-    <Head :title="`Viewing: ${order.id}`" />
+    <Head :title="`Viewing Order ID: ${order.id}`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -18,7 +18,7 @@ const { order } = defineProps<{
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Viewing: {{ order.id }}
+                    Viewing Order ID: {{ order.product.id }}
                 </h2>
                 <div class="flex gap-4">
                     <Link
@@ -34,27 +34,67 @@ const { order } = defineProps<{
                 </div>
             </div>
         </template>
-        <div class="flex gap-4 dark:text-white">
-            {{ order.id }}
-            {{ formatDate(order.created_at) }}
-            <Link
-                v-if="order.customer"
-                :href="route('customers.show', order.customer.id)"
-            >
-                {{ order.customer.name }}
-            </Link>
-            <span v-else>No Customer</span>
-
-            <Link
-                v-if="order.product"
-                :href="route('products.show', order.product.id)"
-            >
-                {{ order.product.name }}
-            </Link>
-            <span v-else>No Product</span>
-
-            {{ order.quantity }}
-            ${{ order.total_amount }}
+        <div class="bg-white shadow-md">
+            <div class="md:flex">
+                <div class="p-8">
+                    <div
+                        class="text-sm font-semibold uppercase tracking-wide text-indigo-500"
+                    >
+                        Order ID: {{ order.id }}
+                    </div>
+                    <p
+                        class="mt-1 block text-lg font-medium leading-tight text-black"
+                    >
+                        Date: {{ formatDate(order.created_at) }}
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        <span>Status: </span>
+                        <span :class="order.status">{{ order.status }}</span>
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        <span>Customer: </span>
+                        <Link
+                            v-if="order.customer"
+                            :href="route('customers.show', order.customer.id)"
+                            class="text-indigo-600 hover:text-indigo-900"
+                        >
+                            {{ order.customer.name }}
+                        </Link>
+                        <span v-else class="text-gray-400">No Customer</span>
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        <span>Product: </span>
+                        <Link
+                            v-if="order.product"
+                            :href="route('products.show', order.product.id)"
+                            class="text-indigo-600 hover:text-indigo-900"
+                        >
+                            {{ order.product.name }}
+                        </Link>
+                        <span v-else class="text-gray-400">No Product</span>
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Quantity: {{ order.quantity }}
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Total Amount: ${{ order.total_amount }}
+                    </p>
+                </div>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.completed {
+    @apply text-green-500;
+}
+
+.pending {
+    @apply text-yellow-500;
+}
+
+.shipped {
+    @apply text-blue-500;
+}
+</style>
