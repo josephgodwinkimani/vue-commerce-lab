@@ -61,6 +61,17 @@ const showingNavigationDropdown = ref(false)
                                 >
                                     Customers
                                 </NavLink>
+                                <NavLink
+                                    :href="route('orders.index')"
+                                    :active="
+                                        route().current('orders.index') ||
+                                        route().current('orders.create') ||
+                                        route().current('orders.edit') ||
+                                        route().current('orders.show')
+                                    "
+                                >
+                                    Orders
+                                </NavLink>
                             </div>
                         </div>
 
