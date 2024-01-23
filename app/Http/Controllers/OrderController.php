@@ -43,6 +43,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $order = Order::with(['customer', 'product'])->findOrFail($order->id);
+
         return Inertia::render('Orders/{order}/Show')->with([
             'order' => $order,
         ]);
