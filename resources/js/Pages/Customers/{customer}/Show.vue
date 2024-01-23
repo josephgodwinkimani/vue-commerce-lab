@@ -57,7 +57,7 @@ const { customer } = defineProps<{
                     </p>
                 </div>
             </div>
-            <div class="border-t border-gray-200">
+            <div v-if="customer.orders.length" class="border-t border-gray-200">
                 <dl>
                     <div
                         class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
