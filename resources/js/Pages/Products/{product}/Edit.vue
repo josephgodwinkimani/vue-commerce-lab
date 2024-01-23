@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Product } from '@/types'
 import ProductForm from '@/Components/ProductForm.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
@@ -7,18 +8,7 @@ import { ref } from 'vue'
 
 // Define page props.
 const { product } = defineProps<{
-    product: {
-        id: number
-        name: string
-        sku: string
-        description: string
-        price: number
-        quantity: number
-        image: string
-        user_id: number
-        created_at: string
-        updated_at: string
-    }
+    product: Product
 }>()
 
 // Create a ref for the ProductForm component.

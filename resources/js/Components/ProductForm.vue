@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Product } from '@/types'
 import { useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import DOMPurify from 'dompurify'
@@ -7,7 +8,7 @@ import { ref } from 'vue'
 // Define component props.
 const { product, action, errors } = defineProps({
     product: {
-        type: Object,
+        type: Object as () => Product,
         default: null
     },
     action: {
@@ -38,7 +39,7 @@ const formAction = action === 'post' ? 'post' : 'patch'
 
 // Set the form URL based on the action.
 const url =
-    formAction === 'post' ? '/products/add' : `/products/${product.id}/edit`
+    formAction === 'post' ? '/products/create' : `/products/${product.id}/edit`
 
 // Define the allowed HTML tags for the description field.
 const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
@@ -77,8 +78,6 @@ function submitForm(): void {
     form.name = sanitizeInput(form.name)
     form.sku = sanitizeInput(form.sku)
     form.description = sanitizeInput(form.description, allowedHTMLTags)
-    form.price = sanitizeInput(form.price)
-    form.quantity = sanitizeInput(form.quantity)
     form.image = sanitizeInput(form.image)
 
     // Send the form data.

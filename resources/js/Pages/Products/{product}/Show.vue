@@ -1,21 +1,11 @@
 <script setup lang="ts">
+import { Product } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 
 // Define page props.
 const { product } = defineProps<{
-    product: {
-        id: number
-        name: string
-        sku: string
-        description: string
-        price: number
-        quantity: number
-        image: string
-        user_id: number
-        created_at: string
-        updated_at: string
-    }
+    product: Product
 }>()
 
 // Init form.

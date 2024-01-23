@@ -1,21 +1,11 @@
 <script setup lang="ts">
+import { Product } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, Head } from '@inertiajs/vue3'
 
 // Define page props.
 const { products } = defineProps<{
-    products: {
-        id: number
-        name: string
-        sku: string
-        description: string
-        price: number
-        quantity: number
-        image: string
-        user_id: number
-        created_at: string
-        updated_at: string
-    }[]
+    products: Product[]
 }>()
 </script>
 
