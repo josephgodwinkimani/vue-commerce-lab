@@ -2,9 +2,9 @@
 
 **Project Overview:** 🚀
 
-This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing **[Laravel](https://laravel.com/docs/10.x)**.
+This repository houses an experimental E-commerce store that serves as a practical application for learning and implementing **[Laravel](https://laravel.com/docs/10.x)**. I scaffolded this [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and use [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
 
-The project is enriched with a modern tech stack, utilizing **[Vue.js](https://vuejs.org/guide/introduction.html)** and **[Inertia.js](https://inertiajs.com/)** for seamless single-page application experiences. **[TailwindCSS](https://tailwindcss.com/)** provides the styling, ensuring a responsive and visually appealing interface.
+VueCommerceLab is enriched with a modern tech stack, utilizing **[Vue.js](https://vuejs.org/guide/introduction.html)** and **[Inertia.js](https://inertiajs.com/)** for seamless single-page application experiences. **[TailwindCSS](https://tailwindcss.com/)** provides the styling, ensuring a responsive and visually appealing interface.
 
 **Key Features:** 🛠
 
@@ -35,13 +35,11 @@ The project is enriched with a modern tech stack, utilizing **[Vue.js](https://v
 
 This project is part of a learning journey to explore the depths of Laravel, Vue.js, and modern web development practices. It serves as a comprehensive example for anyone interested in developing full-featured web applications using these technologies.
 
-This project was scaffolded with [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#breeze-and-inertia) and uses [Laravel Valet](https://laravel.com/docs/10.x/valet#installation) for local development.
-
 ---
 
 ## Installation
 
-Login to MySQL:
+Log into MySQL:
 
 ```bash
 mysql -u root -h 127.0.0.1
