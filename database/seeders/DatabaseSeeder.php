@@ -25,5 +25,8 @@ class DatabaseSeeder extends Seeder
 
         // Seed 500 customers.
         \App\Models\Customer::factory(500)->create();
+
+        // Seed 500 orders.
+        \App\Models\Order::factory(500)->create();
     }
 }
