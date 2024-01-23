@@ -9,6 +9,7 @@ This repository houses an experimental E-commerce store that serves as a practic
 -   **CRUD Operations**: Comprehensive Create, Read, Update, and Delete functionalities for products and customers, showcasing Laravel's robust back-end capabilities.
 -   **[Laravel 10](https://laravel.com/docs/10.x)**: A powerful PHP framework for building scalable web applications with a clean, expressive syntax.
 -   **[Vue.js 3](https://vuejs.org/guide/introduction.html)**: A dynamic and reactive frontend built with Vue.js, offering an engaging user experience.
+-   **[Ziggy](https://github.com/tighten/ziggy)**: Exposes Laravel's named server-side routes via a global `route()` function, allowing for easy route generation in Vue components.
 -   **[Inertia.js](https://inertiajs.com/)**: Bridges Laravel and Vue.js, enabling server-side rendering and client-side navigation without page reloads.
 -   **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
 
@@ -111,26 +112,37 @@ Login with the following credentials:
 
 ---
 
-## Where to find Vue.js files
+## Vue.js
 
 Vue.js files are located in the `resources/js` directory.
 
-You'll mostly be working with both the `Pages` and `Components` directories.
+### Directory Structure
+
+You'll mostly be working with both the `Components` and `Pages` directories.
 
 ```tree
 ├── resources
-│   ├── css
 │   ├── js
 │   │   ├── Components
+│   │   │   ├── ApplicationLogo.vue
+│   │   │   ├── Checkbox.vue
+│   │   │   ├── DangerButton.vue
+│   │   │   ├── ...
 │   │   ├── Layouts
+│   │   │   ├── AuthenticatedLayout.vue
+│   │   │   ├── GuestLayout.vue
 │   │   ├── Pages
-│   │   │   ├── Auth
 │   │   │   ├── Customers
-│   │   │   ├── Orders
-│   │   │   ├── Products
-│   │   │   ├── Profile
-│   │   │   ├── Reports
-│   │   │   ├── Dashboard.vue
-│   │   │   └── Welcome.vue
-│   ├── views
+│   │   │   │   ├── Create.vue
+│   │   │   │   ├── Index.vue
+│   │   │   │   └── {customer}
+│   │   │   │       ├── Edit.vue
+│   │   │   │       └── Show.vue
+│   │   │   ├── ...
 ```
+
+### Dynamic Routes
+
+Folders with a `{}` around them are dynamic routes. For example, `/Pages/Customers/{customers}/Edit.vue` is a dynamic route that will match any customer ID. The ID is then available in the `Edit.vue` component.
+
+---
