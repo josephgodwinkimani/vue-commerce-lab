@@ -6,7 +6,8 @@ import {
     faAngleLeft,
     faAngleRight,
     faEye,
-    faPenToSquare
+    faPenToSquare,
+    faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -16,7 +17,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
-library.add(faPenToSquare, faEye, faAngleRight, faAngleLeft)
+library.add(faPenToSquare, faEye, faAngleRight, faAngleLeft, faTrashCan)
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
