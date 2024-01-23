@@ -8,6 +8,9 @@
         "lint": "eslint --ext .js,.ts,.vue --fix --ignore-path .gitignore ."
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.5.1",
+        "@fortawesome/free-solid-svg-icons": "^6.5.1",
+        "@fortawesome/vue-fontawesome": "^3.0.5",
         "@inertiajs/vue3": "^1.0.14",
         "@tailwindcss/forms": "^0.5.7",
         "@types/dompurify": "^3.0.5",
@@ -17,6 +20,7 @@
         "@vue/server-renderer": "^3.4.15",
         "autoprefixer": "^10.4.17",
         "axios": "^1.6.5",
+        "date-fns": "^3.3.1",
         "dompurify": "^3.0.8",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
