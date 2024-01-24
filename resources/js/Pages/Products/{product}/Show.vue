@@ -4,8 +4,10 @@ import { Product } from '@/types'
 import { formatCurrency, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
-const { product } = defineProps<{
+const { product, totalSalesLastWeek, totalLifetimeSales } = defineProps<{
     product: Product
+    totalSalesLastWeek: number
+    totalLifetimeSales: number
 }>()
 </script>
 
@@ -52,6 +54,14 @@ const { product } = defineProps<{
                     <p>
                         <span>Quantity:</span>
                         {{ formatNumber(product.quantity) }}
+                    </p>
+                    <p>
+                        <span>Total Sales Last Week:</span>
+                        {{ formatNumber(totalSalesLastWeek) }}
+                    </p>
+                    <p>
+                        <span>Total Lifetime Sales:</span>
+                        {{ formatNumber(totalLifetimeSales) }}
                     </p>
                 </div>
             </div>
