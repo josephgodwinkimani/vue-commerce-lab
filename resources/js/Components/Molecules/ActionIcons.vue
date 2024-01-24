@@ -12,7 +12,8 @@ const { entityId, viewRoute, editRoute, deleteRoute } = defineProps({
     },
     editRoute: {
         type: String,
-        required: false
+        required: false,
+        default: null
     },
     deleteRoute: {
         type: String,
