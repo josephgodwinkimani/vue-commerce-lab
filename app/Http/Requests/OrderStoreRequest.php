@@ -11,7 +11,7 @@ class OrderStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -21,7 +21,7 @@ class OrderStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'customer_id' => 'required|exists:customers,id',
             'product_id' => 'required|exists:products,id',
             'status' => 'required|string|max:255',
@@ -33,5 +33,7 @@ class OrderStoreRequest extends FormRequest
             'total_amount' => 'required|numeric',
             'customer_note' => 'nullable|string',
         ];
+
+        return $rules;
     }
 }
