@@ -8,6 +8,7 @@ This repository houses an experimental E-commerce store that serves as a practic
 
 -   **CRUD Operations**: Comprehensive Create, Read, Update, and Delete functionalities for products and customers, showcasing Laravel's robust back-end capabilities.
 -   **[Laravel 10](https://laravel.com/docs/10.x)**: A powerful PHP framework for building scalable web applications with a clean, expressive syntax.
+-   **[TypeScript](https://www.typescriptlang.org/)**: A superset of JavaScript that adds static type definitions, enabling a more robust development experience.
 -   **[Vue.js 3](https://vuejs.org/guide/introduction.html)**: A dynamic and reactive frontend built with Vue.js, offering an engaging user experience.
 -   **[Ziggy](https://github.com/tighten/ziggy)**: Exposes Laravel's named server-side routes via a global `route()` function, allowing for easy route generation in Vue components.
 -   **[Inertia.js](https://inertiajs.com/)**: Bridges Laravel and Vue.js, enabling server-side rendering and client-side navigation without page reloads.
@@ -164,6 +165,8 @@ Controllers are located in the `app/Http/Controllers` directory. Each controller
 
 ## Tests
 
+### PHPUnit
+
 This application is equipped with PHPUnit tests for all models and controllers. Run the tests with:
 
 ```bash
@@ -177,6 +180,40 @@ php artisan test --filter=CustomerTest
 ```
 
 Github Actions will also run the tests on every PR to the `main` branch.
+
+---
+
+## Linting and Formatting
+
+### ESLint
+
+This application is equipped with ESLint and configured for parsing TypeScript. Automatic linting JavaScript and Vue files happens `on_save`.
+
+You can also run lint manually:
+
+```bash
+npm run lint
+```
+
+### Stylelint and TailwindCSS (Prettier)
+
+This application is equipped with Stylelint and the Prettier extension for TailwindCSS. Automatic linting and formatting happens `on_save`.
+
+### Prettier and Pint
+
+Automatic formatting for both JavaScript and PHP files is configured for `on_save`. Please see the VSCode settings and extension [configs](https://github.com/gregrickaby/vue-commerce-lab/tree/main/.vscode) for more information.
+
+You can also manually run the formatters with:
+
+```bash
+npm run format
+```
+
+and
+
+```bash
+composer run lint
+```
 
 ---
 
