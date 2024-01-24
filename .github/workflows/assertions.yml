@@ -55,6 +55,9 @@ jobs:
                   composer install --prefer-dist --no-interaction --no-progress
                   npm i --ignore-scripts
 
+            - name: Run Build
+              run: npm run build
+
             - name: Directory Permissions
               run: chmod -R 777 storage bootstrap/cache
 
@@ -75,6 +78,3 @@ jobs:
 
             - name: Run PHPUnit
               run: php artisan test
-
-            - name: Test Build
-              run: npm run build
