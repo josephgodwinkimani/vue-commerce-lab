@@ -39,6 +39,31 @@ class OrderController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Order $order)
+    {
+
+        return Inertia::render('Orders/{order}/Edit')->with([
+            'order' => $order,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(OrderStoreRequest $request, Order $order)
+    {
+        $orderData = $request->validated();
+
+        $order->update($orderData);
+
+        return Inertia::render('Orders/{order}/Edit', [
+            'order' => $order->refresh(),
+        ]);
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(Order $order)
