@@ -9,21 +9,28 @@ class Order extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'customer_id',
-        'product_id',
-        'status',
-        'shipping_address',
         'billing_address',
-        'credit_card_type',
         'credit_card_last_four',
+        'credit_card_type',
+        'customer_id',
         'customer_note',
+        'product_id',
         'quantity',
+        'shipping_address',
+        'status',
         'total_amount',
     ];
 
     /**
      * Get the customer that owns the order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function customer()
     {
@@ -32,6 +39,8 @@ class Order extends Model
 
     /**
      * Get the product that owns the order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function product()
     {

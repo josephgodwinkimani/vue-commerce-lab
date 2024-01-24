@@ -9,5 +9,29 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'sku', 'image', 'description', 'price', 'quantity'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'description',
+        'image',
+        'name',
+        'price',
+        'quantity',
+        'sku',
+    ];
+
+    /**
+     * Adjust the inventory count when a product is sold.
+     */
+    public function adjustInventoryOnSale(int $quantitySold): void
+    {
+        // Subtract the quantity sold from the current inventory.
+        $this->quantity -= $quantitySold;
+
+        // Update the product.
+        $this->save();
+    }
 }

@@ -9,18 +9,25 @@ class Customer extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
         'address',
         'city',
+        'email',
+        'name',
+        'phone',
         'state',
         'zip',
     ];
 
     /**
      * Get the orders for the customer.
+     *
+     * @returns \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders()
     {
