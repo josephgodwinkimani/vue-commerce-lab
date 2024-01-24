@@ -13,8 +13,9 @@ This repository houses an experimental E-commerce store that serves as a practic
 -   **[Ziggy](https://github.com/tighten/ziggy)**: Exposes Laravel's named server-side routes via a global `route()` function, allowing for easy route generation in Vue components.
 -   **[Inertia.js](https://inertiajs.com/)**: Bridges Laravel and Vue.js, enabling server-side rendering and client-side navigation without page reloads.
 -   **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
--   **Tests** Unit tests for all models and controllers via `php artisan test`.
--   **Github Actions** Continuous integration and testing via Github Actions.
+-   **Tests:** Unit tests for all models and controllers via `php artisan test`.
+-   **Linting and Formatting:** Automatic linting and formatting for PHP, JavaScript, CSS and Vue.js files.
+-   **Github Actions:** Continuous integration and testing via Github Actions.
 
 **Learning Outcomes:** 📚
 
