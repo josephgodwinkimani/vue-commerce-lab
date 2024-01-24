@@ -156,7 +156,7 @@ Models are located in the `app/Models` directory. Each model has a corresponding
 
 ### Views
 
-This application uses Vue and Inertia, so the views are in the `resources/js/pages` directory.
+This application uses Vue and Inertia, so the views are in the `resources/js/pages` directory and routed via the [web.php](https://github.com/gregrickaby/vue-commerce-lab/blob/main/routes/web.php) file.
 
 ### Controllers
 
