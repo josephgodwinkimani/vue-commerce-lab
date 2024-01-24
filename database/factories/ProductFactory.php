@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Product::class;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -18,12 +25,11 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'sku' => $this->faker->unique()->numberBetween(100000, 999999),
-            'price' => $this->faker->randomFloat(2, 0, 1000),
-            'quantity' => $this->faker->numberBetween(0, 100),
+            'sku' => 'SKU-'.$this->faker->unique()->numberBetween(1, 9999),
+            'description' => $this->faker->sentence,
+            'price' => $this->faker->randomFloat(2, 10, 500),
+            'quantity' => $this->faker->numberBetween(1, 100),
             'image' => $this->faker->imageUrl(),
-            'description' => $this->faker->text,
-            'user_id' => 1,
         ];
     }
 }
