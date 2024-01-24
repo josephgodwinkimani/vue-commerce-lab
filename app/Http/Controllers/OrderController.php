@@ -39,6 +39,18 @@ class OrderController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Order $order)
+    {
+        $order = Order::with(['customer', 'product'])->findOrFail($order->id);
+
+        return Inertia::render('Orders/{order}/Show')->with([
+            'order' => $order,
+        ]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Order $order)
@@ -60,18 +72,6 @@ class OrderController extends Controller
 
         return Inertia::render('Orders/{order}/Edit', [
             'order' => $order->refresh(),
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
-    {
-        $order = Order::with(['customer', 'product'])->findOrFail($order->id);
-
-        return Inertia::render('Orders/{order}/Show')->with([
-            'order' => $order,
         ]);
     }
 
