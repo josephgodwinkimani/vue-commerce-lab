@@ -176,7 +176,7 @@ Controllers are responsible for handling requests and returning responses. They 
 
 This application is equipped with PHPUnit tests for all models and controllers. Tests are located in the `tests/` directory.
 
-Because PHPUnit makes calls to the front-end, you'll need to run either start the dev server or run a build:
+Because PHPUnit makes calls to the front-end, you'll need to either start the dev server or run a build:
 
 ```bash
 npm run dev
