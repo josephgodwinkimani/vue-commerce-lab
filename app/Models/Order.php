@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Order extends Model
 {
@@ -45,5 +46,13 @@ class Order extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Count the number of orders in the last $days.
+     */
+    public static function countRecentOrders(int $days = 7): int
+    {
+        return self::where('created_at', '>=', Carbon::now()->subDays($days))->count();
     }
 }
