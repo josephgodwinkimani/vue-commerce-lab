@@ -56,7 +56,12 @@ const { orders } = defineProps<{
                 </thead>
                 <tbody>
                     <tr v-for="order in orders.data" :key="order.id">
-                        <td>{{ order.id }}</td>
+                        <td>
+                            <Link :href="route('orders.show', order.id)">{{
+                                order.id
+                            }}</Link>
+                        </td>
+
                         <td :class="order.status">{{ order.status }}</td>
                         <td>
                             <Link
