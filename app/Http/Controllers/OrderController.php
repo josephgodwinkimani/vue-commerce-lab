@@ -33,7 +33,7 @@ class OrderController extends Controller
     {
         $orderData = $request->validated();
 
-        $request->user()->orders()->create($orderData);
+        Order::create($orderData);
 
         return redirect()->route('order.index');
     }

@@ -33,7 +33,7 @@ class CustomerController extends Controller
     {
         $customerData = $request->validated();
 
-        $request->user()->customer()->create($customerData);
+        Customer::create($customerData);
 
         return redirect()->route('customers.index');
     }

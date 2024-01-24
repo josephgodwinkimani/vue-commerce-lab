@@ -33,7 +33,7 @@ class ProductController extends Controller
     {
         $productData = $request->validated();
 
-        $request->user()->products()->create($productData);
+        Product::create($productData);
 
         return redirect()->route('products.index');
     }
