@@ -198,11 +198,13 @@ npm run lint
 
 ### Stylelint and TailwindCSS (Prettier)
 
-This application is equipped with Stylelint and the Prettier extension for TailwindCSS. Automatic linting and formatting happens `on_save`.
+This application is equipped with Stylelint and the [Prettier plugin for TailwindCSS](https://github.com/tailwindlabs/prettier-plugin-tailwindcss). Automatic linting and formatting happens `on_save`.
 
 ### Prettier and Pint
 
-Automatic formatting for both JavaScript and PHP files is configured for `on_save`. Please see the VSCode settings and extension [configs](https://github.com/gregrickaby/vue-commerce-lab/tree/main/.vscode) for more information.
+Automatic formatting for both JavaScript and PHP files is configured for `on_save`.
+
+Please see the VSCode settings and extension [configs](https://github.com/gregrickaby/vue-commerce-lab/tree/main/.vscode) for more information.
 
 You can also manually run the formatters with:
 
