@@ -12,6 +12,8 @@ This repository houses an experimental E-commerce store that serves as a practic
 -   **[Ziggy](https://github.com/tighten/ziggy)**: Exposes Laravel's named server-side routes via a global `route()` function, allowing for easy route generation in Vue components.
 -   **[Inertia.js](https://inertiajs.com/)**: Bridges Laravel and Vue.js, enabling server-side rendering and client-side navigation without page reloads.
 -   **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
+-   **Tests** Unit tests for all models and controllers via `php artisan test`.
+-   **Github Actions** Continuous integration and testing via Github Actions.
 
 **Learning Outcomes:** 📚
 
@@ -141,5 +143,45 @@ You'll mostly be working with both the `Components` and `Pages` directories.
 ### Dynamic Routes
 
 Folders with a `{}` around them are dynamic routes. For example, `/Pages/Customers/{customers}/Edit.vue` is a dynamic route that will match any customer ID. The ID is then available in the `Edit.vue` component.
+
+---
+
+## MVC
+
+### Models
+
+Models are located in the `app/Models` directory. Each model has a corresponding factory and seeder in the `database/factories` and `database/seeders` directories.
+
+### Views
+
+This application uses Vue and Inertia, so the views are in the `resources/js/pages` directory.
+
+### Controllers
+
+Controllers are located in the `app/Http/Controllers` directory. Each controller has a corresponding test in the `tests/Feature` directory
+
+---
+
+## Tests
+
+This application is equipped with PHPUnit tests for all models and controllers. Run the tests with:
+
+```bash
+php artisan test
+```
+
+Run a specific test with:
+
+```bash
+php artisan test --filter=CustomerTest
+```
+
+Github Actions will also run the tests on every PR to the `main` branch.
+
+---
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
 ---
