@@ -39,9 +39,7 @@ const formAction = action === 'post' ? 'post' : 'patch'
 
 // Set the form URL based on the action.
 const url =
-    formAction === 'post'
-        ? '/customers/create'
-        : `/customers/${customer.id}/edit`
+    formAction === 'post' ? '/customers' : `/customers/${customer.id}/edit`
 
 // Success message state.
 const successMessage = ref('')

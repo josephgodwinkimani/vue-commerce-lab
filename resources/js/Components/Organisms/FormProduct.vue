@@ -37,8 +37,7 @@ const form = useForm({
 const formAction = action === 'post' ? 'post' : 'patch'
 
 // Set the form URL based on the action.
-const url =
-    formAction === 'post' ? '/products/create' : `/products/${product.id}`
+const url = formAction === 'post' ? '/products' : `/products/${product.id}`
 
 // Define the allowed HTML tags for the description field.
 const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
