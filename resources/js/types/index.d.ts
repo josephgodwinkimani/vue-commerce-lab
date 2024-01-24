@@ -31,6 +31,8 @@ export interface Customer {
     state: string
     updated_at: string
     zip: string
+    orders_count?: number
+    orders_sum_total_amount?: number
 }
 
 export interface Order {
