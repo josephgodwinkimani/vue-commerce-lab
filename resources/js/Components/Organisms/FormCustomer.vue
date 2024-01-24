@@ -38,8 +38,7 @@ const form = useForm({
 const formAction = action === 'post' ? 'post' : 'patch'
 
 // Set the form URL based on the action.
-const url =
-    formAction === 'post' ? '/customers' : `/customers/${customer.id}/edit`
+const url = formAction === 'post' ? '/customers' : `/customers/${customer.id}`
 
 // Success message state.
 const successMessage = ref('')

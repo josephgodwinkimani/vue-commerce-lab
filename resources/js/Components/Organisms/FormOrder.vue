@@ -41,7 +41,7 @@ const form = useForm({
 const formAction = action === 'post' ? 'post' : 'patch'
 
 // Set the form URL based on the action.
-const url = formAction === 'post' ? '/orders' : `/orders/${order.id}/edit`
+const url = formAction === 'post' ? '/orders' : `/orders/${order.id}`
 
 // Success message state.
 const successMessage = ref('')
@@ -109,32 +109,14 @@ function submitForm(): void {
                 <label class="label" for="status"
                     >Order Status<span class="required">*</span></label
                 >
-                <input
-                    id="status"
-                    v-model="form.status"
-                    type="text"
-                    placeholder="Order Status"
-                    required
-                />
-                <p class="description">Please enter the order status.</p>
+                <select id="status" v-model="form.status" required>
+                    <option value="" disabled>Select Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="pending">Pending</option>
+                </select>
+                <p class="description">Please select the order status.</p>
             </div>
-
-            <!-- Order total amount input -->
-            <div class="field">
-                <label class="label" for="totalAmount"
-                    >Total Amount<span class="required">*</span></label
-                >
-                <input
-                    id="totalAmount"
-                    v-model.number="form.totalAmount"
-                    type="number"
-                    placeholder="0.00"
-                    required
-                />
-                <p class="description">Please enter the total amount.</p>
-            </div>
-
-            <!-- Add other order fields here -->
         </form>
     </section>
 </template>
