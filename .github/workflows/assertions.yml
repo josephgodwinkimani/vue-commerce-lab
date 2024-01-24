@@ -6,6 +6,11 @@ on:
 
     workflow_dispatch:
 
+env:
+    APP_ENV: testing
+    DB_CONNECTION: sqlite
+    DB_DATABASE: ':memory:'
+
 jobs:
     assertions:
         runs-on: ubuntu-latest
@@ -49,7 +54,7 @@ jobs:
               run: npm run lint
 
             - name: Run Migration
-              run: php artisan migrate
+              run: php artisan migrate --force
 
             - name: Seed DB
               run: php artisan db:seed
