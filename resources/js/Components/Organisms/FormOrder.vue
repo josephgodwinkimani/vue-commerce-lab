@@ -25,16 +25,17 @@ const { order, action, errors } = defineProps({
 
 // Initialize the form.
 const form = useForm({
-    billingAddress: order ? order.billing_address : '',
-    creditCardLateFour: order ? order.credit_card_late_four : '',
-    creditCardType: order ? order.credit_card_type : '',
-    customerId: order ? order.customer_id : 0,
-    customerNote: order ? order.customer_note : '',
-    productId: order ? order.product_id : 0,
+    id: order ? order.id : 0,
+    billing_address: order ? order.billing_address : '',
+    credit_card_last_four: order ? order.credit_card_last_four : '',
+    credit_card_type: order ? order.credit_card_type : '',
+    customer_id: order ? order.customer_id : 0,
+    customer_note: order ? order?.customer_note : '',
+    product_id: order ? order.product_id : 0,
     quantity: order ? order.quantity : 0,
-    shippingAddress: order ? order.shipping_address : '',
+    shipping_address: order ? order.shipping_address : '',
     status: order ? order.status : '',
-    totalAmount: order ? order.total_amount : 0
+    total_amount: order ? order.total_amount : 0
 })
 
 // Set the form action based on the action.
@@ -43,12 +44,15 @@ const formAction = action === 'post' ? 'post' : 'patch'
 // Set the form URL based on the action.
 const url = formAction === 'post' ? '/orders' : `/orders/${order.id}`
 
+// Define the allowed HTML tags for the description field.
+const allowedHTMLTags = ['b', 'i', 'em', 'strong', 'a', 'br', 'p', 'ul', 'li']
+
 // Success message state.
 const successMessage = ref('')
 
 // Define the computed property for form validation.
 const isFormValid = computed(() => {
-    return form.status && form.totalAmount // Add other necessary validations
+    return form.status
 })
 
 // Allow access to the submitForm function from the parent component.
@@ -67,11 +71,11 @@ function submitForm(): void {
     }
 
     // Sanitize individual form fields.
-    form.billingAddress = sanitizeInput(form.billingAddress)
-    form.creditCardLateFour = sanitizeInput(form.creditCardLateFour)
-    form.creditCardType = sanitizeInput(form.creditCardType)
-    form.shippingAddress = sanitizeInput(form.shippingAddress)
     form.status = sanitizeInput(form.status)
+    form.customer_note = sanitizeInput(
+        form.customer_note ? form.customer_note : '',
+        allowedHTMLTags
+    )
 
     // Send the form data.
     form[formAction](url, {
@@ -104,6 +108,17 @@ function submitForm(): void {
         </div>
 
         <form class="form" @submit.prevent="submitForm">
+            <!-- Hide uneditable fields -->
+            <input v-model="form.id" type="hidden" />
+            <input v-model="form.billing_address" type="hidden" />
+            <input v-model="form.credit_card_last_four" type="hidden" />
+            <input v-model="form.credit_card_type" type="hidden" />
+            <input v-model="form.customer_id" type="hidden" />
+            <input v-model="form.product_id" type="hidden" />
+            <input v-model="form.quantity" type="hidden" />
+            <input v-model="form.shipping_address" type="hidden" />
+            <input v-model="form.total_amount" type="hidden" />
+
             <!-- Order status input -->
             <div class="field">
                 <label class="label" for="status"
@@ -116,6 +131,23 @@ function submitForm(): void {
                     <option value="pending">Pending</option>
                 </select>
                 <p class="description">Please select the order status.</p>
+            </div>
+            <!-- Customer note input -->
+            <div class="field">
+                <label class="label" for="description"
+                    >Customer Note<span class="required">*</span></label
+                >
+                <textarea
+                    id="description"
+                    v-model="form.customer_note"
+                    type="text"
+                    placeholder="Enter the customer note."
+                    required
+                    rows="6"
+                />
+                <p class="description">
+                    Please enter the customer note. Basic HTML is allowed.
+                </p>
             </div>
         </form>
     </section>
@@ -149,16 +181,8 @@ function submitForm(): void {
         @apply pt-2 text-sm italic text-gray-600 dark:text-white;
     }
 
-    .preview-image {
-        @apply h-32 w-32 rounded-md object-cover;
-    }
-
     .required {
         @apply text-red-800;
-    }
-
-    .delete-image {
-        @apply mt-2 text-sm text-red-800;
     }
 }
 </style>
