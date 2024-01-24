@@ -43,8 +43,14 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Inertia::render('Products/{product}/Show')->with([
+
+        $totalSalesLastWeek = $product->totalSalesInPeriod();
+        $totalLifetimeSales = $product->totalLifetimeSales();
+
+        return Inertia::render('Products/{product}/Show', [
             'product' => $product,
+            'totalSalesLastWeek' => $totalSalesLastWeek,
+            'totalLifetimeSales' => $totalLifetimeSales,
         ]);
     }
 
