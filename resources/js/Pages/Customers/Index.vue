@@ -64,7 +64,6 @@ const { customers } = defineProps<{
                     <tr v-for="customer in customers.data" :key="customer.id">
                         <td>
                             <Link
-                                class="hover:underline"
                                 :href="route('customers.show', customer.id)"
                                 >{{ customer.name }}</Link
                             >
@@ -102,6 +101,10 @@ const { customers } = defineProps<{
 
     th {
         @apply bg-gray-100 dark:bg-gray-800;
+    }
+
+    a {
+        @apply text-blue-500 underline hover:no-underline;
     }
 }
 </style>

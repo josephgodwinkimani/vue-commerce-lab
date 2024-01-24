@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { Product } from '@/types'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link, Head } from '@inertiajs/vue3'
 import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
 import Pagination from '@/Components/Molecules/Pagination.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Product } from '@/types'
+import { formatCurrency, formatNumber } from '@/utils'
+import { Head, Link } from '@inertiajs/vue3'
 
 const { products } = defineProps<{
     products: {
@@ -62,11 +63,9 @@ const { products } = defineProps<{
                 <tbody>
                     <tr v-for="product in products.data" :key="product.id">
                         <td>
-                            <Link
-                                class="hover:underline"
-                                :href="route('products.show', product.id)"
-                                >{{ product.name }}</Link
-                            >
+                            <Link :href="route('products.show', product.id)">{{
+                                product.name
+                            }}</Link>
                         </td>
                         <td>{{ product.sku }}</td>
                         <td>
@@ -78,8 +77,8 @@ const { products } = defineProps<{
                             />
                         </td>
                         <td>{{ product.description }}</td>
-                        <td>${{ product.price }}</td>
-                        <td>{{ product.quantity }}</td>
+                        <td>{{ formatCurrency(product.price) }}</td>
+                        <td>{{ formatNumber(product.quantity) }}</td>
                         <td>
                             <ActionIcons
                                 :entity-id="product.id"
@@ -107,6 +106,10 @@ const { products } = defineProps<{
 
     th {
         @apply bg-gray-100 dark:bg-gray-800;
+    }
+
+    a {
+        @apply text-blue-500 underline hover:no-underline;
     }
 
     .image {

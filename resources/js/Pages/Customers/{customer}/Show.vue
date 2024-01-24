@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Customer } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Customer } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { customer } = defineProps<{
@@ -34,68 +34,53 @@ const { customer } = defineProps<{
             </div>
         </template>
 
-        <div class="bg-white shadow-md">
-            <div class="md:flex">
-                <div class="p-8">
-                    <div
-                        class="text-sm font-semibold uppercase tracking-wide text-indigo-500"
-                    >
-                        {{ customer.name }}
-                    </div>
-                    <p
-                        class="mt-1 block text-lg font-medium leading-tight text-black"
-                    >
-                        {{ customer.email }}
-                    </p>
-                    <p class="mt-2 text-gray-500">
-                        Phone: {{ customer.phone }}
-                    </p>
-                    <p class="text-gray-500">
-                        Address: {{ customer.address }}, {{ customer.city }},
-                        {{ customer.state }},
-                        {{ customer.zip }}
-                    </p>
-                </div>
-            </div>
-            <div v-if="customer.orders.length" class="border-t border-gray-200">
-                <dl>
-                    <div
-                        class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-                    >
-                        <dt class="text-sm font-medium text-gray-500">
-                            Orders
-                        </dt>
-                        <dd
-                            class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
-                        >
-                            <ul
-                                class="divide-y divide-gray-200 rounded-md border border-gray-200"
+        <div class="customer">
+            <p><span>Name:</span> {{ customer.name }}</p>
+            <p><span>Email:</span> {{ customer.email }}</p>
+            <p><span>Phone:</span> {{ customer.phone }}</p>
+            <p>
+                <span>Address:</span> {{ customer.address }},
+                {{ customer.city }}, {{ customer.state }},
+                {{ customer.zip }}
+            </p>
+
+            <div v-if="customer.orders.length">
+                <div>
+                    <span>Recent Orders</span>
+                    <ol>
+                        <li v-for="order in customer.orders" :key="order.id">
+                            <span
+                                >Order ID:
+                                <Link :href="route('orders.show', order.id)">{{
+                                    order.id
+                                }}</Link></span
                             >
-                                <li
-                                    v-for="order in customer.orders"
-                                    :key="order.id"
-                                    class="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
-                                >
-                                    <div class="flex w-0 flex-1 items-center">
-                                        <span class="ml-2 w-0 flex-1 truncate"
-                                            >Order ID: {{ order.id }}</span
-                                        >
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <Link
-                                            :href="
-                                                route('orders.show', order.id)
-                                            "
-                                            class="font-medium text-indigo-600 hover:text-indigo-500"
-                                            >View Order</Link
-                                        >
-                                    </div>
-                                </li>
-                            </ul>
-                        </dd>
-                    </div>
-                </dl>
+                        </li>
+                    </ol>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.customer {
+    @apply bg-white p-8 shadow dark:bg-gray-800 dark:text-white;
+
+    p {
+        @apply mb-2;
+    }
+
+    span {
+        @apply font-semibold;
+    }
+
+    a {
+        @apply text-blue-500 underline hover:no-underline;
+    }
+
+    ol {
+        @apply mt-2 list-inside list-decimal;
+    }
+}
+</style>
