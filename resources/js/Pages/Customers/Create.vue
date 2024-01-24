@@ -16,7 +16,7 @@ function saveCustomer() {
 </script>
 
 <template>
-    <Head title="Add New Product" />
+    <Head title="Add New Customer" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -24,7 +24,7 @@ function saveCustomer() {
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Add New Product
+                    Add New Customer
                 </h2>
                 <div class="flex gap-4">
                     <button
