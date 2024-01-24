@@ -35,7 +35,7 @@ class OrderController extends Controller
 
         Order::create($orderData);
 
-        return redirect()->route('order.index');
+        return redirect()->route('orders.index');
     }
 
     /**
