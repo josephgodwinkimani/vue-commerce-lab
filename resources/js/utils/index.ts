@@ -16,6 +16,31 @@ export function formatDate(dateString: string, formatStr = 'PP'): string {
 }
 
 /**
+ * Format a number to a currency string.
+ *
+ * @param value The number to format.
+ *
+ * @returns The formatted currency string.
+ */
+export function formatCurrency(value: number): string {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(value)
+}
+
+/**
+ * Format a number to a string.
+ *
+ * @param value The number to format.
+ *
+ * @returns The formatted string.
+ */
+export function formatNumber(value: number): string {
+    return new Intl.NumberFormat('en-US').format(value)
+}
+
+/**
  * Sanitize form fields.
  *
  * @param value The value to sanitize.
