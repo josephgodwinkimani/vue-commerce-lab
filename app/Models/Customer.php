@@ -26,6 +26,13 @@ class Customer extends Model
     ];
 
     /**
+     * The attributes that should be appended to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = ['order_count', 'total_spent'];
+
+    /**
      * Get the orders for the customer.
      *
      * @returns \Illuminate\Database\Eloquent\Relations\HasMany
@@ -33,6 +40,22 @@ class Customer extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the total number of orders for the customer.
+     */
+    public function getOrderCountAttribute(): int
+    {
+        return (int) $this->orders()->count();
+    }
+
+    /**
+     * Get the total amount spent by the customer.
+     */
+    public function getTotalSpentAttribute(): int
+    {
+        return (int) $this->orders()->sum('total_amount');
     }
 
     /**
