@@ -15,11 +15,13 @@ class DashboardController extends Controller
     public function index()
     {
         $ordersCount = Order::countRecentOrders();
+        $totalRecentOrdersAmount = Order::sumRecentOrdersAmount();
         $topCustomers = Customer::topCustomers();
         $topSellingProducts = Product::topSellingProducts();
 
         return Inertia::render('Dashboard/Index', [
             'ordersCount' => $ordersCount,
+            'totalRecentOrdersAmount' => $totalRecentOrdersAmount,
             'topCustomers' => $topCustomers,
             'topSellingProducts' => $topSellingProducts,
         ]);
