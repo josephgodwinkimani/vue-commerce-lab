@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Order } from '@/types'
-import { formatDate } from '@/utils'
+import { formatCurrency, formatDate, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { order } = defineProps<{
@@ -34,67 +34,65 @@ const { order } = defineProps<{
                 </div>
             </div>
         </template>
-        <div class="bg-white shadow-md">
-            <div class="md:flex">
-                <div class="p-8">
-                    <div
-                        class="text-sm font-semibold uppercase tracking-wide text-indigo-500"
-                    >
-                        Order ID: {{ order.id }}
-                    </div>
-                    <p
-                        class="mt-1 block text-lg font-medium leading-tight text-black"
-                    >
-                        Date: {{ formatDate(order.created_at) }}
-                    </p>
-                    <p class="mt-2 text-gray-500">
-                        <span>Status: </span>
-                        <span :class="order.status">{{ order.status }}</span>
-                    </p>
-                    <p class="mt-2 text-gray-500">
-                        <span>Customer: </span>
-                        <Link
-                            v-if="order.customer"
-                            :href="route('customers.show', order.customer.id)"
-                            class="text-indigo-600 hover:text-indigo-900"
-                        >
-                            {{ order.customer.name }}
-                        </Link>
-                        <span v-else class="text-gray-400">No Customer</span>
-                    </p>
-                    <p class="mt-2 text-gray-500">
-                        <span>Product: </span>
-                        <Link
-                            v-if="order.product"
-                            :href="route('products.show', order.product.id)"
-                            class="text-indigo-600 hover:text-indigo-900"
-                        >
-                            {{ order.product.name }}
-                        </Link>
-                        <span v-else class="text-gray-400">No Product</span>
-                    </p>
-                    <p class="mt-2 text-gray-500">
-                        Quantity: {{ order.quantity }}
-                    </p>
-                    <p class="mt-2 text-gray-500">
-                        Total Amount: ${{ order.total_amount }}
-                    </p>
-                </div>
-            </div>
+        <div class="order">
+            <p><span>Order ID:</span> {{ order.id }}</p>
+            <p><span>Date:</span> {{ formatDate(order.created_at) }}</p>
+            <p>
+                <span>Status: </span>
+                <span :class="order.status">{{ order.status }}</span>
+            </p>
+            <p>
+                <span>Customer: </span>
+                <Link
+                    v-if="order.customer"
+                    :href="route('customers.show', order.customer.id)"
+                >
+                    {{ order.customer.name }}
+                </Link>
+                <span v-else>No Customer</span>
+            </p>
+            <p>
+                <span>Product: </span>
+                <Link
+                    v-if="order.product"
+                    :href="route('products.show', order.product.id)"
+                >
+                    {{ order.product.name }}
+                </Link>
+                <span v-else>No Product</span>
+            </p>
+            <p>Quantity: {{ formatNumber(order.quantity) }}</p>
+            <p>Total Amount: {{ formatCurrency(order.total_amount) }}</p>
         </div>
     </AuthenticatedLayout>
 </template>
 
 <style scoped>
-.completed {
-    @apply text-green-500;
-}
+.order {
+    @apply bg-white p-8 shadow dark:bg-gray-800 dark:text-white;
 
-.pending {
-    @apply text-yellow-500;
-}
+    p {
+        @apply mb-2;
+    }
 
-.shipped {
-    @apply text-blue-500;
+    span {
+        @apply font-semibold;
+    }
+
+    a {
+        @apply text-blue-500 underline hover:no-underline;
+    }
+
+    .completed {
+        @apply capitalize text-green-500;
+    }
+
+    .pending {
+        @apply capitalize text-yellow-500;
+    }
+
+    .shipped {
+        @apply capitalize text-orange-500;
+    }
 }
 </style>
