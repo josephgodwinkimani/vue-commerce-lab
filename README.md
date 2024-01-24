@@ -174,7 +174,21 @@ Controllers are responsible for handling requests and returning responses. They 
 
 ### PHPUnit
 
-This application is equipped with PHPUnit tests for all models and controllers. Run the tests with:
+This application is equipped with PHPUnit tests for all models and controllers.
+
+Before running tests, you'll need to run either have the dev server running or build:
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+npm run build
+```
+
+Now you can run PHPUnit tests with:
 
 ```bash
 php artisan test
@@ -186,7 +200,7 @@ Run a specific test with:
 php artisan test --filter=CustomerTest
 ```
 
-Github Actions will also run the tests on every PR to the `main` branch.
+Github Actions will also [run the tests](https://github.com/gregrickaby/vue-commerce-lab/actions) on every PR to the `main` branch.
 
 ---
 
