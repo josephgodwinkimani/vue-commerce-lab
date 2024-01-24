@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Product } from '@/types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Product } from '@/types'
+import { formatCurrency, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { product } = defineProps<{
@@ -9,7 +10,7 @@ const { product } = defineProps<{
 </script>
 
 <template>
-    <Head :title="`Viewing: ${product.name}`" />
+    <Head :title="`Viewing Product: ${product.name}`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -17,7 +18,7 @@ const { product } = defineProps<{
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Viewing: {{ product.name }}
+                    Viewing Product: {{ product.name }}
                 </h2>
                 <div class="flex gap-4">
                     <Link
@@ -33,7 +34,7 @@ const { product } = defineProps<{
                 </div>
             </div>
         </template>
-        <div class="bg-white shadow-md">
+        <div class="product">
             <div class="md:flex">
                 <div class="md:flex-shrink-0">
                     <img
@@ -43,22 +44,31 @@ const { product } = defineProps<{
                     />
                 </div>
                 <div class="p-8">
-                    <div
-                        class="text-sm font-semibold uppercase tracking-wide text-indigo-500"
-                    >
-                        {{ product.name }}
-                    </div>
-                    <p
-                        class="mt-1 block text-lg font-medium leading-tight text-black"
-                    >
-                        Price: ${{ product.price }}
+                    <p><span>Name:</span> {{ product.name }}</p>
+                    <p><span>Description:</span> {{ product.description }}</p>
+                    <p>
+                        <span>Price:</span> {{ formatCurrency(product.price) }}
                     </p>
-                    <p class="mt-2 text-gray-500">{{ product.description }}</p>
-                    <p class="mt-2 text-gray-500">
-                        Quantity: {{ product.quantity }}
+                    <p>
+                        <span>Quantity:</span>
+                        {{ formatNumber(product.quantity) }}
                     </p>
                 </div>
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.product {
+    @apply overflow-hidden rounded shadow-md dark:bg-gray-800 dark:text-white;
+
+    a {
+        @apply text-blue-600 hover:underline;
+    }
+
+    span {
+        @apply font-semibold;
+    }
+}
+</style>

@@ -9,7 +9,7 @@ const { customer } = defineProps<{
 </script>
 
 <template>
-    <Head :title="`Viewing: ${customer.name}`" />
+    <Head :title="`Viewing Customer: ${customer.name}`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -17,7 +17,7 @@ const { customer } = defineProps<{
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Viewing: {{ customer.name }}
+                    Viewing Customer: {{ customer.name }}
                 </h2>
                 <div class="flex gap-4">
                     <Link

@@ -32,7 +32,7 @@ function saveCustomer() {
 </script>
 
 <template>
-    <Head :title="`Edit: ${customer.name}`" />
+    <Head :title="`Edit Customer: ${customer.name}`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -40,7 +40,7 @@ function saveCustomer() {
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Edit: {{ customer.name }}
+                    Edit Customer: {{ customer.name }}
                 </h2>
                 <div class="flex gap-4">
                     <button

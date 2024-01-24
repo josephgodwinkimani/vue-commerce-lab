@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Product } from '@/types'
 import FormProduct from '@/Components/Organisms/FormProduct.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Product } from '@/types'
 import { Head, Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 // Define page props.
 const { product } = defineProps<{
@@ -34,7 +33,7 @@ function saveProduct() {
 </script>
 
 <template>
-    <Head :title="`Edit: ${product.name}`" />
+    <Head :title="`Edit Product: ${product.name}`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -42,7 +41,7 @@ function saveProduct() {
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Edit: {{ product.name }}
+                    Edit Product: {{ product.name }}
                 </h2>
                 <div class="flex gap-4">
                     <button

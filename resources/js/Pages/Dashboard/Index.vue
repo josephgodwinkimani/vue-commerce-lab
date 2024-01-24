@@ -31,18 +31,21 @@ const {
         <section class="flex gap-8">
             <aside class="widget">
                 <h2>This Week's Orders</h2>
-                <p>Total: {{ formatNumber(ordersCount) }}</p>
-                <p>Amount: {{ formatCurrency(totalRecentOrdersAmount) }}</p>
+                <p><span>Total:</span> {{ formatNumber(ordersCount) }}</p>
+                <p>
+                    <span>Amount:</span>
+                    {{ formatCurrency(totalRecentOrdersAmount) }}
+                </p>
                 <Link href="/orders">View All Orders</Link>
             </aside>
             <aside class="widget">
-                <h2>Top Selling Products This Week</h2>
+                <h2>Biggest Sellers This Week</h2>
                 <ol>
                     <li v-for="product in topSellingProducts" :key="product.id">
                         <Link :href="`/products/${product.id}`">
                             {{ product.name }}
                         </Link>
-                        {{ formatNumber(product.quantity) }}
+                        ({{ formatNumber(product.quantity) }})
                     </li>
                 </ol>
                 <Link href="/products">View All Products</Link>
@@ -54,7 +57,7 @@ const {
                         <Link :href="`/customers/${customer.id}`">
                             {{ customer.name }}
                         </Link>
-                        {{ formatCurrency(customer.total_spent) }}
+                        ({{ formatCurrency(customer.total_spent) }})
                     </li>
                 </ol>
                 <Link href="/customers">View All Customers</Link>
@@ -65,7 +68,7 @@ const {
 
 <style scoped>
 .widget {
-    @apply flex flex-col gap-2 rounded-lg bg-gray-100 p-4 shadow-md dark:bg-gray-800 dark:text-white;
+    @apply flex flex-col gap-2 rounded bg-gray-100 px-8 py-4 shadow-md dark:bg-gray-800 dark:text-white;
 
     h2 {
         @apply text-lg font-semibold;
@@ -73,6 +76,10 @@ const {
 
     a {
         @apply text-blue-500 underline hover:no-underline;
+    }
+
+    span {
+        @apply font-semibold;
     }
 
     ol {
