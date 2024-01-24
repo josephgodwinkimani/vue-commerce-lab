@@ -14,7 +14,7 @@ class ProductTest extends TestCase
     /**
      * Test accessing the products route without authentication.
      */
-    public function test_access_products_route_without_authentication()
+    public function test_access_products_route_without_authentication(): void
     {
         $response = $this->get('/products');
         $response->assertRedirect('/login');
@@ -23,7 +23,7 @@ class ProductTest extends TestCase
     /**
      * Test accessing the products route with authentication.
      */
-    public function test_access_products_route_with_authentication()
+    public function test_access_products_route_with_authentication(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -35,7 +35,7 @@ class ProductTest extends TestCase
     /**
      * Test product creation.
      */
-    public function test_product_creation()
+    public function test_product_creation(): void
     {
         // Create a user
         $user = User::factory()->create();
@@ -64,7 +64,7 @@ class ProductTest extends TestCase
     /**
      * Test product deletion.
      */
-    public function test_product_delete()
+    public function test_product_delete(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);

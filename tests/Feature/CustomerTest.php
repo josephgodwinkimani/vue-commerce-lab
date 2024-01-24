@@ -12,7 +12,7 @@ class CustomerTest extends TestCase
     /**
      * Test accessing the customers route without authentication.
      */
-    public function test_access_customers_route_without_authentication()
+    public function test_access_customers_route_without_authentication(): void
     {
 
         // Access the customers route.
@@ -25,7 +25,7 @@ class CustomerTest extends TestCase
     /**
      * Test accessing the customers route with authentication.
      */
-    public function test_access_customers_route_with_authentication()
+    public function test_access_customers_route_with_authentication(): void
     {
         // Create a user and log in.
         $user = User::factory()->create();
@@ -43,7 +43,7 @@ class CustomerTest extends TestCase
     /**
      * Test creating a new customer.
      */
-    public function test_customer_creation()
+    public function test_customer_creation(): void
     {
         // Create and log in a user if authentication is required.
         $user = User::factory()->create();
@@ -67,7 +67,7 @@ class CustomerTest extends TestCase
     /**
      * Test customer deletion.
      */
-    public function test_customer_delete()
+    public function test_customer_delete(): void
     {
         // Create and log in a user if authentication is required.
         $user = User::factory()->create();
