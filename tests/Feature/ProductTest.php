@@ -16,7 +16,11 @@ class ProductTest extends TestCase
      */
     public function test_access_products_route_without_authentication(): void
     {
+
+        // Access the products route.
         $response = $this->get('/products');
+
+        // Assert that the user is redirected back to the login page.
         $response->assertRedirect('/login');
     }
 
@@ -25,10 +29,16 @@ class ProductTest extends TestCase
      */
     public function test_access_products_route_with_authentication(): void
     {
+        // Create a user.
         $user = User::factory()->create();
+
+        // Authenticate as the user.
         $this->actingAs($user);
 
+        // Access the products route.
         $response = $this->get('/products');
+
+        // Assert successful response code.
         $response->assertStatus(200);
     }
 
@@ -37,27 +47,24 @@ class ProductTest extends TestCase
      */
     public function test_product_creation(): void
     {
-        // Create a user
+        // Create a user.
         $user = User::factory()->create();
 
-        // Authenticate as the user
+        // Authenticate as the user.
         $this->actingAs($user);
 
-        // Generate product data, making sure to include the user_id
-        $productData = Product::factory()->make([
-            'user_id' => $user->id, // Assign the user ID here
-        ])->toArray();
+        // Generate product data.
+        $product = Product::factory()->make()->toArray();
 
-        // Send POST request to create a new product
-        $response = $this->post('/products', $productData);
+        // Send POST request to create a new product.
+        $response = $this->post('/products', $product);
 
         // Assert that the response has a 302 status code (redirect).
         $response->assertRedirect(route('products.index'));
 
-        // Make sure 'sku' is part of the assertion
+        // Assert the product was created in the database.
         $this->assertDatabaseHas('products', [
-            'name' => $productData['name'],
-            'sku' => $productData['sku'], // Include this in your assertion
+            'name' => $product['name'],
         ]);
     }
 
@@ -66,13 +73,23 @@ class ProductTest extends TestCase
      */
     public function test_product_delete(): void
     {
+
+        // Create a user.
         $user = User::factory()->create();
+
+        // Authenticate as the user.
         $this->actingAs($user);
 
+        // Create a product.
         $product = Product::factory()->create();
+
+        // Send DELETE request to delete the product.
         $response = $this->delete("/products/{$product->id}");
+
+        // Assert that the response has a 302 status code (redirect).
         $response->assertRedirect(route('products.index'));
 
+        // Assert that the product was deleted from the database.
         $this->assertDatabaseMissing('products', ['id' => $product->id]);
     }
 }
