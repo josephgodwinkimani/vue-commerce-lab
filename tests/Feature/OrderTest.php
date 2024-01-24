@@ -16,7 +16,7 @@ class OrderTest extends TestCase
     /**
      * Test accessing the orders route without authentication.
      */
-    public function test_access_orders_route_without_authentication()
+    public function test_access_orders_route_without_authentication(): void
     {
 
         // Access the orders route.
@@ -29,7 +29,7 @@ class OrderTest extends TestCase
     /**
      * Test accessing the orders route with authentication.
      */
-    public function test_access_orders_route_with_authentication()
+    public function test_access_orders_route_with_authentication(): void
     {
         // Create a user and log in.
         $user = User::factory()->create();
@@ -47,7 +47,7 @@ class OrderTest extends TestCase
     /**
      * Test creating a new customer.
      */
-    public function test_order_creation()
+    public function test_order_creation(): void
     {
         // Create and log in a user if authentication is required.
         $user = User::factory()->create();
@@ -79,24 +79,33 @@ class OrderTest extends TestCase
     }
 
     /**
-     * Test customer deletion.
+     * Test deleting an order.
      */
-    public function test_order_delete()
+    public function test_order_deletion(): void
     {
         // Create and log in a user if authentication is required.
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // Create a customer.
+        // Create a product for the foreign key dependency.
+        $product = Product::factory()->create();
+
+        // Create a customer for the foreign key dependency.
         $customer = Customer::factory()->create();
 
-        // Send DELETE request to delete the customer.
-        $response = $this->delete("/orders/{$customer->id}");
+        // Create an order.
+        $order = Order::factory()->create([
+            'customer_id' => $customer->id,
+            'product_id' => $product->id,
+        ]);
+
+        // Send DELETE request to delete the order.
+        $response = $this->delete(route('orders.destroy', $order));
 
         // Assert that the response is a redirect to the orders index route.
         $response->assertRedirect(route('orders.index'));
 
-        // Assert the customer is deleted from the database.
-        $this->assertDatabaseMissing('orders', ['id' => $customer->id]);
+        // Assert the order is deleted from the database.
+        $this->assertDatabaseMissing('orders', ['id' => $order->id]);
     }
 }
