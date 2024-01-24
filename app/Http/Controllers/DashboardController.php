@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Product;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -13,9 +15,13 @@ class DashboardController extends Controller
     public function index()
     {
         $ordersCount = Order::countRecentOrders();
+        $topCustomers = Customer::topCustomers();
+        $topSellingProducts = Product::topSellingProducts();
 
         return Inertia::render('Dashboard/Index', [
             'ordersCount' => $ordersCount,
+            'topCustomers' => $topCustomers,
+            'topSellingProducts' => $topSellingProducts,
         ]);
     }
 }
