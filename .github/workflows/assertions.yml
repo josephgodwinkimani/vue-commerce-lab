@@ -1,0 +1,61 @@
+name: Assertions
+
+on:
+    pull_request:
+        branches: ['main']
+
+    workflow_dispatch:
+
+jobs:
+    assertions:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 'lts/*'
+                  cache: 'npm'
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  tools: phpcs, composer:v2
+
+            - name: Setup Composer
+              id: composer-cache
+              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            - name: Cache Composer Dependencies
+              uses: actions/cache@v3
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+
+            - name: Install Dependencies
+              run: |
+                  composer install
+                  npm i --ignore-scripts
+
+            - name: Lint PHP
+              run: composer run lint
+
+            - name: Lint JavaScript
+              run: npm run lint
+
+            - name: Run Migration
+              run: php artisan migrate
+
+            - name: Seed DB
+              run: php artisan db:seed
+
+            - name: Run PHPUnit
+              run: php artisan test
+
+            - name: Test Build
+              run: npm run build
