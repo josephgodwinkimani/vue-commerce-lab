@@ -15,7 +15,7 @@ This repository houses an experimental E-commerce store that serves as a practic
 -   **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
 -   **Tests:** Unit tests for all models and controllers via `php artisan test`.
 -   **Linting and Formatting:** Automatic linting and formatting for PHP, JavaScript, CSS and Vue.js files.
--   **Github Actions:** Continuous integration and testing via Github Actions.
+-   **Github Actions:** Continuous integration and testing via [Github Actions](https://github.com/gregrickaby/vue-commerce-lab/actions).
 
 **Learning Outcomes:** 📚
 
