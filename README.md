@@ -176,7 +176,7 @@ Controllers are responsible for handling requests and returning responses. They 
 
 This application is equipped with PHPUnit tests for all models and controllers. Tests are located in the `tests/` directory.
 
-Before running tests, you'll need to run either have the dev server running or build:
+Because PHPUnit makes calls to the front-end, you'll need to run either start the dev server or run a build:
 
 ```bash
 npm run dev
@@ -204,7 +204,7 @@ php artisan test --filter=CustomerTest
 
 This application is equipped with both [Vitest](https://vitest.dev/) and [Vue Test Utils](https://test-utils.vuejs.org/guide/) (VTU) for testing Vue components. Tests are located in the `/tests` directory.
 
-Vitest and VTU provide a basic set of utility functions aimed to simplify testing Vue.js components. Later, you can easily bolt-on [Vue Testing Library](https://www.npmjs.com/package/@testing-library/vue) which will add even more utility functions.
+Vitest (test runner) and VTU (test library) provide a basic set of utility functions aimed to simplify testing Vue.js components. Later, you can easily bolt-on [Vue Testing Library](https://www.npmjs.com/package/@testing-library/vue) which will add even more utility functions.
 
 You can run the tests with:
 
