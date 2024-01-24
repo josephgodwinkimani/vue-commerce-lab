@@ -3,6 +3,7 @@ import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
 import Pagination from '@/Components/Molecules/Pagination.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Customer } from '@/types'
+import { formatCurrency, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { customers } = defineProps<{
@@ -52,11 +53,8 @@ const { customers } = defineProps<{
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zip</th>
+                        <th>Total Orders</th>
+                        <th>Total Spent</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -69,11 +67,12 @@ const { customers } = defineProps<{
                             >
                         </td>
                         <td>{{ customer.email }}</td>
-                        <td>{{ customer.phone }}</td>
-                        <td>{{ customer.address }}</td>
-                        <td>{{ customer.city }}</td>
-                        <td>{{ customer.state }}</td>
-                        <td>{{ customer.zip }}</td>
+                        <td>{{ formatNumber(customer.order_count) }}</td>
+                        <td>
+                            {{
+                                formatCurrency(customer.orders_sum_total_amount)
+                            }}
+                        </td>
                         <td>
                             <ActionIcons
                                 :entity-id="customer.id"
