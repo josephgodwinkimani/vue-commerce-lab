@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Product extends Model
 {
@@ -33,5 +34,20 @@ class Product extends Model
 
         // Update the product.
         $this->save();
+    }
+
+    /**
+     * Get top selling products in the last $days.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function topSellingProducts(int $days = 7, int $limit = 3)
+    {
+        return self::where('created_at', '>=', Carbon::now()->subDays($days))
+            ->groupBy('id')
+            ->selectRaw('products.*, sum(quantity) as total_quantity_sold')
+            ->orderByDesc('total_quantity_sold')
+            ->limit($limit)
+            ->get();
     }
 }
