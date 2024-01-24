@@ -92,4 +92,26 @@ class ProductTest extends TestCase
         // Assert that the product was deleted from the database.
         $this->assertDatabaseMissing('products', ['id' => $product->id]);
     }
+
+    /**
+     * Test inventory adjustment on product sale.
+     */
+    public function test_inventory_adjustment_on_sale(): void
+    {
+
+        // Create a user.
+        $user = User::factory()->create();
+
+        // Authenticate as the user.
+        $this->actingAs($user);
+
+        // Create a product with a known quantity count.
+        $product = Product::factory()->create(['quantity' => 10]);
+
+        // Simulate a sale of 3 units.
+        $product->adjustInventoryOnSale(3);
+
+        // Check if the inventory count is reduced by 3.
+        $this->assertEquals(7, $product->fresh()->quantity);
+    }
 }
