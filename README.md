@@ -104,7 +104,7 @@ Visit the site: <https://vue-commerce-lab.test>
 
 Login with the following credentials:
 
--   user: <test@example.com>
+-   user: <admin@vuecommercelab.com>
 -   pass: `password`
 
 ---

@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
 
         // Create a test user.
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Jane Doe',
+            'email' => 'admin@vuecommercelab.com',
 
         ]);
 
