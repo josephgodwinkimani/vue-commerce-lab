@@ -13,7 +13,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::withCount('orders')
+            ->withSum('orders', 'total_amount')
+            ->paginate(10);
 
         return Inertia::render('Customers/Index', ['customers' => $customers]);
     }
