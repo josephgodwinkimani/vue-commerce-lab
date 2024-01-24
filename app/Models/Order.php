@@ -49,6 +49,15 @@ class Order extends Model
     }
 
     /**
+     * Calculate the total dollar amount of recent orders in the last $days.
+     */
+    public static function sumRecentOrdersAmount(int $days = 7): int
+    {
+        return (int) self::where('created_at', '>=', Carbon::now()->subDays($days))
+            ->sum('total_amount');
+    }
+
+    /**
      * Count the number of orders in the last $days.
      */
     public static function countRecentOrders(int $days = 7): int
