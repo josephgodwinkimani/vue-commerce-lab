@@ -6,18 +6,26 @@ on:
 
     workflow_dispatch:
 
-env:
-    APP_ENV: testing
-    DB_CONNECTION: sqlite
-    DB_DATABASE: ':memory:'
-
 jobs:
     assertions:
         runs-on: ubuntu-latest
 
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+                    MYSQL_DATABASE: vue_commerce_lab
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=3
+
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
+
+            - name: Copy .env
+              run: cp .env.example .env
 
             - name: Setup Node
               uses: actions/setup-node@v4
@@ -29,7 +37,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: '8.3'
-                  tools: phpcs, composer:v2
+                  tools: composer:v2
 
             - name: Setup Composer
               id: composer-cache
@@ -44,20 +52,26 @@ jobs:
 
             - name: Install Dependencies
               run: |
-                  composer install
+                  composer install --prefer-dist --no-interaction --no-progress
                   npm i --ignore-scripts
+
+            - name: Directory Permissions
+              run: chmod -R 777 storage bootstrap/cache
+
+            - name: Generate key
+              run: php artisan key:generate
+
+            - name: Run Migrations
+              run: php artisan migrate --force
+
+            - name: Seed DB
+              run: php artisan db:seed
 
             - name: Lint PHP
               run: composer run lint
 
             - name: Lint JavaScript
               run: npm run lint
-
-            - name: Run Migration
-              run: php artisan migrate --force
-
-            - name: Seed DB
-              run: php artisan db:seed
 
             - name: Run PHPUnit
               run: php artisan test
