@@ -154,13 +154,19 @@ Folders with a `{}` around them are dynamic routes. For example, `/Pages/Custome
 
 Models are located in the `app/Models` directory. Each model has a corresponding factory and seeder in the `database/factories` and `database/seeders` directories.
 
+Models are responsible for managing the data of the application. They receive input from the controller, validate it, then send it to the database.
+
 ### Views
 
 This application uses Vue and Inertia, so the views are in the `resources/js/pages` directory and routed via the [web.php](https://github.com/gregrickaby/vue-commerce-lab/blob/main/routes/web.php) file.
 
+Views are responsible for displaying the data to the user. They receive data from the controller, then render it to the browser.
+
 ### Controllers
 
 Controllers are located in the `app/Http/Controllers` directory. Each controller has a corresponding test in the `tests/Feature` directory
+
+Controllers are responsible for handling requests and returning responses. They receive input from the user, validate it, then pass it to the model.
 
 ---
 
