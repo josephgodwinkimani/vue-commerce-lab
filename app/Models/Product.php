@@ -25,6 +25,16 @@ class Product extends Model
     ];
 
     /**
+     * Get the order items for the product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * Adjust the inventory count when a product is sold.
      */
     public function adjustInventoryOnSale(int $quantitySold): void
@@ -49,5 +59,23 @@ class Product extends Model
             ->orderByDesc('total_quantity_sold')
             ->limit($limit)
             ->get();
+    }
+
+    /**
+     * Calculate total sales of the product in a specific period.
+     */
+    public function totalSalesInPeriod(int $days = 7): int
+    {
+        return $this->orders()
+            ->where('created_at', '>=', Carbon::now()->subDays($days))
+            ->sum('quantity');
+    }
+
+    /**
+     * Calculate total lifetime sales of the product.
+     */
+    public function totalLifetimeSales(): int
+    {
+        return $this->orders()->sum('quantity');
     }
 }
