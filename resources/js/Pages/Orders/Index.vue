@@ -3,7 +3,7 @@ import ActionIcons from '@/Components/Molecules/ActionIcons.vue'
 import Pagination from '@/Components/Molecules/Pagination.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Order } from '@/types'
-import { formatDate } from '@/utils'
+import { formatCurrency, formatDate, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { orders } = defineProps<{
@@ -56,13 +56,7 @@ const { orders } = defineProps<{
                 </thead>
                 <tbody>
                     <tr v-for="order in orders.data" :key="order.id">
-                        <td>
-                            <Link
-                                class="hover:underline"
-                                :href="route('orders.show', order.id)"
-                                >{{ order.id }}</Link
-                            >
-                        </td>
+                        <td>{{ order.id }}</td>
                         <td :class="order.status">{{ order.status }}</td>
                         <td>
                             <Link
@@ -85,8 +79,8 @@ const { orders } = defineProps<{
                             </Link>
                             <span v-else>No Product</span>
                         </td>
-                        <td>{{ order.quantity }}</td>
-                        <td>${{ order.total_amount }}</td>
+                        <td>{{ formatNumber(order.quantity) }}</td>
+                        <td>{{ formatCurrency(order.total_amount) }}</td>
                         <td>
                             <ActionIcons
                                 :entity-id="order.id"
@@ -105,7 +99,7 @@ const { orders } = defineProps<{
 
 <style scoped>
 .table {
-    @apply w-full border-collapse dark:text-white;
+    @apply w-full border-collapse capitalize dark:text-white;
 
     th,
     td {
@@ -114,6 +108,10 @@ const { orders } = defineProps<{
 
     th {
         @apply bg-gray-100 dark:bg-gray-800;
+    }
+
+    a {
+        @apply text-blue-500 underline hover:no-underline;
     }
 }
 
@@ -126,6 +124,6 @@ const { orders } = defineProps<{
 }
 
 .shipped {
-    @apply text-blue-500;
+    @apply text-orange-500;
 }
 </style>
