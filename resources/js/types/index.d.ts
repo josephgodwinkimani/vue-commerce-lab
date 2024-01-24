@@ -53,6 +53,10 @@ export interface Order {
     updated_at: string
 }
 
+export interface TopCustomer extends Customer {
+    total_spent: number
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
