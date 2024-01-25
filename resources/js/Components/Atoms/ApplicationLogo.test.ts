@@ -1,6 +1,5 @@
 import ApplicationLogo from '@/Components/Atoms/ApplicationLogo.vue'
 import { mount } from '@vue/test-utils'
-import { describe, expect, test } from 'vitest'
 
 /**
  * Define a test suite.
