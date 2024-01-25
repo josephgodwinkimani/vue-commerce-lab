@@ -13,11 +13,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * A basic story showing the logo.
+ * A basic story showing the component.
  *
  * @see https://storybook.js.org/docs/api/csf
  */
-export const Logo: Story = {
+export const Component: Story = {
     render: (args) => ({
         components: { ApplicationLogo },
         setup() {
