@@ -1,4 +1,4 @@
-import DropDown from '@/Components/Atoms/DropDown/DropDown.vue'
+import DropDown from '@/Components/Atoms/Dropdown/Dropdown.vue'
 import { mount } from '@vue/test-utils'
 
 describe('DropDown', () => {
