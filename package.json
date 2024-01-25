@@ -6,7 +6,7 @@
         "build": "vue-tsc && vite build && vite build --ssr",
         "format": "prettier  '**/*.{vue,js,ts,md,html,css,json,yml}' --ignore-path .gitignore --cache --write",
         "lint": "eslint --ext .js,.ts,.vue --fix --ignore-path .gitignore .",
-        "test": "vitest",
+        "test": "vitest --ui",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build --test"
     },
@@ -28,6 +28,7 @@
         "@typescript-eslint/eslint-plugin": "^6.19.1",
         "@typescript-eslint/parser": "^6.19.1",
         "@vitejs/plugin-vue": "^5.0.3",
+        "@vitest/ui": "^1.2.1",
         "@vue/server-renderer": "^3.4.15",
         "@vue/test-utils": "^2.4.3",
         "autoprefixer": "^10.4.17",
