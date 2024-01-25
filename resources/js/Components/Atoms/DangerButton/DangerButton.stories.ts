@@ -6,13 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
  */
 const meta: Meta<typeof DangerButton> = {
     title: 'Atoms/DangerButton',
-    component: DangerButton,
-    argTypes: {
-        buttonText: {
-            control: 'text',
-            defaultValue: 'Click Me'
-        }
-    }
+    component: DangerButton
 }
 
 export default meta
@@ -24,14 +18,8 @@ type Story = StoryObj<typeof meta>
  * @see https://storybook.js.org/docs/api/csf
  */
 export const Component: Story = {
-    args: {
-        buttonText: 'Click Me'
-    },
-    render: (args) => ({
+    render: () => ({
         components: { DangerButton },
-        setup() {
-            return { args }
-        },
-        template: '<DangerButton>{{ args.buttonText }}</DangerButton>'
+        template: '<DangerButton>Click Me</DangerButton>'
     })
 }
