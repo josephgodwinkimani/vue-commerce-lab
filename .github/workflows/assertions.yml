@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    assertions:
+    setup:
         runs-on: ubuntu-latest
 
         services:
@@ -70,12 +70,22 @@ jobs:
             - name: Build App
               run: npm run build
 
+    php:
+        runs-on: ubuntu-latest
+        needs: setup
+
+        steps:
             - name: Lint PHP
               run: composer run lint
 
             - name: Test PHP
               run: php artisan test
 
+    javascript:
+        runs-on: ubuntu-latest
+        needs: setup
+
+        steps:
             - name: Lint JavaScript
               run: npm run lint
 
