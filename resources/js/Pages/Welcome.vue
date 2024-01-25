@@ -13,7 +13,7 @@ defineProps<{
     <Head title="Welcome" />
 
     <div
-        class="bg-dots-darker dark:bg-dots-lighter relative min-h-screen bg-gray-100 bg-center selection:bg-red-500 selection:text-white sm:flex sm:items-center sm:justify-center dark:bg-gray-900"
+        class="bg-dots-darker dark:bg-dots-lighter relative min-h-screen bg-gray-100 bg-center selection:bg-red-500 selection:text-white dark:bg-gray-900 sm:flex sm:items-center sm:justify-center"
     >
         <div v-if="canLogin" class="p-6 text-end sm:fixed sm:right-0 sm:top-0">
             <Link
@@ -314,7 +314,7 @@ defineProps<{
                 class="mt-16 flex justify-center px-6 sm:items-center sm:justify-between"
             >
                 <div
-                    class="text-center text-sm text-gray-500 sm:text-start dark:text-gray-400"
+                    class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-start"
                 >
                     <div class="flex items-center gap-4">
                         <a
@@ -340,7 +340,7 @@ defineProps<{
                 </div>
 
                 <div
-                    class="ms-4 text-center text-sm text-gray-500 sm:ms-0 sm:text-end dark:text-gray-400"
+                    class="ms-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:ms-0 sm:text-end"
                 >
                     Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
                 </div>
