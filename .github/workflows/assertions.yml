@@ -67,18 +67,19 @@ jobs:
             - name: Seed DB
               run: php artisan db:seed
 
+            - name: Build App
+              run: npm run build
+
             - name: Lint PHP
               run: composer run lint
 
             - name: Test PHP
-              run: |
-                  npm run build
-                  php artisan test
+              run: php artisan test
 
             - name: Lint JavaScript
               run: npm run lint
 
             - name: Test JavaScript
-              run: |
-                  npm run build
-                  npm run test:ci
+              run: npm run test:ci
+              env:
+                  LARAVEL_BYPASS_ENV_CHECK: 1
