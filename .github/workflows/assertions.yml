@@ -38,7 +38,7 @@ jobs:
             - name: Install Dependencies
               run: |
                   composer install --prefer-dist --no-interaction --no-progress
-                  npm i --ignore-scripts
+                  npm ci --ignore-scripts
 
     php-tests:
         needs: setup
@@ -57,22 +57,12 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 'lts/*'
-                  cache: 'npm'
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.3'
-                  tools: composer:v2
-
-            - name: Cache Composer Dependencies
+            - name: Restore Composer Cache
               uses: actions/cache@v3
               with:
-                  path: ${{ needs.setup.outputs.composer-cache-dir }}
+                  path: |
+                      vendor
+                      ${{ needs.setup.outputs.composer-cache-dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
 
@@ -99,16 +89,9 @@ jobs:
     javascript-tests:
         needs: setup
         runs-on: ubuntu-latest
-
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
-
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 'lts/*'
-                  cache: 'npm'
 
             - name: Lint JavaScript
               run: npm run lint
