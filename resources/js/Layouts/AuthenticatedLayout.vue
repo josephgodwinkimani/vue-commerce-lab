@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ApplicationLogo from '@/Components/Atoms/ApplicationLogo/ApplicationLogo.vue'
-import Dropdown from '@/Components/Atoms/Dropdown.vue'
+import Dropdown from '@/Components/Atoms/Dropdown/Dropdown.vue'
 import DropdownLink from '@/Components/Atoms/DropdownLink.vue'
 import NavLink from '@/Components/Molecules/NavLink.vue'
 import ResponsiveNavLink from '@/Components/Molecules/ResponsiveNavLink.vue'
