@@ -23,7 +23,24 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * Show a checked checkbox.
+ * A basic story showing the component.
+ */
+export const Component: Story = {
+    render: (args) => ({
+        components: { Checkbox },
+        setup() {
+            return { args }
+        },
+        template: '<Checkbox v-bind="args" />'
+    }),
+    args: {
+        checked: false,
+        value: 'basic-example'
+    }
+}
+
+/**
+ * Checked checkbox.
  */
 export const Checked: Story = {
     render: (args) => ({
@@ -40,7 +57,7 @@ export const Checked: Story = {
 }
 
 /**
- * Show an unchecked checkbox.
+ * Unchecked checkbox.
  */
 export const Unchecked: Story = {
     render: (args) => ({
