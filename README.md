@@ -206,9 +206,9 @@ Run a specific test with:
 php artisan test --filter=CustomerTest
 ```
 
-### Vue Component Tests
+### Vue Component Testing
 
-This application is equipped with both [Vitest](https://vitest.dev/) and [Vue Test Utils](https://test-utils.vuejs.org/guide/) (VTU) for testing Vue components. Tests should be placed next to the component in the `resources/js/Components/**` directory. Tests must be named `**.test.ts`:
+This application is equipped with both [Vitest](https://vitest.dev/) (official test runner) and [Vue Test Utils](https://test-utils.vuejs.org/guide/) (official testing library) for testing Vue components. Tests must be placed next to the component and named `ComponentName.test.ts`:
 
 ```tree
 ├── resources
@@ -216,11 +216,9 @@ This application is equipped with both [Vitest](https://vitest.dev/) and [Vue Te
 │   │   ├── Components
 │   │   │   ├── Atoms
 │   │   │   │   ├── ApplicationLogo.stories.ts
-│   │   │   │   ├── ApplicationLogo.test.ts
+│   │   │   │   ├── ApplicationLogo.test.ts <-- test file
 │   │   │   │   └── ApplicationLogo.vue
 ```
-
-Vitest (test runner) and VTU (test library) provide a basic set of utility functions aimed to simplify testing Vue.js components. Later, you can easily bolt-on [Vue Testing Library](https://www.npmjs.com/package/@testing-library/vue) which will add even more utility functions. Learn more by reading the [Vue Testing Guide](https://vuejs.org/guide/scaling-up/testing.html).
 
 You can run the tests with:
 
@@ -228,11 +226,64 @@ You can run the tests with:
 npm run test
 ```
 
+Vitest will run the tests in watch mode, so you can make changes to the component and see the results in real-time. Additionally, [Vitest UI](https://vitest.dev/guide/ui.html) will also automatically open in a new browser tab.
+
+#### Writing Component Tests
+
+Component tests are written in TypeScript and use the [Vitest API](https://vitest.dev/api/) for assertions. Here's an example:
+
+```ts
+import ApplicationLogo from '@/Components/Atoms/ApplicationLogo.vue'
+import { mount } from '@vue/test-utils'
+import { describe, expect, test } from 'vitest'
+
+/**
+ * Define a test suite.
+ *
+ * @see https://vitest.dev/api/#describe
+ */
+describe('ApplicationLogo', () => {
+    /**
+     * Mount the component.
+     *
+     * @see https://vue-test-utils.vuejs.org/api/#mount
+     */
+    const wrapper = mount(ApplicationLogo)
+
+    /**
+     * Assert the component renders.
+     *
+     * @see https://vitest.dev/api/expect.html
+     */
+    test('logo renders', () => {
+        expect(wrapper).toBeTruthy()
+    })
+
+    /**
+     * Assert the component is a SVG.
+     */
+    test('logo is SVG', () => {
+        wrapper.find('svg')
+    })
+
+    /**
+     * Assert the component matches the snapshot.
+     *
+     * @see https://vitest.dev/api/expect.html#tomatchsnapshot
+     */
+    test('logo matches snapshot', () => {
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+})
+```
+
+### Github Actions
+
 Github Actions will also [run the tests](https://github.com/gregrickaby/vue-commerce-lab/actions) on every PR to the `main` branch.
 
 ---
 
-## Linting and Formatting
+## Linting
 
 ### ESLint
 
@@ -250,34 +301,26 @@ This application is equipped with [Stylelint](https://stylelint.io/) and the [Pr
 
 ### Prettier and Pint
 
-Automatic formatting for both JavaScript and PHP files is configured for `on_save`.
+Automatic formatting for both JavaScript and PHP files is configured for `on_save`. Please see the VSCode settings and extension [configs](https://github.com/gregrickaby/vue-commerce-lab/tree/main/.vscode) for more information.
 
-Please see the VSCode settings and extension [configs](https://github.com/gregrickaby/vue-commerce-lab/tree/main/.vscode) for more information.
-
-You can also manually run the formatters with:
+Manually run Prettier and Pint with:
 
 ```bash
-npm run format
-```
-
-and
-
-```bash
-composer run lint
+npm run format && composer run lint
 ```
 
 ---
 
 ## Storybook
 
-This application is equipped with [Storybook](https://storybook.js.org/) for developing UI components in isolation. Stories must be written in [CSF](https://storybook.js.org/docs/api/csf), placed next to the component in the `resources/js/Components` directory. Stories must be named `**.stories.ts`:
+This application is equipped with [Storybook](https://storybook.js.org/) for developing UI components in isolation. Stories must be written in [CSF](https://storybook.js.org/docs/api/csf), placed next to the component in the `resources/js/Components` directory. Stories must be named `ComponentName.stories.ts`:
 
 ```tree
 ├── resources
 │   ├── js
 │   │   ├── Components
 │   │   │   ├── Atoms
-│   │   │   │   ├── ApplicationLogo.stories.ts
+│   │   │   │   ├── ApplicationLogo.stories.ts <-- story file
 │   │   │   │   ├── ApplicationLogo.test.ts
 │   │   │   │   └── ApplicationLogo.vue
 ```
