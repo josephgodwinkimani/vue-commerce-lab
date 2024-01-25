@@ -7,10 +7,18 @@ on:
     workflow_dispatch:
 
 jobs:
-    setup:
+    assertions:
         runs-on: ubuntu-latest
-        outputs:
-            composer-cache-dir: ${{ steps.composer-cache.outputs.dir }}
+
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+                    MYSQL_DATABASE: vue_commerce_lab
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=3
 
         steps:
             - name: Checkout Repository
@@ -31,40 +39,21 @@ jobs:
                   php-version: '8.3'
                   tools: composer:v2
 
-            - name: Setup Composer Cache Directory
+            - name: Setup Composer
               id: composer-cache
-              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_ENV
+              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            - name: Cache Composer Dependencies
+              uses: actions/cache@v3
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
 
             - name: Install Dependencies
               run: |
                   composer install --prefer-dist --no-interaction --no-progress
                   npm ci --ignore-scripts
-
-    php-tests:
-        needs: setup
-        runs-on: ubuntu-latest
-        services:
-            mysql:
-                image: mysql:5.7
-                env:
-                    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-                    MYSQL_DATABASE: vue_commerce_lab
-                ports:
-                    - 3306:3306
-                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=3
-
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
-
-            - name: Restore Composer Cache
-              uses: actions/cache@v3
-              with:
-                  path: |
-                      vendor
-                      ${{ needs.setup.outputs.composer-cache-dir }}
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
 
             - name: Directory Permissions
               run: chmod -R 777 storage bootstrap/cache
@@ -85,13 +74,6 @@ jobs:
               run: |
                   npm run build
                   php artisan test
-
-    javascript-tests:
-        needs: setup
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
 
             - name: Lint JavaScript
               run: npm run lint
