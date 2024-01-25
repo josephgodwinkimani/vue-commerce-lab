@@ -15,7 +15,7 @@ describe('Checkbox', () => {
     })
 
     /**
-     * Verify the checkbox input renders correctly.
+     * Assert the component input renders correctly.
      */
     test('renders a checkbox input', () => {
         const checkbox = wrapper.find('input[type="checkbox"]')
@@ -23,8 +23,7 @@ describe('Checkbox', () => {
     })
 
     /**
-     * Verify that the checkbox toggles its state
-     * and emits an event on state change.
+     * Assert component toggles its state and emits an event on state change.
      */
     test('toggles checked state and emits update:checked event', async () => {
         const checkbox = wrapper.find('input[type="checkbox"]')
@@ -40,5 +39,12 @@ describe('Checkbox', () => {
             expect(checkbox.element.checked).toBe(false)
             expect(wrapper.emitted('update:checked')?.[1]).toEqual([false])
         }
+    })
+
+    /**
+     * Assert the component matches the snapshot.
+     */
+    test('checkbox matches snapshot', () => {
+        expect(wrapper.html()).toMatchSnapshot()
     })
 })
