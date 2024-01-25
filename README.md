@@ -315,6 +315,8 @@ npm run format && composer run lint
 
 ## Storybook
 
+> View Storybook: <https://gregrickaby.github.io/vue-commerce-lab/> 👀
+
 This application is equipped with [Storybook](https://storybook.js.org/) for developing UI components in isolation. Stories must be written in [CSF](https://storybook.js.org/docs/api/csf), placed next to the component in the `resources/js/Components` directory. Stories must be named `ComponentName.stories.ts`:
 
 ```tree
