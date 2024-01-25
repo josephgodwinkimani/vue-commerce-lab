@@ -18,9 +18,9 @@
         }
     },
     "include": [
-        "resources/js/**/*.ts",
-        "resources/js/**/*.d.ts",
-        "resources/js/**/*.vue",
+        "resources/js/**/**/*.ts",
+        "resources/js/**/**/*.d.ts",
+        "resources/js/**/**/*.vue",
         ".eslintrc.cjs"
     ],
     "exclude": ["node_modules"]
