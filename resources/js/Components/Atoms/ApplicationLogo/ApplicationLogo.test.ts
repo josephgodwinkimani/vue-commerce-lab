@@ -19,14 +19,14 @@ describe('ApplicationLogo', () => {
      *
      * @see https://vitest.dev/api/expect.html
      */
-    test('logo renders', () => {
+    test('renders', () => {
         expect(wrapper).toBeTruthy()
     })
 
     /**
      * Assert the component is a SVG.
      */
-    test('logo is SVG', () => {
+    test('is SVG', () => {
         wrapper.find('svg')
     })
 
@@ -35,7 +35,7 @@ describe('ApplicationLogo', () => {
      *
      * @see https://vitest.dev/api/expect.html#tomatchsnapshot
      */
-    test('logo matches snapshot', () => {
+    test('matches snapshot', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 })

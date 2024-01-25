@@ -15,6 +15,13 @@ describe('Checkbox', () => {
     })
 
     /**
+     * Assert the component renders.
+     */
+    test('renders', () => {
+        expect(wrapper).toBeTruthy()
+    })
+
+    /**
      * Assert the component input renders correctly.
      */
     test('renders a checkbox input', () => {
@@ -44,7 +51,7 @@ describe('Checkbox', () => {
     /**
      * Assert the component matches the snapshot.
      */
-    test('checkbox matches snapshot', () => {
+    test('matches snapshot', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 })
