@@ -7,11 +7,10 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 const meta: Meta<typeof DangerButton> = {
     title: 'Atoms/DangerButton',
     component: DangerButton,
-    // Adding argTypes for dynamically changing the slot content
     argTypes: {
         buttonText: {
             control: 'text',
-            defaultValue: 'Click Me' // Default text for the button
+            defaultValue: 'Click Me'
         }
     }
 }
@@ -26,7 +25,7 @@ type Story = StoryObj<typeof meta>
  */
 export const Component: Story = {
     args: {
-        buttonText: 'Click Me' // Default value for the button text
+        buttonText: 'Click Me'
     },
     render: (args) => ({
         components: { DangerButton },
