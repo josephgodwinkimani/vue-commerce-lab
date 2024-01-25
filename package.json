@@ -2,13 +2,13 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
         "build": "vue-tsc && vite build && vite build --ssr",
+        "build:storybook": "storybook build --test",
+        "dev": "vite",
         "format": "prettier  '**/*.{vue,js,ts,md,html,css,json,yml}' --ignore-path .gitignore --cache --write",
         "lint": "eslint --ext .js,.ts,.vue --fix --ignore-path .gitignore .",
-        "test": "vitest --ui",
         "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build --test"
+        "test": "vitest"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.5.1",
