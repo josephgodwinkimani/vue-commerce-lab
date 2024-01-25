@@ -142,16 +142,20 @@ Vue.js files are located in the `resources/js` directory.
 
 ### Directory Structure
 
-You'll mostly be working with both the `Components` and `Pages` directories.
+The directory structure follows standard Laravel conventions, with the addition of a `types` directory for TypeScript interfaces and types, and a `utils` directory for utility and helper functions.
 
 ```tree
 ├── resources
+│   ├── css
+│   │   └── app.css <-- TailwindCSS
 │   ├── js
 │   │   ├── Components
 │   │   │   ├── Atoms
-│   │   │   │   ├── ApplicationLogo.stories.ts
-│   │   │   │   ├── ApplicationLogo.test.ts
-│   │   │   │   └── ApplicationLogo.vue
+│   │   │   │   ├── ApplicationLogo
+│   │   │   │   │   ├── ApplicationLogo.stories.ts <-- Storybook
+│   │   │   │   │   ├── ApplicationLogo.test.ts <-- Test
+│   │   │   │   │   ├── ApplicationLogo.test.ts.snap <-- Snapshot
+│   │   │   │   │   └── ApplicationLogo.vue <-- Vue Component
 │   │   │   ├── Molecules
 │   │   │   ├── Organisms
 │   │   ├── Layouts
@@ -159,9 +163,17 @@ You'll mostly be working with both the `Components` and `Pages` directories.
 │   │   │   ├── Customers
 │   │   │   │   ├── Create.vue
 │   │   │   │   ├── Index.vue
-│   │   │   │   └── {customer}
+│   │   │   │   └── {customer} <-- Dynamic route
 │   │   │   │       ├── Edit.vue
 │   │   │   │       └── Show.vue
+│   │   ├── app.ts <-- Vue app
+│   │   ├── types
+│   │   │   └── index.d.ts <-- Typescript interfaces and types
+│   │   └── utils
+│   │       └── index.ts <-- Utility and helper functions
+│   └── views
+│       ├── app.blade.php
+│       └── welcome.blade.php
 ```
 
 ### Dynamic Routes
@@ -217,9 +229,11 @@ This application is equipped with both [Vitest](https://vitest.dev/) (official t
 │   ├── js
 │   │   ├── Components
 │   │   │   ├── Atoms
-│   │   │   │   ├── ApplicationLogo.stories.ts
-│   │   │   │   ├── ApplicationLogo.test.ts <-- test file
-│   │   │   │   └── ApplicationLogo.vue
+│   │   │   │   ├── ApplicationLogo
+│   │   │   │   │   ├── ApplicationLogo.stories.ts <-- Storybook
+│   │   │   │   │   ├── ApplicationLogo.test.ts <-- Test
+│   │   │   │   │   ├── ApplicationLogo.test.ts.snap <-- Snapshot
+│   │   │   │   │   └── ApplicationLogo.vue <-- Vue Component
 ```
 
 You can run the tests with:
@@ -235,7 +249,7 @@ Vitest will run the tests in watch mode, so you can make changes to the componen
 Component tests are written in TypeScript and use the [Vitest API](https://vitest.dev/api/) for assertions. Here's an example:
 
 ```ts
-import ApplicationLogo from '@/Components/Atoms/ApplicationLogo.vue'
+import ApplicationLogo from '@/Components/Atoms/ApplicationLogo/ApplicationLogo.vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
 
@@ -324,15 +338,23 @@ This application is equipped with [Storybook](https://storybook.js.org/) for dev
 │   ├── js
 │   │   ├── Components
 │   │   │   ├── Atoms
-│   │   │   │   ├── ApplicationLogo.stories.ts <-- story file
-│   │   │   │   ├── ApplicationLogo.test.ts
-│   │   │   │   └── ApplicationLogo.vue
+│   │   │   │   ├── ApplicationLogo
+│   │   │   │   │   ├── ApplicationLogo.stories.ts <-- Storybook
+│   │   │   │   │   ├── ApplicationLogo.test.ts <-- Test
+│   │   │   │   │   ├── ApplicationLogo.test.ts.snap <-- Snapshot
+│   │   │   │   │   └── ApplicationLogo.vue <-- Vue Component
 ```
 
 Run Storybook with:
 
 ```bash
 npm run storybook
+```
+
+Build Storybook with:
+
+```bash
+npm run build:storybook
 ```
 
 ---
