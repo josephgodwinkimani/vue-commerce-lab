@@ -14,6 +14,7 @@ This repository houses an experimental E-commerce dashboard that serves as a pra
 -   **[Inertia.js](https://inertiajs.com/)**: Bridges Laravel and Vue.js, enabling server-side rendering and client-side navigation without page reloads.
 -   **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework used for designing sleek, responsive layouts with speed and efficiency.
 -   **[Storybook](https://storybook.js.org/)**: A development environment for UI components, allowing for rapid iteration and testing.
+-   **[Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/):** A methodology for designing UIs with a focus on reusability and scalability.
 -   **Tests:** Unit tests for all models and controllers using PHPUnit, and component tests for Vue.js components using Vitest and Vue Test Utils.
 -   **Linting and Formatting:** Automatic linting and formatting for PHP, JavaScript, CSS and Vue.js files.
 -   **Github Actions:** Continuous integration and testing with Github Actions.
