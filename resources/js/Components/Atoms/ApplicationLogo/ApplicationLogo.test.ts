@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/Atoms/ApplicationLogo.vue'
+import ApplicationLogo from '@/Components/Atoms/ApplicationLogo/ApplicationLogo.vue'
 import { mount } from '@vue/test-utils'
 
 /**

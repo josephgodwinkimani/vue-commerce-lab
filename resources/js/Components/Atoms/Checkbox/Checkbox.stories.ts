@@ -1,4 +1,4 @@
-import Checkbox from '@/Components/Atoms/Checkbox.vue'
+import Checkbox from '@/Components/Atoms/Checkbox/Checkbox.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 /**

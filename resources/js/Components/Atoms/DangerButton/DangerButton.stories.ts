@@ -1,4 +1,4 @@
-import DangerButton from '@/Components/Atoms/DangerButton.vue'
+import DangerButton from '@/Components/Atoms/DangerButton/DangerButton.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 /**

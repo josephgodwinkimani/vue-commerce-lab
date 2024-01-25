@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import ApplicationLogo from '@/Components/Atoms/ApplicationLogo.vue'
+import ApplicationLogo from '@/Components/Atoms/ApplicationLogo/ApplicationLogo.vue'
 import Dropdown from '@/Components/Atoms/Dropdown.vue'
 import DropdownLink from '@/Components/Atoms/DropdownLink.vue'
 import NavLink from '@/Components/Molecules/NavLink.vue'
 import ResponsiveNavLink from '@/Components/Molecules/ResponsiveNavLink.vue'
 import { Link } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
 const showingNavigationDropdown = ref(false)
 </script>
