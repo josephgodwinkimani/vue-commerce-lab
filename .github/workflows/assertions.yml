@@ -70,11 +70,26 @@ jobs:
             - name: Build App
               run: npm run build
 
+            - name: Upload Build Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: build-artifacts
+                  path: ./public
+
     php:
         runs-on: ubuntu-latest
         needs: setup
 
         steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Download Build Artifacts
+              uses: actions/download-artifact@v3
+              with:
+                  name: build-artifacts
+                  path: ./public
+
             - name: Lint PHP
               run: composer run lint
 
@@ -86,6 +101,15 @@ jobs:
         needs: setup
 
         steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Download Build Artifacts
+              uses: actions/download-artifact@v3
+              with:
+                  name: build-artifacts
+                  path: ./public
+
             - name: Lint JavaScript
               run: npm run lint
 
