@@ -8,7 +8,8 @@
         "format": "prettier  '**/*.{vue,js,ts,md,html,css,json,yml}' --ignore-path .gitignore --cache --write",
         "lint": "eslint --ext .js,.ts,.vue --fix --ignore-path .gitignore .",
         "storybook": "storybook dev -p 6006",
-        "test": "vitest"
+        "test": "vitest",
+        "test:ci": "vitest run"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.5.1",
