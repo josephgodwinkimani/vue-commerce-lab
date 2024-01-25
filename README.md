@@ -149,6 +149,7 @@ You'll mostly be working with both the `Components` and `Pages` directories.
 │   │   ├── Components
 │   │   │   ├── Atoms
 │   │   │   │   ├── ApplicationLogo.stories.ts
+│   │   │   │   ├── ApplicationLogo.test.ts
 │   │   │   │   └── ApplicationLogo.vue
 │   │   │   ├── Molecules
 │   │   │   ├── Organisms
