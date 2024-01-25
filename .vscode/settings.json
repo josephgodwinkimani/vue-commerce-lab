@@ -21,6 +21,11 @@
     "tailwindCSS.emmetCompletions": true,
     "typescript.suggest.autoImports": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
     "[vue]": {
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
