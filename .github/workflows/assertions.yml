@@ -83,3 +83,6 @@ jobs:
               run: npm run test:ci
               env:
                   LARAVEL_BYPASS_ENV_CHECK: 1
+
+            - name: Test Storybook
+              run: npm run build:storybook
