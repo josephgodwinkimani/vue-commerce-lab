@@ -228,7 +228,7 @@ You can run the tests with:
 npm run test
 ```
 
-Vitest will run the tests in watch mode, so you can make changes to the component and see the results in real-time. Additionally, [Vitest UI](https://vitest.dev/guide/ui.html) will also automatically open in a new browser tab.
+Vitest will run the tests in watch mode, so you can make changes to the component and see the results in real-time.
 
 #### Writing Component Tests
 
