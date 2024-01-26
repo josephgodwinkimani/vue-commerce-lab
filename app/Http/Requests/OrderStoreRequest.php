@@ -22,17 +22,13 @@ class OrderStoreRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'customer_id' => 'required|exists:customers,id',
-            'status' => 'required|string|max:255',
-            'shipping_address' => 'required|string',
             'billing_address' => 'required|string',
-            'credit_card_type' => 'required|string|max:255',
             'credit_card_last_four' => 'required|string|max:4',
-            'total_amount' => 'required|numeric',
+            'credit_card_type' => 'required|string|max:255',
+            'customer_id' => 'required|exists:customers,id',
             'customer_note' => 'nullable|string',
-            'products' => 'required|array',
-            'products.*.product_id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|numeric|min:1',
+            'shipping_address' => 'required|string',
+            'status' => 'required|string|max:255',
         ];
 
         return $rules;
