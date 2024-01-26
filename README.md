@@ -271,14 +271,14 @@ describe('ApplicationLogo', () => {
      *
      * @see https://vitest.dev/api/expect.html
      */
-    test('logo renders', () => {
+    test('component renders', () => {
         expect(wrapper).toBeTruthy()
     })
 
     /**
      * Assert the component is a SVG.
      */
-    test('logo is SVG', () => {
+    test('component is SVG', () => {
         wrapper.find('svg')
     })
 
@@ -287,11 +287,16 @@ describe('ApplicationLogo', () => {
      *
      * @see https://vitest.dev/api/expect.html#tomatchsnapshot
      */
-    test('logo matches snapshot', () => {
+    test('component matches snapshot', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 })
 ```
+
+#### Helpful Links
+
+1. [Vitest API](https://vitest.dev/api/)
+2. [Vue Test Utils API](https://test-utils.vuejs.org/api/)
 
 ### Github Actions
 
