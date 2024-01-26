@@ -25,14 +25,13 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => Customer::inRandomOrder()->first()->id,
-            'status' => $this->faker->randomElement(['pending', 'completed', 'shipped']),
-            'shipping_address' => $this->faker->address,
             'billing_address' => $this->faker->address,
-            'credit_card_type' => $this->faker->creditCardType,
             'credit_card_last_four' => $this->faker->numerify('####'),
+            'credit_card_type' => $this->faker->creditCardType,
+            'customer_id' => Customer::inRandomOrder()->first()->id,
             'customer_note' => $this->faker->sentence,
-            'total_amount' => $this->faker->randomFloat(2, 20, 500),
+            'shipping_address' => $this->faker->address,
+            'status' => $this->faker->randomElement(['pending', 'completed', 'shipped']),
         ];
     }
 }

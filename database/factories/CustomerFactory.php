@@ -24,11 +24,11 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->streetAddress,
             'city' => $this->faker->city,
+            'email' => $this->faker->unique()->safeEmail,
+            'name' => $this->faker->name,
+            'phone' => $this->faker->phoneNumber,
             'state' => $this->faker->stateAbbr,
             'zip' => $this->faker->postcode,
         ];

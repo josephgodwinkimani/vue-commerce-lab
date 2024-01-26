@@ -24,12 +24,12 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
-            'sku' => 'SKU-'.$this->faker->unique()->numberBetween(1, 9999),
             'description' => $this->faker->sentence,
+            'image' => $this->faker->imageUrl(),
+            'name' => $this->faker->word,
             'price' => $this->faker->randomFloat(2, 10, 500),
             'quantity' => $this->faker->numberBetween(1, 100),
-            'image' => $this->faker->imageUrl(),
+            'sku' => 'SKU-'.$this->faker->unique()->numberBetween(1, 9999),
         ];
     }
 }
