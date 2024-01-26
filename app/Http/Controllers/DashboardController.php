@@ -14,16 +14,52 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $ordersCount = Order::countRecentOrders();
-        $totalRecentOrdersAmount = Order::sumRecentOrdersAmount();
-        $topCustomers = Customer::topCustomers();
-        $topSellingProducts = Product::topSellingProducts();
+        $ordersCount = Order::countRecentOrders(7);
+        $totalRecentOrdersAmount = Order::sumRecentOrdersAmount(7);
+        $bestCustomers = Customer::bestCustomers(7, 3);
+        $bestSellingProducts = Product::bestSellingProducts(7, 3)->get();
 
         return Inertia::render('Dashboard/Index', [
             'ordersCount' => $ordersCount,
             'totalRecentOrdersAmount' => $totalRecentOrdersAmount,
-            'topCustomers' => $topCustomers,
-            'topSellingProducts' => $topSellingProducts,
+            'bestCustomers' => $bestCustomers,
+            'bestSellingProducts' => $bestSellingProducts,
         ]);
+    }
+
+    /**
+     * Display the best sellers page.
+     */
+    public function bestSellers()
+    {
+
+        $bestSellingProducts = Product::bestSellingProducts(7, 3)->get();
+
+        return Inertia::render('Dashboard/Reports/BestSellers', [
+            'bestSellingProducts' => $bestSellingProducts,
+        ]);
+    }
+
+    /**
+     * Display the best customers page.
+     */
+    public function bestCustomers()
+    {
+
+        $bestCustomers = Customer::bestCustomers(7, 10);
+
+        return Inertia::render('Dashboard/Reports/BestCustomers', [
+            'bestCustomers' => $bestCustomers,
+        ]);
+    }
+
+    /**
+     * Display the best customers page.
+     */
+    public function orderStatus()
+    {
+        $orders = Order::with(['customer', 'items'])->paginate(10);
+
+        return Inertia::render('Dashboard/Reports/OrderStatus', ['orders' => $orders]);
     }
 }

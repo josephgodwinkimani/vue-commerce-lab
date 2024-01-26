@@ -13,13 +13,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::withCount('orders')
-            ->with(['orders' => function ($query) {
-                $query->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                    ->selectRaw('orders.customer_id, sum(order_items.quantity * order_items.price) as total_spent')
-                    ->groupBy('orders.customer_id');
-            }])
-            ->paginate(10);
+        $customers = Customer::withCount('orders')->paginate(10);
 
         return Inertia::render('Customers/Index', ['customers' => $customers]);
     }

@@ -45,12 +45,10 @@ class ProductController extends Controller
     {
 
         $totalSalesLastWeek = $product->totalSalesInPeriod();
-        $totalLifetimeSales = $product->totalLifetimeSales();
 
         return Inertia::render('Products/{product}/Show', [
             'product' => $product,
             'totalSalesLastWeek' => $totalSalesLastWeek,
-            'totalLifetimeSales' => $totalLifetimeSales,
         ]);
     }
 
