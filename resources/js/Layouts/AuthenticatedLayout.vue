@@ -72,6 +72,43 @@ const showingNavigationDropdown = ref(false)
                                 >
                                     Orders
                                 </NavLink>
+                                <div
+                                    class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:border-gray-300 hover:text-gray-700 focus:border-gray-300 focus:text-gray-700 focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:hover:text-gray-300 dark:focus:border-gray-700 dark:focus:text-gray-300"
+                                >
+                                    <Dropdown align="left" width="48">
+                                        <template #trigger> Reports </template>
+
+                                        <template #content>
+                                            <DropdownLink
+                                                :href="
+                                                    route(
+                                                        'dashboard.bestSellers'
+                                                    )
+                                                "
+                                            >
+                                                Best Sellers
+                                            </DropdownLink>
+                                            <DropdownLink
+                                                :href="
+                                                    route(
+                                                        'dashboard.bestCustomers'
+                                                    )
+                                                "
+                                            >
+                                                Best Customers
+                                            </DropdownLink>
+                                            <DropdownLink
+                                                :href="
+                                                    route(
+                                                        'dashboard.orderStatus'
+                                                    )
+                                                "
+                                            >
+                                                Order Status
+                                            </DropdownLink>
+                                        </template>
+                                    </Dropdown>
+                                </div>
                             </div>
                         </div>
 
