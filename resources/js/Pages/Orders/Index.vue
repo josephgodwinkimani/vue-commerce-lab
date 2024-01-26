@@ -48,7 +48,7 @@ const { orders } = defineProps<{
                         <th>Status</th>
                         <th>Customer</th>
                         <th>Date</th>
-                        <th>Product</th>
+                        <th>Product IDs</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Actions</th>
@@ -76,16 +76,22 @@ const { orders } = defineProps<{
                         </td>
                         <td>{{ formatDate(order.created_at) }}</td>
                         <td>
-                            <Link
-                                v-if="order.product"
-                                :href="route('products.show', order.product.id)"
-                            >
-                                {{ order.product.name }}
-                            </Link>
-                            <span v-else>No Product</span>
+                            <span
+                                v-for="item in order.items"
+                                :key="item.product.id"
+                                >[
+                                <Link
+                                    :href="
+                                        route('products.show', item.product.id)
+                                    "
+                                >
+                                    {{ item.product.id }}
+                                </Link>
+                                ]
+                            </span>
                         </td>
                         <td>{{ formatNumber(order.quantity) }}</td>
-                        <td>{{ formatCurrency(order.total_amount) }}</td>
+                        <td>{{ formatCurrency(order.total_revenue) }}</td>
                         <td>
                             <ActionIcons
                                 :entity-id="order.id"

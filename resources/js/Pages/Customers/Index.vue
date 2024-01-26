@@ -53,8 +53,8 @@ const { customers } = defineProps<{
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Total Orders</th>
-                        <th>Total Spent</th>
+                        <th>Lifetime Orders</th>
+                        <th>Lifetime Spent</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -67,11 +67,9 @@ const { customers } = defineProps<{
                             >
                         </td>
                         <td>{{ customer.email }}</td>
-                        <td>{{ formatNumber(customer.order_count) }}</td>
+                        <td>{{ formatNumber(customer.lifetime_orders) }}</td>
                         <td>
-                            {{
-                                formatCurrency(customer.orders_sum_total_amount)
-                            }}
+                            {{ formatCurrency(customer.lifetime_revenue) }}
                         </td>
                         <td>
                             <ActionIcons
@@ -81,6 +79,7 @@ const { customers } = defineProps<{
                                 delete-route="customers.destroy"
                             />
                         </td>
+                        <pre>{{ JSON.stringify(customer, null, 2) }}</pre>
                     </tr>
                 </tbody>
             </table>

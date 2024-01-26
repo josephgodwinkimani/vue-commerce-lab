@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Customer } from '@/types'
+import { formatCurrency, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { customer } = defineProps<{
@@ -42,6 +43,14 @@ const { customer } = defineProps<{
                 <span>Address:</span> {{ customer.address }},
                 {{ customer.city }}, {{ customer.state }},
                 {{ customer.zip }}
+            </p>
+            <p>
+                <span>Lifetime Orders:</span>
+                {{ formatNumber(customer.lifetime_orders) }}
+            </p>
+            <p>
+                <span>Lifetime Total:</span>
+                {{ formatCurrency(customer.lifetime_revenue) }}
             </p>
 
             <div v-if="customer.orders.length">

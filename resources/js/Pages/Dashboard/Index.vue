@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Product, TopCustomer } from '@/types'
+import { Customer, Product } from '@/types'
 import { formatCurrency, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const {
     ordersCount,
     totalRecentOrdersAmount,
-    topCustomers,
-    topSellingProducts
+    bestCustomers,
+    bestSellingProducts
 } = defineProps<{
     ordersCount: number
     totalRecentOrdersAmount: number
-    topSellingProducts: Product[]
-    topCustomers: TopCustomer[]
+    bestSellingProducts: Product[]
+    bestCustomers: Customer[]
 }>()
 </script>
 
@@ -41,7 +41,10 @@ const {
             <aside class="widget">
                 <h2>Biggest Sellers This Week</h2>
                 <ol>
-                    <li v-for="product in topSellingProducts" :key="product.id">
+                    <li
+                        v-for="product in bestSellingProducts"
+                        :key="product.id"
+                    >
                         <Link :href="`/products/${product.id}`">
                             {{ product.name }}
                         </Link>
@@ -53,16 +56,17 @@ const {
             <aside class="widget">
                 <h2>Top Customers This Week</h2>
                 <ol>
-                    <li v-for="customer in topCustomers" :key="customer.id">
+                    <li v-for="customer in bestCustomers" :key="customer.id">
                         <Link :href="`/customers/${customer.id}`">
                             {{ customer.name }}
                         </Link>
-                        ({{ formatCurrency(customer.total_spent) }})
+                        ({{ formatCurrency(customer.lifetime_revenue) }})
                     </li>
                 </ol>
                 <Link href="/customers">View All Customers</Link>
             </aside>
         </section>
+        <pre>{{ JSON.stringify(bestCustomers, null, 2) }}</pre>
     </AuthenticatedLayout>
 </template>
 

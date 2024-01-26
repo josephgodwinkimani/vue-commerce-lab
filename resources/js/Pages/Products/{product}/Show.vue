@@ -4,10 +4,9 @@ import { Product } from '@/types'
 import { formatCurrency, formatNumber } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
-const { product, totalSalesLastWeek, totalLifetimeSales } = defineProps<{
+const { product, totalSalesLastWeek } = defineProps<{
     product: Product
     totalSalesLastWeek: number
-    totalLifetimeSales: number
 }>()
 </script>
 
@@ -61,7 +60,9 @@ const { product, totalSalesLastWeek, totalLifetimeSales } = defineProps<{
                     </p>
                     <p>
                         <span>Total Lifetime Sales:</span>
-                        {{ formatNumber(totalLifetimeSales) }}
+                        {{ formatNumber(product.lifetime_sales) }} ({{
+                            formatCurrency(product.lifetime_revenue)
+                        }})
                     </p>
                 </div>
             </div>

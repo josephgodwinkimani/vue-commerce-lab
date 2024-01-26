@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Order } from '@/types'
-import { formatCurrency, formatDate, formatNumber } from '@/utils'
+import { formatCurrency, formatDate } from '@/utils'
 import { Head, Link } from '@inertiajs/vue3'
 
 const { order } = defineProps<{
@@ -18,7 +18,7 @@ const { order } = defineProps<{
                 <h2
                     class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
                 >
-                    Viewing Order ID: {{ order.product.id }}
+                    Viewing Order ID: {{ order.id }}
                 </h2>
                 <div class="flex gap-4">
                     <Link
@@ -51,18 +51,20 @@ const { order } = defineProps<{
                 </Link>
                 <span v-else>No Customer</span>
             </p>
-            <p>
-                <span>Product: </span>
-                <Link
-                    v-if="order.product"
-                    :href="route('products.show', order.product.id)"
-                >
-                    {{ order.product.name }}
-                </Link>
-                <span v-else>No Product</span>
-            </p>
-            <p>Quantity: {{ formatNumber(order.quantity) }}</p>
-            <p>Total Amount: {{ formatCurrency(order.total_amount) }}</p>
+            <p><span>Total Items:</span> {{ order.quantity }}</p>
+            <div v-if="order.items" class="mb-2">
+                <span>Products:</span>
+                <ol>
+                    <li v-for="item in order.items" :key="item.id">
+                        <span>{{ item.quantity }}x </span>
+                        <Link :href="route('products.show', item.product_id)">
+                            {{ item.product.name }}
+                        </Link>
+                        ({{ formatCurrency(item.product.price) }})
+                    </li>
+                </ol>
+            </div>
+            <p><span>Total Amount:</span> {{ formatCurrency(order.total) }}</p>
         </div>
     </AuthenticatedLayout>
 </template>
@@ -73,6 +75,10 @@ const { order } = defineProps<{
 
     p {
         @apply mb-2;
+    }
+
+    ol {
+        @apply mt-2 list-inside list-decimal;
     }
 
     span {
