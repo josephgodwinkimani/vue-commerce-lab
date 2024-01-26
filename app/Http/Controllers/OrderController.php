@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderStoreRequest;
 use App\Models\Order;
+use App\Models\Product;
 use Inertia\Inertia;
 
 class OrderController extends Controller
@@ -33,7 +34,15 @@ class OrderController extends Controller
     {
         $orderData = $request->validated();
 
-        Order::create($orderData);
+        $order = Order::create($orderData);
+
+        foreach ($request->products as $product) {
+            $order->items()->create([
+                'product_id' => $product['product_id'],
+                'quantity' => $product['quantity'],
+                'price' => Product::find($product['product_id'])->price,
+            ]);
+        }
 
         return redirect()->route('orders.index');
     }
@@ -70,9 +79,17 @@ class OrderController extends Controller
 
         $order->update($orderData);
 
-        return Inertia::render('Orders/{order}/Edit', [
-            'order' => $order->refresh(),
-        ]);
+        // Remove all existing items and add new ones.
+        $order->items()->delete();
+        foreach ($request->products as $product) {
+            $order->items()->create([
+                'product_id' => $product['product_id'],
+                'quantity' => $product['quantity'],
+                'price' => Product::find($product['product_id'])->price,
+            ]);
+        }
+
+        return redirect()->route('orders.index');
     }
 
     /**

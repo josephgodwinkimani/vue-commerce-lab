@@ -21,12 +21,20 @@ class Order extends Model
         'credit_card_type',
         'customer_id',
         'customer_note',
-        'product_id',
-        'quantity',
         'shipping_address',
         'status',
         'total_amount',
     ];
+
+    /**
+     * Order item relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 
     /**
      * Get the customer that owns the order.

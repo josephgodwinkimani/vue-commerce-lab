@@ -1,10 +1,10 @@
 import { Config } from 'ziggy-js'
 
 export interface User {
-    id: number
-    name: string
     email: string
     email_verified_at: string
+    id: number
+    name: string
 }
 
 export interface Product {
@@ -26,13 +26,23 @@ export interface Customer {
     email: string
     id: number
     name: string
+    order_count: number
+    orders: Order[]
     orders: Order[]
     phone: string
     state: string
+    total_spent: number
     updated_at: string
     zip: string
-    order_count: number
-    orders_sum_total_amount: number
+}
+
+export interface OrderItem {
+    id: number
+    order_id: number
+    price: number
+    product: Product
+    product_id: number
+    quantity: number
 }
 
 export interface Order {
@@ -41,14 +51,10 @@ export interface Order {
     credit_card_last_four: string
     credit_card_type: string
     customer: Customer
-    product: Product
     customer_id: number
     customer_note?: string
     id: number
-    next_page_url: string
-    prev_page_url: string
-    product_id: number
-    quantity: number
+    items: OrderItem[]
     shipping_address: string
     status: string
     total_amount: number

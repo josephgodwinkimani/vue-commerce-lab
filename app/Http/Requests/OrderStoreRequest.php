@@ -23,15 +23,16 @@ class OrderStoreRequest extends FormRequest
     {
         $rules = [
             'customer_id' => 'required|exists:customers,id',
-            'product_id' => 'required|exists:products,id',
             'status' => 'required|string|max:255',
             'shipping_address' => 'required|string',
             'billing_address' => 'required|string',
             'credit_card_type' => 'required|string|max:255',
             'credit_card_last_four' => 'required|string|max:4',
-            'quantity' => 'required|numeric',
             'total_amount' => 'required|numeric',
             'customer_note' => 'nullable|string',
+            'products' => 'required|array',
+            'products.*.product_id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|numeric|min:1',
         ];
 
         return $rules;
