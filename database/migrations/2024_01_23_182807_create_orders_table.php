@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('credit_card_type');
             $table->string('credit_card_last_four');
             $table->text('customer_note')->nullable();
-            $table->decimal('total_amount', 8, 2)->nullable();
             $table->timestamps();
         });
     }
