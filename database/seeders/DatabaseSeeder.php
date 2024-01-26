@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,22 +18,23 @@ class DatabaseSeeder extends Seeder
     {
 
         // Create a test user.
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Jane Doe',
             'email' => 'admin@vuecommercelab.com',
 
         ]);
 
         // Seed 500 products.
-        \App\Models\Product::factory(500)->create();
+        Product::factory(500)->create();
 
         // Seed 500 customers.
-        \App\Models\Customer::factory(500)->create();
+        Customer::factory(500)->create();
 
-        // Seed 500 orders.
-        \App\Models\Order::factory(500)->create();
-
-        // Seed 500 order items.
-        \App\Models\OrderItem::factory(500)->create();
+        // Seed 500 orders with each order having multiple order items.
+        Order::factory(500)->create()->each(function ($order) {
+            OrderItem::factory(rand(1, 5))->create([
+                'order_id' => $order->id,
+            ]);
+        });
     }
 }
