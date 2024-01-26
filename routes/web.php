@@ -37,8 +37,11 @@ Route::get('/', function () {
  */
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Dashboard route.
+    // Dashboard routes.
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/reports/best-sellers', [DashboardController::class, 'bestSellers'])->name('dashboard.bestSellers');
+    Route::get('/dashboard/reports/best-customers', [DashboardController::class, 'bestCustomers'])->name('dashboard.bestCustomers');
+    Route::get('/dashboard/reports/order-status', [DashboardController::class, 'orderStatus'])->name('dashboard.orderStatus');
 
     // Profile routes.
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -49,6 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('orders', OrderController::class);
+
 });
 
 require __DIR__.'/auth.php';
