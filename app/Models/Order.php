@@ -23,11 +23,17 @@ class Order extends Model
         'customer_note',
         'shipping_address',
         'status',
-        'total_amount',
     ];
 
     /**
-     * Order item relationship.
+     * The attributes that should be appended to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = ['quantity', 'total_revenue'];
+
+    /**
+     * Get the related order items.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -37,7 +43,7 @@ class Order extends Model
     }
 
     /**
-     * Get the customer that owns the order.
+     * Get the customer that belongs to the order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -47,29 +53,49 @@ class Order extends Model
     }
 
     /**
-     * Get the product that owns the order.
+     * Get the total quanity of items in the order.
+     */
+    public function getQuantityAttribute()
+    {
+        return $this->items->sum('quantity');
+    }
+
+    /**
+     * Get the total revenue of the order.
+     */
+    public function getTotalRevenueAttribute()
+    {
+        return $this->items->map(function ($item) {
+            return $item->quantity * $item->product->price;
+        })->sum();
+    }
+
+    /**
+     * Scope a query to calculate the total dollar amount of recent orders in the last $days.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function product()
+    public function scopeSumRecentOrdersAmount($query, int $days = 7)
     {
-        return $this->belongsTo(Product::class);
+        return $query->with(['items.product'])
+            ->where('created_at', '>=', Carbon::now()->subDays($days))
+            ->get()
+            ->sum(function ($order) {
+                return $order->items->sum(function ($item) {
+                    return $item->quantity * $item->product->price;
+                });
+            });
     }
 
     /**
-     * Calculate the total dollar amount of recent orders in the last $days.
+     * Scope a query to count the number of orders in the last $days.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return int
      */
-    public static function sumRecentOrdersAmount(int $days = 7): int
+    public function scopeCountRecentOrders($query, int $days = 7)
     {
-        return (int) self::where('created_at', '>=', Carbon::now()->subDays($days))
-            ->sum('total_amount');
-    }
-
-    /**
-     * Count the number of orders in the last $days.
-     */
-    public static function countRecentOrders(int $days = 7): int
-    {
-        return self::where('created_at', '>=', Carbon::now()->subDays($days))->count();
+        return $query->where('created_at', '>=', Carbon::now()->subDays($days))->count();
     }
 }

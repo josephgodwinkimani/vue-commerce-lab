@@ -5,7 +5,6 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Customer extends Model
 {
@@ -31,7 +30,7 @@ class Customer extends Model
      *
      * @var array<int, string>
      */
-    protected $appends = ['order_count', 'total_spent'];
+    protected $appends = ['lifetime_orders', 'lifetime_revenue'];
 
     /**
      * Get the orders for the customer.
@@ -44,37 +43,47 @@ class Customer extends Model
     }
 
     /**
-     * Get the total number of orders for the customer.
+     * Get the total lifetime orders for the customer.
      */
-    public function getOrderCountAttribute(): int
+    public function getLifetimeOrdersAttribute(): int
     {
-        return (int) $this->orders()->count();
+        return (int) $this->orders->count();
     }
 
     /**
-     * Get the total amount spent by the customer.
+     * Get the total lifetime revenue by the customer.
      */
-    public function getTotalSpentAttribute(): int
+    public function getLifetimeRevenueAttribute(): int
     {
-        return (int) $this->orders()
-            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-            ->sum(DB::raw('order_items.quantity * order_items.price'));
+        return (int) $this->orders->pluck('total')->sum();
     }
 
     /**
-     * Get the top customers by total amount spent.
+     * Scope a query to get the top customers by total amount spent in the last $days.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function topCustomers(int $days = 7, int $limit = 3)
+    public function scopeBestCustomers($query, int $days = 7, int $limit = 3)
     {
-        return self::join('orders', 'customers.id', '=', 'orders.customer_id')
-            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-            ->where('orders.created_at', '>=', Carbon::now()->subDays($days))
-            ->groupBy('customers.id')
-            ->selectRaw('customers.*, sum(order_items.quantity * order_items.price) as total_spent')
-            ->orderByDesc('total_spent')
-            ->take($limit)
-            ->get();
+        return $query->with([
+            'orders' => function ($query) use ($days) {
+                $query->where('created_at', '>=', Carbon::now()->subDays($days))
+                    ->with('items.product');
+            },
+        ])
+            ->get()
+            ->map(function ($customer) {
+                // Calculate total spent for each customer.
+                $customer->total_spent = $customer->orders->sum(function ($order) {
+                    return $order->items->sum(function ($item) {
+                        return $item->quantity * $item->product->price;
+                    });
+                });
+
+                return $customer;
+            })
+            ->sortByDesc('total_spent')
+            ->take($limit);
     }
 }

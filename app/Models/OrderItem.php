@@ -14,7 +14,7 @@ class OrderItem extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['order_id', 'product_id', 'quantity', 'price'];
+    protected $fillable = ['order_id', 'product_id', 'quantity'];
 
     /**
      * Connect the order item to the order.

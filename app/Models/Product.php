@@ -25,17 +25,24 @@ class Product extends Model
     ];
 
     /**
-     * Order item relationship.
+     * The attributes that should be appended to the model's array form.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @var array<int, string>
      */
-    public function items()
+    protected $appends = ['lifetime_sales', 'lifetime_revenue'];
+
+    /**
+     * Order relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function orders()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->belongsToMany(Order::class, 'order_items');
     }
 
     /**
-     * Get the order items for the product.
+     * Order item relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -57,18 +64,24 @@ class Product extends Model
     }
 
     /**
-     * Get top selling products in the last $days.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * Calculate total lifetime sales of ta product.
      */
-    public static function topSellingProducts(int $days = 7, int $limit = 3)
+    public function getLifetimeSalesAttribute(): int
     {
-        return self::where('created_at', '>=', Carbon::now()->subDays($days))
-            ->groupBy('id')
-            ->selectRaw('products.*, sum(quantity) as total_quantity_sold')
-            ->orderByDesc('total_quantity_sold')
-            ->limit($limit)
-            ->get();
+        return $this->orderItems()->sum('quantity');
+    }
+
+    /**
+     * Calculate total lifetime revenue of a product.
+     */
+    public function getLifetimeRevenueAttribute(): int
+    {
+        return $this->orderItems()
+            ->with('product')
+            ->get()
+            ->sum(function ($orderItem) {
+                return $orderItem->quantity * $orderItem->product->price;
+            });
     }
 
     /**
@@ -76,16 +89,25 @@ class Product extends Model
      */
     public function totalSalesInPeriod(int $days = 7): int
     {
-        return $this->orders()
-            ->where('created_at', '>=', Carbon::now()->subDays($days))
-            ->sum('quantity');
+        return $this->orderItems()
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.created_at', '>=', Carbon::now()->subDays($days))
+            ->sum('order_items.quantity');
     }
 
     /**
-     * Calculate total lifetime sales of the product.
+     * Scope a query to get top selling products in the last $days.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function totalLifetimeSales(): int
+    public function scopeBestSellingProducts($query, int $days = 7, int $limit = 3)
     {
-        return $this->orders()->sum('quantity');
+        return $query->join('order_items', 'products.id', '=', 'order_items.product_id')
+            ->where('order_items.created_at', '>=', Carbon::now()->subDays($days))
+            ->groupBy('products.id')
+            ->selectRaw('products.*, sum(order_items.quantity) as total_quantity_sold')
+            ->orderByDesc('total_quantity_sold')
+            ->limit($limit);
     }
 }
