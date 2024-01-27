@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 class Order extends Model
@@ -34,20 +36,16 @@ class Order extends Model
 
     /**
      * Get the related order items.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
     /**
      * Get the customer that belongs to the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
@@ -55,7 +53,7 @@ class Order extends Model
     /**
      * Get the total quanity of items in the order.
      */
-    public function getQuantityAttribute()
+    public function getQuantityAttribute(): int
     {
         return $this->items->sum('quantity');
     }
@@ -63,7 +61,7 @@ class Order extends Model
     /**
      * Get the total revenue of the order.
      */
-    public function getTotalRevenueAttribute()
+    public function getTotalRevenueAttribute(): float
     {
         return $this->items->map(function ($item) {
             return $item->quantity * $item->product->price;
@@ -76,7 +74,7 @@ class Order extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSumRecentOrdersAmount($query, int $days = 7)
+    public function scopeSumRecentOrdersAmount($query, int $days = 7): float
     {
         return $query->with(['items.product'])
             ->where('created_at', '>=', Carbon::now()->subDays($days))
@@ -92,9 +90,8 @@ class Order extends Model
      * Scope a query to count the number of orders in the last $days.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return int
      */
-    public function scopeCountRecentOrders($query, int $days = 7)
+    public function scopeCountRecentOrders($query, int $days = 7): int
     {
         return $query->where('created_at', '>=', Carbon::now()->subDays($days))->count();
     }

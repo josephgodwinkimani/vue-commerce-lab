@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 class Product extends Model
@@ -33,20 +36,16 @@ class Product extends Model
 
     /**
      * Order relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function orders()
+    public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class, 'order_items');
     }
 
     /**
      * Order item relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function orderItems()
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -99,9 +98,8 @@ class Product extends Model
      * Scope a query to get top selling products in the last $days.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeBestSellingProducts($query, int $days = 7, int $limit = 3)
+    public function scopeBestSellingProducts($query, int $days = 7, int $limit = 3): Builder
     {
         return $query->join('order_items', 'products.id', '=', 'order_items.product_id')
             ->where('order_items.created_at', '>=', Carbon::now()->subDays($days))
