@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -69,7 +71,7 @@ class Order extends Model
     }
 
     /**
-     * Scope a query to calculate the total dollar amount of recent orders in the last $days.
+     * Calculate the total dollar amount of recent orders in the last $days.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -87,12 +89,21 @@ class Order extends Model
     }
 
     /**
-     * Scope a query to count the number of orders in the last $days.
+     * Count the number of orders in the last $days.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeCountRecentOrders($query, int $days = 7): int
     {
         return $query->where('created_at', '>=', Carbon::now()->subDays($days))->count();
+    }
+
+    /**
+     * Get the count of orders grouped by status.
+     */
+    public function scopeCountByStatus(Builder $query): Builder
+    {
+        return $query->select('status', DB::raw('count(*) as total'))
+            ->groupBy('status');
     }
 }

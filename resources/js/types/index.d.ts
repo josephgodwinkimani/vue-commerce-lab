@@ -66,6 +66,10 @@ export interface Order {
     updated_at: string
 }
 
+export interface OrderStatus extends Order {
+    total: number
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {

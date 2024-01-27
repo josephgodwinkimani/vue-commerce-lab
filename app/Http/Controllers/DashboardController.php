@@ -53,12 +53,12 @@ class DashboardController extends Controller
     }
 
     /**
-     * Display the best customers route.
+     * Display the order status report.
      */
     public function orderStatus(): Response
     {
-        $orders = Order::with(['customer', 'items'])->paginate(10);
+        $orderStatusCounts = Order::countByStatus()->get();
 
-        return Inertia::render('Dashboard/Reports/OrderStatus', ['orders' => $orders]);
+        return Inertia::render('Dashboard/Reports/OrderStatus', ['orderStatusCounts' => $orderStatusCounts]);
     }
 }
