@@ -55,15 +55,12 @@ class Product extends Model
      */
     public function adjustInventoryOnSale(int $quantitySold): void
     {
-        // Subtract the quantity sold from the current inventory.
         $this->quantity -= $quantitySold;
-
-        // Update the product.
         $this->save();
     }
 
     /**
-     * Calculate total lifetime sales of ta product.
+     * Calculate total lifetime sales of a product.
      */
     public function getLifetimeSalesAttribute(): int
     {
@@ -95,7 +92,7 @@ class Product extends Model
     }
 
     /**
-     * Scope a query to get top selling products in the last $days.
+     * Get top selling products in the last $days.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
