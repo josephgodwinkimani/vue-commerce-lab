@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Order extends Model
@@ -46,6 +47,33 @@ class Order extends Model
     ];
 
     /**
+     * The "booted" method of the model.
+     *
+     * Called after the model is initialized. Used here to register model
+     * event listeners for 'saved' and 'deleted' events.
+     */
+    protected static function booted()
+    {
+        parent::booted();
+
+        // Listener for the 'saved' event.
+        static::saved(function ($order) {
+            if (isset($order->customer_id)) {
+                Cache::forget("customer_{$order->customer_id}_lifetime_orders");
+                Cache::forget("customer_{$order->customer_id}_lifetime_revenue");
+            }
+        });
+
+        // Listener for the 'deleted' event.
+        static::deleted(function ($order) {
+            if (isset($order->customer_id)) {
+                Cache::forget("customer_{$order->customer_id}_lifetime_orders");
+                Cache::forget("customer_{$order->customer_id}_lifetime_revenue");
+            }
+        });
+    }
+
+    /**
      * Get the related order items.
      */
     public function items(): HasMany
@@ -74,8 +102,12 @@ class Order extends Model
      */
     public function getTotalRevenueAttribute(): float
     {
-        return $this->items->sum(function ($item) {
-            return $item->quantity * $item->product->price;
+        $cacheKey = "order_{$this->id}_total_revenue";
+
+        return Cache::remember($cacheKey, now()->addHours(24), function () {
+            return $this->items->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
         });
     }
 
@@ -84,14 +116,18 @@ class Order extends Model
      */
     public static function calculateSumRecentOrdersAmount(int $days = 7): float
     {
-        return self::with(['items.product'])
-            ->where('created_at', '>=', Carbon::now()->subDays($days))
-            ->get()
-            ->sum(function ($order) {
-                return $order->items->sum(function ($item) {
-                    return $item->quantity * $item->product->price;
+        $cacheKey = "sum_recent_orders_amount_{$days}_days";
+
+        return Cache::remember($cacheKey, now()->addHours(24), function () use ($days) {
+            return self::with(['items.product'])
+                ->where('created_at', '>=', Carbon::now()->subDays($days))
+                ->get()
+                ->sum(function ($order) {
+                    return $order->items->sum(function ($item) {
+                        return $item->quantity * $item->product->price;
+                    });
                 });
-            });
+        });
     }
 
     /**

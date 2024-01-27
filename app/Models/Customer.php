@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class Customer extends Model
 {
@@ -47,7 +48,11 @@ class Customer extends Model
      */
     public function getLifetimeOrdersAttribute(): int
     {
-        return $this->orders->count();
+        $cacheKey = "customer_{$this->id}_lifetime_orders";
+
+        return Cache::remember($cacheKey, now()->addHours(24), function () {
+            return $this->orders->count();
+        });
     }
 
     /**
@@ -55,7 +60,11 @@ class Customer extends Model
      */
     public function getLifetimeRevenueAttribute(): int
     {
-        return $this->orders->sum('total_revenue');
+        $cacheKey = "customer_{$this->id}_lifetime_revenue";
+
+        return Cache::remember($cacheKey, now()->addHours(24), function () {
+            return $this->orders->sum('total_revenue');
+        });
     }
 
     /**
