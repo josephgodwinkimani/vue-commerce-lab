@@ -37,6 +37,15 @@ class Order extends Model
     protected $appends = ['quantity', 'total_revenue'];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'total_revenue' => 'float',
+    ];
+
+    /**
      * Get the related order items.
      */
     public function items(): HasMany
@@ -53,11 +62,11 @@ class Order extends Model
     }
 
     /**
-     * Get the total quanity of items in the order.
+     * Get the total quantity of items in the order.
      */
     public function getQuantityAttribute(): int
     {
-        return $this->items->sum('quantity');
+        return $this->items()->sum('quantity');
     }
 
     /**
@@ -65,20 +74,17 @@ class Order extends Model
      */
     public function getTotalRevenueAttribute(): float
     {
-        return $this->items->map(function ($item) {
+        return $this->items->sum(function ($item) {
             return $item->quantity * $item->product->price;
-        })->sum();
+        });
     }
 
     /**
-     * Calculate the total dollar amount of recent orders in the last $days.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Calculate the total dollar amount of recent orders in the last specified days.
      */
-    public function scopeSumRecentOrdersAmount($query, int $days = 7): float
+    public static function calculateSumRecentOrdersAmount(int $days = 7): float
     {
-        return $query->with(['items.product'])
+        return self::with(['items.product'])
             ->where('created_at', '>=', Carbon::now()->subDays($days))
             ->get()
             ->sum(function ($order) {
@@ -89,17 +95,15 @@ class Order extends Model
     }
 
     /**
-     * Count the number of orders in the last $days.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * Count the number of orders in the last specified days.
      */
-    public function scopeCountRecentOrders($query, int $days = 7): int
+    public static function countRecentOrders(int $days = 7): int
     {
-        return $query->where('created_at', '>=', Carbon::now()->subDays($days))->count();
+        return self::where('created_at', '>=', Carbon::now()->subDays($days))->count();
     }
 
     /**
-     * Get the count of orders grouped by status.
+     * Scope a query to get the count of orders grouped by status.
      */
     public function scopeCountByStatus(Builder $query): Builder
     {

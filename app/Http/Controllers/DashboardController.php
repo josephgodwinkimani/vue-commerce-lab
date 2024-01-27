@@ -16,9 +16,9 @@ class DashboardController extends Controller
     public function index(): Response
     {
         $ordersCount = Order::countRecentOrders(7);
-        $totalRecentOrdersAmount = Order::sumRecentOrdersAmount(7);
-        $bestCustomers = Customer::bestCustomers(7, 10);
-        $bestSellingProducts = Product::bestSellingProducts(7, 10)->get();
+        $totalRecentOrdersAmount = Order::calculateSumRecentOrdersAmount(7);
+        $bestCustomers = Customer::bestCustomers(7, 3);
+        $bestSellingProducts = Product::bestSellingProducts(7, 3)->get();
 
         return Inertia::render('Dashboard/Index', [
             'ordersCount' => $ordersCount,
@@ -57,7 +57,7 @@ class DashboardController extends Controller
      */
     public function orderStatus(): Response
     {
-        $orderStatusCounts = Order::countByStatus()->get();
+        $orderStatusCounts = Order::CountByStatus()->get();
 
         return Inertia::render('Dashboard/Reports/OrderStatus', ['orderStatusCounts' => $orderStatusCounts]);
     }
