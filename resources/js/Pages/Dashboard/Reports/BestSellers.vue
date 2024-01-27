@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Product } from '@/types'
+import { Head } from '@inertiajs/vue3'
 
 const { bestSellingProducts } = defineProps<{
     bestSellingProducts: Product[]

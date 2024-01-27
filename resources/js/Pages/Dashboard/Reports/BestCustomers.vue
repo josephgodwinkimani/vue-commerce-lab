@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Customer } from '@/types'
+import { Head } from '@inertiajs/vue3'
 
 const { bestCustomers } = defineProps<{
     bestCustomers: Customer[]
