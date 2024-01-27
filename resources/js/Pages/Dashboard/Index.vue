@@ -66,7 +66,6 @@ const {
                 <Link href="/customers">View All Customers</Link>
             </aside>
         </section>
-        <pre>{{ JSON.stringify(bestCustomers, null, 2) }}</pre>
     </AuthenticatedLayout>
 </template>
 

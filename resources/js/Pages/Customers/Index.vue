@@ -79,7 +79,6 @@ const { customers } = defineProps<{
                                 delete-route="customers.destroy"
                             />
                         </td>
-                        <pre>{{ JSON.stringify(customer, null, 2) }}</pre>
                     </tr>
                 </tbody>
             </table>
