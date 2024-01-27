@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         $products = Product::paginate(10);
 
@@ -21,7 +23,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Products/Create');
     }
@@ -29,7 +31,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductStoreRequest $request)
+    public function store(ProductStoreRequest $request): RedirectResponse
     {
         $productData = $request->validated();
 
@@ -41,9 +43,8 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product): Response
     {
-
         $totalSalesLastWeek = $product->totalSalesInPeriod();
 
         return Inertia::render('Products/{product}/Show', [
@@ -55,9 +56,8 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Product $product): Response
     {
-
         return Inertia::render('Products/{product}/Edit')->with([
             'product' => $product,
         ]);
@@ -65,8 +65,10 @@ class ProductController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProductStoreRequest $request, Product $product)
+    public function update(ProductStoreRequest $request, Product $product): Response
     {
         $productData = $request->validated();
 
@@ -80,7 +82,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
 

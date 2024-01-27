@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderStoreRequest;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-
         $orders = Order::with(['customer', 'items'])->paginate(10);
 
         return Inertia::render('Orders/Index', ['orders' => $orders]);
@@ -23,7 +24,7 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Orders/Create');
     }
@@ -31,7 +32,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(OrderStoreRequest $request)
+    public function store(OrderStoreRequest $request): RedirectResponse
     {
         $orderData = $request->validated();
 
@@ -51,9 +52,8 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(Order $order): Response
     {
-        // Find all orders by order id.
         $order->load(['customer', 'items.product']);
 
         return Inertia::render('Orders/{order}/Show')->with([
@@ -64,9 +64,8 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $order)
+    public function edit(Order $order): Response
     {
-
         return Inertia::render('Orders/{order}/Edit')->with([
             'order' => $order,
         ]);
@@ -75,14 +74,14 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(OrderStoreRequest $request, Order $order)
+    public function update(OrderStoreRequest $request, Order $order): RedirectResponse
     {
         $orderData = $request->validated();
 
         $order->update($orderData);
 
-        // Remove all existing items and add new ones.
         $order->items()->delete();
+
         foreach ($request->products as $product) {
             $order->items()->create([
                 'product_id' => $product['product_id'],
@@ -97,7 +96,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order): RedirectResponse
     {
         $order->delete();
 
