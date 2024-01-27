@@ -1,5 +1,4 @@
 import { format } from 'date-fns'
-import DOMPurify from 'dompurify'
 
 /**
  * Format date string to a readable format.
@@ -38,19 +37,4 @@ export function formatCurrency(value: number): string {
  */
 export function formatNumber(value: number): string {
     return new Intl.NumberFormat('en-US').format(value)
-}
-
-/**
- * Sanitize form fields.
- *
- * @param value The value to sanitize.
- * @param allowedTags Optional allowed tags for sanitizing HTML content.
- *
- * @returns The sanitized string.
- */
-export function sanitizeInput(
-    value: string,
-    allowedTags: string[] = []
-): string {
-    return DOMPurify.sanitize(value, { ALLOWED_TAGS: allowedTags })
 }
