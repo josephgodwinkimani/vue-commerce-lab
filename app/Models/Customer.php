@@ -75,6 +75,7 @@ class Customer extends Model
                 $customer->total_revenue = $customer->lifetime_revenue;
             })
             ->sortByDesc('total_revenue')
-            ->take($limit);
+            ->take($limit)
+            ->values();
     }
 }
