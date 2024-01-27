@@ -64,7 +64,10 @@ const { order } = defineProps<{
                     </li>
                 </ol>
             </div>
-            <p><span>Total Amount:</span> {{ formatCurrency(order.total) }}</p>
+            <p>
+                <span>Total Amount:</span>
+                {{ formatCurrency(order.total_revenue) }}
+            </p>
         </div>
     </AuthenticatedLayout>
 </template>
