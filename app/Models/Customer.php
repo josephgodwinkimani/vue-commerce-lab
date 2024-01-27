@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
@@ -34,10 +36,8 @@ class Customer extends Model
 
     /**
      * Get the orders for the customer.
-     *
-     * @returns \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
@@ -55,35 +55,26 @@ class Customer extends Model
      */
     public function getLifetimeRevenueAttribute(): int
     {
-        return (int) $this->orders->pluck('total')->sum();
+        return (int) $this->orders->pluck('total_revenue')->sum();
     }
 
     /**
-     * Scope a query to get the top customers by total amount spent in the last $days.
+     * Get the top customers by total revenue in the last $days.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeBestCustomers($query, int $days = 7, int $limit = 3)
+    public function scopeBestCustomers($query, int $days = 7, int $limit = 3): Collection
     {
         return $query->with([
             'orders' => function ($query) use ($days) {
-                $query->where('created_at', '>=', Carbon::now()->subDays($days))
-                    ->with('items.product');
+                $query->where('created_at', '>=', Carbon::now()->subDays($days));
             },
         ])
             ->get()
-            ->map(function ($customer) {
-                // Calculate total spent for each customer.
-                $customer->total_spent = $customer->orders->sum(function ($order) {
-                    return $order->items->sum(function ($item) {
-                        return $item->quantity * $item->product->price;
-                    });
-                });
-
-                return $customer;
+            ->each(function ($customer) {
+                $customer->total_revenue = $customer->lifetime_revenue;
             })
-            ->sortByDesc('total_spent')
+            ->sortByDesc('total_revenue')
             ->take($limit);
     }
 }
