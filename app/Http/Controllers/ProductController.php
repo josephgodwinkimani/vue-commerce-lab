@@ -21,14 +21,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        return Inertia::render('Products/Create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(ProductStoreRequest $request): RedirectResponse
@@ -50,32 +42,6 @@ class ProductController extends Controller
         return Inertia::render('Products/{product}/Show', [
             'product' => $product,
             'totalSalesLastWeek' => $totalSalesLastWeek,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product): Response
-    {
-        return Inertia::render('Products/{product}/Edit')->with([
-            'product' => $product,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(ProductStoreRequest $request, Product $product): Response
-    {
-        $productData = $request->validated();
-
-        $product->update($productData);
-
-        return Inertia::render('Products/{product}/Edit', [
-            'product' => $product->refresh(),
         ]);
     }
 

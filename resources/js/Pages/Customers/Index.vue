@@ -28,11 +28,6 @@ const { customers } = defineProps<{
                 >
                     All Customers
                 </h2>
-                <Link
-                    :href="route('customers.create')"
-                    class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                    >Add New Customer</Link
-                >
             </div>
         </template>
 
@@ -75,7 +70,6 @@ const { customers } = defineProps<{
                             <ActionIcons
                                 :entity-id="customer.id"
                                 view-route="customers.show"
-                                edit-route="customers.edit"
                                 delete-route="customers.destroy"
                             />
                         </td>

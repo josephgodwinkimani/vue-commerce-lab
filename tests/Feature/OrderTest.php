@@ -45,42 +45,6 @@ class OrderTest extends TestCase
     }
 
     /**
-     * Test creating a new customer.
-     */
-    public function test_order_creation(): void
-    {
-        // Create and log in.
-        $user = User::factory()->create();
-
-        // Authenticate as the user.
-        $this->actingAs($user);
-
-        // Create a product for the foreign key dependency.
-        $product = Product::factory()->create();
-
-        // Create a customer for the foreign key dependency.
-        $customer = Customer::factory()->create();
-
-        // Generate order data using OrderFactory.
-        $orderData = Order::factory()->make([
-            'customer_id' => $customer->id,
-            'product_id' => $product->id,
-        ])->toArray();
-
-        // Send POST request to create a new order.
-        $response = $this->post('/orders', $orderData);
-
-        // Assert that the response is a redirect to the orders index route.
-        $response->assertRedirect(route('orders.index'));
-
-        // Assert the order was created in the database.
-        $this->assertDatabaseHas('orders', [
-            'customer_id' => $customer->id,
-            'product_id' => $product->id,
-        ]);
-    }
-
-    /**
      * Test deleting an order.
      */
     public function test_order_deletion(): void
@@ -100,7 +64,6 @@ class OrderTest extends TestCase
         // Create an order.
         $order = Order::factory()->create([
             'customer_id' => $customer->id,
-            'product_id' => $product->id,
         ]);
 
         // Send DELETE request to delete the order.

@@ -21,14 +21,6 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        return Inertia::render('Customers/Create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(CustomerStoreRequest $request): RedirectResponse
@@ -49,30 +41,6 @@ class CustomerController extends Controller
 
         return Inertia::render('Customers/{customer}/Show', [
             'customer' => $customer,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Customer $customer): Response
-    {
-        return Inertia::render('Customers/{customer}/Edit')->with([
-            'customer' => $customer,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(CustomerStoreRequest $request, Customer $customer): Response
-    {
-        $customerData = $request->validated();
-
-        $customer->update($customerData);
-
-        return Inertia::render('Customers/{customer}/Edit', [
-            'customer' => $customer->refresh(),
         ]);
     }
 

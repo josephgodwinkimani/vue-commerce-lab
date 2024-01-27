@@ -28,11 +28,6 @@ const { orders } = defineProps<{
                 >
                     All Orders
                 </h2>
-                <Link
-                    :href="route('orders.create')"
-                    class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                    >Add New Order</Link
-                >
             </div>
         </template>
 
@@ -95,7 +90,6 @@ const { orders } = defineProps<{
                         <td>
                             <ActionIcons
                                 :entity-id="order.id"
-                                edit-route="orders.edit"
                                 view-route="orders.show"
                                 delete-route="orders.destroy"
                             />

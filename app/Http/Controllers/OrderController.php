@@ -62,38 +62,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order): Response
-    {
-        return Inertia::render('Orders/{order}/Edit')->with([
-            'order' => $order,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(OrderStoreRequest $request, Order $order): RedirectResponse
-    {
-        $orderData = $request->validated();
-
-        $order->update($orderData);
-
-        $order->items()->delete();
-
-        foreach ($request->products as $product) {
-            $order->items()->create([
-                'product_id' => $product['product_id'],
-                'quantity' => $product['quantity'],
-                'price' => Product::find($product['product_id'])->price,
-            ]);
-        }
-
-        return redirect()->route('orders.index');
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Order $order): RedirectResponse

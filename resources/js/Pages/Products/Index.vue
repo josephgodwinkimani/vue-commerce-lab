@@ -28,11 +28,6 @@ const { products } = defineProps<{
                 >
                     All Products
                 </h2>
-                <Link
-                    :href="route('products.create')"
-                    class="focus:shadow-outline-blue rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none active:bg-blue-600"
-                    >Add New Product</Link
-                >
             </div>
         </template>
 
@@ -40,11 +35,6 @@ const { products } = defineProps<{
             <h3 class="text-xl font-bold dark:text-white">
                 No products found.
             </h3>
-            <Link
-                class="hover:underline dark:text-white"
-                :href="route('products.create')"
-                >Add a product</Link
-            >
         </div>
 
         <div v-else>
@@ -83,7 +73,6 @@ const { products } = defineProps<{
                             <ActionIcons
                                 :entity-id="product.id"
                                 view-route="products.show"
-                                edit-route="products.edit"
                                 delete-route="products.destroy"
                             />
                         </td>
