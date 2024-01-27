@@ -18,7 +18,7 @@ class OrderItem extends Model
     protected $fillable = ['order_id', 'product_id', 'quantity'];
 
     /**
-     * Connect the order item to the order.
+     * Get the order that the order item belongs to.
      */
     public function order(): BelongsTo
     {
@@ -26,7 +26,7 @@ class OrderItem extends Model
     }
 
     /**
-     * Connect the order item to the product.
+     * Get the product that the order item belongs to.
      */
     public function product(): BelongsTo
     {
