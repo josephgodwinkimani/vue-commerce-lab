@@ -6,6 +6,7 @@ use App\Http\Requests\OrderStoreRequest;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,19 +35,32 @@ class OrderController extends Controller
      */
     public function store(OrderStoreRequest $request): RedirectResponse
     {
-        $orderData = $request->validated();
+        return DB::transaction(function () use ($request) {
+            // Validate the request data.
+            $orderData = $request->validated();
 
-        $order = Order::create($orderData);
+            // Create a new order from the validated data.
+            $order = Order::create($orderData);
 
-        foreach ($request->products as $product) {
-            $order->items()->create([
-                'product_id' => $product['product_id'],
-                'quantity' => $product['quantity'],
-                'price' => Product::find($product['product_id'])->price,
-            ]);
-        }
+            // Retrieve all product IDs from the request.
+            $productIds = array_column($request->products, 'product_id');
 
-        return redirect()->route('orders.index');
+            // Fetch all products in one query and key them by their IDs.
+            $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+            // Iterate over each product from the request.
+            foreach ($request->products as $product) {
+                // Create a new order item for each product.
+                $order->items()->create([
+                    'product_id' => $product['product_id'], // Set the product ID.
+                    'quantity' => $product['quantity'],     // Set the quantity.
+                    'price' => $products[$product['product_id']]->price, // Retrieve the price from pre-fetched products.
+                ]);
+            }
+
+            // Redirect to the orders index route after successful creation.
+            return redirect()->route('orders.index');
+        });
     }
 
     /**

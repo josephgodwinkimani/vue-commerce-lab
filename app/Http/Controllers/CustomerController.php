@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,11 +26,17 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request): RedirectResponse
     {
-        $customerData = $request->validated();
+        return DB::transaction(function () use ($request) {
 
-        Customer::create($customerData);
+            // Validate the request data.
+            $customerData = $request->validated();
 
-        return redirect()->route('customers.index');
+            // Create a new customer from the validated data.
+            Customer::create($customerData);
+
+            // Redirect the user back to the index page.
+            return redirect()->route('customers.index');
+        });
     }
 
     /**

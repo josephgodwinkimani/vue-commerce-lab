@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,11 +26,17 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request): RedirectResponse
     {
-        $productData = $request->validated();
+        return DB::transaction(function () use ($request) {
 
-        Product::create($productData);
+            // Validate the request data.
+            $productData = $request->validated();
 
-        return redirect()->route('products.index');
+            // Create a new product from the validated data.
+            Product::create($productData);
+
+            // Redirect the user back to the index page.
+            return redirect()->route('products.index');
+        });
     }
 
     /**
