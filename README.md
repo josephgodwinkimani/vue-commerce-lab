@@ -43,34 +43,28 @@ This project serves as a comprehensive example for anyone interested in developi
 
 ## Installation
 
-Log into MySQL:
-
-```bash
-mysql -u root -h 127.0.0.1
-```
-
-Create a database:
-
-```sql
-CREATE DATABASE vue_commerce_lab;
-```
-
 Clone the repository (into your Valet sites directory):
 
 ```bash
-cd ~/Sites && git clone git@github.com:gregrickaby/vue-commerce-lab.git
+git clone git@github.com:gregrickaby/vue-commerce-lab.git
 ```
 
 Install dependencies:
 
 ```bash
-cd vue-commerce-lab && composer install && npm install
+composer install && npm install
 ```
 
 Create `.env` file:
 
 ```bash
 cp .env.example .env
+```
+
+Create `database.sqlite` file:
+
+```bash
+touch database/database.sqlite
 ```
 
 Generate application key:
@@ -89,6 +83,12 @@ Seed the database:
 
 ```bash
 php artisan db:seed
+```
+
+Set the PHP version to 8.3:
+
+```bash
+valet isolate php@8.3
 ```
 
 Secure the site:
