@@ -4,7 +4,8 @@ on:
     push:
         branches: ['main']
         paths:
-            - 'resources/js/**/*.stories.ts'
+            - 'resources/js/**/*.mdx'
+            - 'resources/js/**/*.stories.@(js|mjs|ts)'
             - 'resources/js/**/*.vue'
     workflow_dispatch:
 
