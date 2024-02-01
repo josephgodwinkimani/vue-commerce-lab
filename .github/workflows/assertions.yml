@@ -72,10 +72,15 @@ jobs:
               run: php artisan test
 
             - name: Lint JavaScript
-              run: npm run lint
+              run: npm run lint:js
+
+            - name: Lint Styles
+              run: npm run lint:css
 
             - name: Test JavaScript
               run: npm run test:ci
+              env:
+                  LARAVEL_BYPASS_ENV_CHECK: 1
 
             - name: Test Storybook
               run: npm run build:storybook
