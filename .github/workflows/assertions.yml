@@ -68,14 +68,14 @@ jobs:
             - name: Lint PHP
               run: composer run lint
 
-            - name: Test PHP
-              run: php artisan test
-
             - name: Lint JavaScript
               run: npm run lint:js
 
             - name: Lint Styles
               run: npm run lint:css
+
+            - name: Test PHP
+              run: php artisan test
 
             - name: Test JavaScript
               run: npm run test:ci
