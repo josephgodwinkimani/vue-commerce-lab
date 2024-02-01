@@ -1,12 +1,13 @@
 {
     "recommendations": [
         "EditorConfig.EditorConfig",
+        "Vue.volar",
+        "Vue.vscode-typescript-vue-plugin",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "bradlc.vscode-tailwindcss",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "open-southeners.laravel-pint",
-        "amiralizadeh9480.laravel-extra-intellisense",
-        "bradlc.vscode-tailwindcss",
-        "Vue.volar",
         "stylelint.vscode-stylelint"
     ]
 }
