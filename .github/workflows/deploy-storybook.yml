@@ -3,7 +3,9 @@ name: Deploy Storybook
 on:
     push:
         branches: ['main']
-
+        paths:
+            - 'resources/js/**/*.stories.ts'
+            - 'resources/js/**/*.vue'
     workflow_dispatch:
 
 permissions:
